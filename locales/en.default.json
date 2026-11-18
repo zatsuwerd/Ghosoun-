@@ -1,0 +1,198 @@
+{
+  "general": {
+    "accessibility": {
+      "close": "Close",
+      "menu": "Toggle Navigation Menu",
+      "search": "Search Site",
+      "cart": "View Shopping Bag",
+      "skip_to_content": "Skip to main content",
+      "previous": "Previous",
+      "next": "Next",
+      "zoom_image": "Zoom product image"
+    },
+    "cart": {
+      "title": "Your Bag",
+      "empty": "Your bag is currently empty.",
+      "continue_shopping": "Explore Botanicals",
+      "subtotal": "Subtotal",
+      "discounts": "Discounts",
+      "checkout": "Proceed to Checkout",
+      "view_cart": "View Full Cart",
+      "update": "Update Cart",
+      "free_shipping_away": "Add {{ amount }} more for complimentary local delivery",
+      "free_shipping_eligible": "You qualify for complimentary local delivery",
+      "quantity": "Quantity",
+      "decrease_quantity": "Decrease quantity",
+      "increase_quantity": "Increase quantity",
+      "remove": "Remove",
+      "note": "Gift Message or Order Notes",
+      "taxes_shipping_note": "Taxes and shipping options calculated at checkout.",
+      "add_error": "Unable to update your bag right now. Please try again."
+    },
+    "wishlist": {
+      "title": "Saved Botanicals",
+      "empty": "No items saved to your wishlist yet.",
+      "add": "Save to Wishlist",
+      "remove": "Remove from Wishlist",
+      "explore": "Explore Collections"
+    },
+    "search": {
+      "title": "Search Ghosoun",
+      "placeholder": "Search oils, botanicals, or journal articles...",
+      "submit": "Search",
+      "results_count": "{{ count }} results found",
+      "no_results": "No matching products or articles found for \"{{ terms }}\".",
+      "popular_label": "Popular Searches",
+      "type_product": "Product",
+      "type_article": "Journal",
+      "type_page": "Page"
+    },
+    "pagination": {
+      "label": "Pagination",
+      "previous": "Previous page",
+      "next": "Next page",
+      "page": "Page {{ number }}"
+    },
+    "language": {
+      "label": "Language"
+    },
+    "social": {
+      "instagram": "Instagram",
+      "facebook": "Facebook",
+      "youtube": "YouTube",
+      "whatsapp": "WhatsApp"
+    },
+    "errors": {
+      "not_found_code": "404",
+      "not_found_title": "Page Not Found",
+      "not_found_text": "The botanical page or collection you requested could not be found.",
+      "return_home": "Return to Home"
+    }
+  },
+  "collections": {
+    "general": {
+      "all_of_collection": "All {{ title }}",
+      "products_count": "{{ count }} products",
+      "filter_by": "Filter by",
+      "sort_by": "Sort by",
+      "apply": "Apply",
+      "clear_all": "Reset Filters",
+      "no_matches": "No products match your selected filters.",
+      "empty": "Products assigned to this collection will appear here once published.",
+      "catalog_title": "Our Collections",
+      "view_collection": "Explore Collection"
+    }
+  },
+  "products": {
+    "product": {
+      "add_to_cart": "Add to Bag",
+      "adding": "Adding...",
+      "sold_out": "Out of Stock",
+      "unavailable": "Unavailable",
+      "choose_options": "Select Option",
+      "from_price": "From {{ price }}",
+      "regular_price": "Regular price",
+      "sale_price": "Sale price",
+      "save": "Save {{ amount }}",
+      "sku": "SKU",
+      "pure_guarantee": "Single-Origin Botanical",
+      "botanical_origin_fallback": "Cold-Pressed & Steam-Distilled Botanical",
+      "quantity_low": "Low stock available",
+      "in_stock": "In stock and ready to ship",
+      "botanical_name_label": "Botanical Name",
+      "plant_part_label": "Plant Part",
+      "extraction_label": "Extraction Method",
+      "origin_label": "Origin",
+      "related_heading": "Pair With Complementary Botanicals"
+    }
+  },
+  "blogs": {
+    "article": {
+      "back_to_blog": "Back to {{ title }}",
+      "by_author": "By {{ author }}",
+      "read_more": "Read Journal Entry",
+      "tags": "Topics",
+      "comments_title": "Reader Notes",
+      "comment_form_title": "Leave a Thought",
+      "comment_name": "Name",
+      "comment_email": "Email",
+      "comment_message": "Comment",
+      "comment_post": "Post Comment",
+      "comment_moderated": "Comments are reviewed before appearing on the storefront.",
+      "comment_success": "Your comment has been published.",
+      "comment_success_moderated": "Your comment has been submitted and is awaiting review."
+    },
+    "blog": {
+      "all_topics": "All Articles",
+      "empty": "Journal articles will appear here once published.",
+      "min_read": "{{ minutes }} min read"
+    }
+  },
+  "templates": {
+    "contact": {
+      "form": {
+        "name": "Full Name",
+        "email": "Email Address",
+        "phone": "Phone Number (Optional)",
+        "topic": "Inquiry Topic",
+        "message": "How Can We Help?",
+        "send": "Send Message",
+        "post_success": "Thank you for contacting Ghosoun. Our team will reply shortly."
+      }
+    }
+  },
+  "sections": {
+    "announcement": {
+      "aria_label": "Store Announcements",
+      "previous": "Previous announcement",
+      "next": "Next announcement"
+    },
+    "header": {
+      "search_placeholder": "Search Ghosoun oils, diffusers, or botanicals...",
+      "account": "Account",
+      "cart": "Bag",
+      "wishlist": "Wishlist",
+      "shop_all": "Shop All Botanicals"
+    },
+    "hero": {
+      "previous_slide": "Previous slide",
+      "next_slide": "Next slide",
+      "go_to_slide": "Go to slide {{ number }}"
+    },
+    "mobile_nav": {
+      "aria_label": "Mobile Bottom Navigation",
+      "home": "Home",
+      "shop": "Shop",
+      "wishlist": "Wishlist",
+      "cart": "Bag",
+      "menu": "Menu"
+    },
+    "footer": {
+      "newsletter_title": "Join the Ghosoun Journal",
+      "newsletter_subtext": "Receive seasonal botanical notes, new harvest releases, and care guides.",
+      "email_placeholder": "Enter your email address",
+      "subscribe": "Subscribe",
+      "newsletter_success": "Thank you for subscribing to Ghosoun.",
+      "copyright": "Ghosoun Botanicals. All rights reserved."
+    },
+    "collection_tabs": {
+      "view_all": "View {{ title }}"
+    },
+    "faq": {
+      "search_placeholder": "Filter questions by keyword...",
+      "all_categories": "All Topics",
+      "no_matches": "No questions matched your filter. Reach out via our Contact page."
+    },
+    "newsletter_popup": {
+      "email_label": "Email address",
+      "email_placeholder": "Enter your email address",
+      "submit": "Join Ghosoun",
+      "dismiss": "No thanks, continue browsing",
+      "invalid_email": "Please enter a valid email address.",
+      "success_heading": "Welcome to Ghosoun",
+      "success_message": "Thank you for joining. Check below for your welcome privilege code configured by our team.",
+      "welcome_code_label": "Welcome Code",
+      "continue_shopping": "Continue Exploring"
+    }
+  }
+}

@@ -1,0 +1,33 @@
+<wishlist-drawer class="cart-drawer-backdrop" id="WishlistDrawerBackdrop" data-section-id="{{ section.id }}" aria-hidden="true">
+  <div class="cart-drawer" role="dialog" aria-modal="true" aria-label="{{ 'general.wishlist.title' | t }}">
+
+    <div class="cart-drawer-header">
+      <h3 class="h4" style="margin: 0;">{{ 'general.wishlist.title' | t }}</h3>
+      <button type="button" class="header-action-icon" data-wishlist-close aria-label="{{ 'general.accessibility.close' | t }}">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true" focusable="false"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
+      </button>
+    </div>
+
+    <div class="cart-drawer-items" id="WishlistDrawerItemList">
+      <div style="text-align: center; padding: 5rem 1.5rem;">
+        <p style="color: var(--color-text-muted); margin-bottom: 2rem;">{{ 'general.wishlist.empty' | t }}</p>
+        <a href="{{ routes.all_products_collection_url }}" class="btn btn-primary btn-sm">
+          {{ 'general.wishlist.explore' | t }}
+        </a>
+      </div>
+    </div>
+
+  </div>
+</wishlist-drawer>
+
+{% schema %}
+{
+  "name": "Wishlist Drawer",
+  "settings": [],
+  "presets": [
+    {
+      "name": "Wishlist Drawer"
+    }
+  ]
+}
+{% endschema %}

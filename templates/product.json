@@ -1,0 +1,104 @@
+{
+  "sections": {
+    "main_product": {
+      "type": "main-product",
+      "blocks": {
+        "title": {
+          "type": "title",
+          "settings": {
+            "show_pure_badge": true
+          }
+        },
+        "botanical_specs": {
+          "type": "botanical_specs",
+          "settings": {
+            "fallback_latin_name": "Lavandula angustifolia",
+            "fallback_plant_part": "Flowering Tops",
+            "fallback_extraction": "Steam Distillation / Cold-Pressed",
+            "fallback_origin": "Mediterranean Harvest"
+          }
+        },
+        "price": {
+          "type": "price",
+          "settings": {
+            "tax_notice": "Shipping and taxes calculated at checkout."
+          }
+        },
+        "variant_picker": {
+          "type": "variant_picker",
+          "settings": {}
+        },
+        "quantity_selector": {
+          "type": "quantity_selector",
+          "settings": {}
+        },
+        "buy_buttons": {
+          "type": "buy_buttons",
+          "settings": {
+            "show_dynamic_checkout": true
+          }
+        },
+        "description": {
+          "type": "description",
+          "settings": {}
+        },
+        "trust_badges": {
+          "type": "trust_badges",
+          "settings": {
+            "badge_1": "100% Pure & Undiluted",
+            "badge_2": "Single-Origin Harvest",
+            "badge_3": "Protective Dark Glass",
+            "badge_4": "Zero Synthetic Fillers"
+          }
+        },
+        "tab_benefits": {
+          "type": "collapsible_tab",
+          "settings": {
+            "heading": "Key Benefits & Properties",
+            "content": "<p>Steam-distilled or cold-pressed to preserve natural aromatic compounds and fatty-acid character.</p>",
+            "open_by_default": true
+          }
+        },
+        "tab_usage": {
+          "type": "collapsible_tab",
+          "settings": {
+            "heading": "How to Use & Dilution Guide",
+            "content": "<p>For aromatic diffusion, add 3 to 5 drops per 100ml of water. For topical skin or scalp use, dilute in a cold-pressed Ghosoun carrier oil (1–2% concentration).</p>",
+            "open_by_default": false
+          }
+        }
+      },
+      "block_order": [
+        "title",
+        "botanical_specs",
+        "price",
+        "variant_picker",
+        "quantity_selector",
+        "buy_buttons",
+        "description",
+        "trust_badges",
+        "tab_benefits",
+        "tab_usage"
+      ],
+      "settings": {
+        "padding_top": 48,
+        "padding_bottom": 64
+      }
+    },
+    "related_products": {
+      "type": "related-products",
+      "settings": {
+        "eyebrow": "Botanical Pairings",
+        "heading": "Pair With Complementary Botanicals",
+        "products_to_show": 4,
+        "image_ratio": "4/5",
+        "padding_top": 56,
+        "padding_bottom": 64
+      }
+    }
+  },
+  "order": [
+    "main_product",
+    "related_products"
+  ]
+}

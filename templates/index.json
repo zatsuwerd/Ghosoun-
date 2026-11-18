@@ -1,0 +1,403 @@
+{
+  "sections": {
+    "hero_slider": {
+      "type": "hero-botanical-slider",
+      "blocks": {
+        "slide_1": {
+          "type": "slide",
+          "settings": {
+            "overlay_opacity": 85,
+            "badge_label": "Ghosoun · غصون",
+            "heading": "Pure Botanical Oils, Rooted in Natural Origin",
+            "subtext": "Single-origin essential oils and first-press carrier elixirs crafted for mindful skin, hair, and home rituals.",
+            "btn_1_text": "Shop Botanicals",
+            "btn_1_link": "/collections/all",
+            "btn_2_text": "Explore Story",
+            "btn_2_link": "/pages/about-us"
+          }
+        },
+        "slide_2": {
+          "type": "slide",
+          "settings": {
+            "overlay_opacity": 80,
+            "badge_label": "Home Atmosphere",
+            "heading": "Artisan Diffusers & Mindful Aromatherapy",
+            "subtext": "Matte ceramic ultrasonic diffusers and cold-air nebulizers engineered for quiet living spaces.",
+            "btn_1_text": "Explore Diffusers",
+            "btn_1_link": "/collections/diffusers",
+            "btn_2_text": "Why Choose Ghosoun",
+            "btn_2_link": "/pages/why-choose-our-products"
+          }
+        }
+      },
+      "block_order": [
+        "slide_1",
+        "slide_2"
+      ],
+      "settings": {
+        "accessibility_label": "Ghosoun Featured Botanical Collections",
+        "text_alignment": "start",
+        "slide_height_desktop": 620,
+        "slide_height_mobile": 480,
+        "padding_top": 0,
+        "padding_bottom": 0
+      }
+    },
+    "trust_bar": {
+      "type": "trust-icons-bar",
+      "blocks": {
+        "pillar_1": {
+          "type": "trust_badge",
+          "settings": {
+            "icon": "pure",
+            "title": "100% Pure Oils",
+            "subtext": "No synthetics or diluents"
+          }
+        },
+        "pillar_2": {
+          "type": "trust_badge",
+          "settings": {
+            "icon": "leaf",
+            "title": "Natural Extraction",
+            "subtext": "Steam distilled & cold-pressed"
+          }
+        },
+        "pillar_3": {
+          "type": "trust_badge",
+          "settings": {
+            "icon": "glass",
+            "title": "Dark Glass",
+            "subtext": "UV-shielded apothecary bottles"
+          }
+        },
+        "pillar_4": {
+          "type": "trust_badge",
+          "settings": {
+            "icon": "origin",
+            "title": "Single-Origin",
+            "subtext": "Traceable harvest regions"
+          }
+        },
+        "pillar_5": {
+          "type": "trust_badge",
+          "settings": {
+            "icon": "shield",
+            "title": "Batch Integrity",
+            "subtext": "Transparent ingredient labels"
+          }
+        },
+        "pillar_6": {
+          "type": "trust_badge",
+          "settings": {
+            "icon": "delivery",
+            "title": "Express Dispatch",
+            "subtext": "Carefully packed to order"
+          }
+        }
+      },
+      "block_order": [
+        "pillar_1",
+        "pillar_2",
+        "pillar_3",
+        "pillar_4",
+        "pillar_5",
+        "pillar_6"
+      ],
+      "settings": {
+        "padding_top": 28,
+        "padding_bottom": 28
+      }
+    },
+    "category_grid": {
+      "type": "category-grid",
+      "blocks": {
+        "cat_1": {
+          "type": "category",
+          "settings": {
+            "kicker": "Steam-Distilled",
+            "title": "Essential Oils",
+            "caption": "Undiluted therapeutic botanical extracts",
+            "custom_url": "/collections/essential-oils"
+          }
+        },
+        "cat_2": {
+          "type": "category",
+          "settings": {
+            "kicker": "Cold-Pressed",
+            "title": "Carrier Oils",
+            "caption": "Unrefined nutrient-rich skin & scalp oils",
+            "custom_url": "/collections/carrier-oils"
+          }
+        },
+        "cat_3": {
+          "type": "category",
+          "settings": {
+            "kicker": "Home Atmosphere",
+            "title": "Diffusers",
+            "caption": "Ultrasonic ceramic & waterless nebulizers",
+            "custom_url": "/collections/diffusers"
+          }
+        },
+        "cat_4": {
+          "type": "category",
+          "settings": {
+            "kicker": "Targeted Care",
+            "title": "Face & Scalp",
+            "caption": "Botanical blends for daily rituals",
+            "custom_url": "/collections/all"
+          }
+        }
+      },
+      "block_order": [
+        "cat_1",
+        "cat_2",
+        "cat_3",
+        "cat_4"
+      ],
+      "settings": {
+        "eyebrow": "Curated Botanicals",
+        "heading": "Explore by Ritual & Origin",
+        "subtitle": "Navigate pure essential oils, cold-pressed carrier elixirs, ceramic diffusers, and skin remedies.",
+        "show_product_count": true,
+        "padding_top": 64,
+        "padding_bottom": 48
+      }
+    },
+    "collection_tabs": {
+      "type": "featured-collection-tabs",
+      "blocks": {
+        "tab_1": {
+          "type": "tab",
+          "settings": {
+            "tab_title": "Bestsellers"
+          }
+        },
+        "tab_2": {
+          "type": "tab",
+          "settings": {
+            "tab_title": "Essential Oils"
+          }
+        },
+        "tab_3": {
+          "type": "tab",
+          "settings": {
+            "tab_title": "Carrier Oils"
+          }
+        },
+        "tab_4": {
+          "type": "tab",
+          "settings": {
+            "tab_title": "Diffusers"
+          }
+        }
+      },
+      "block_order": [
+        "tab_1",
+        "tab_2",
+        "tab_3",
+        "tab_4"
+      ],
+      "settings": {
+        "subtitle": "Curated Botanicals",
+        "heading": "Ghosoun Signature Selection",
+        "products_to_show": 8,
+        "card_ratio": "4/5",
+        "padding_top": 56,
+        "padding_bottom": 64
+      }
+    },
+    "origin_story": {
+      "type": "origin-story-split",
+      "blocks": {
+        "metric_1": {
+          "type": "metric",
+          "settings": {
+            "metric": "Single-Origin",
+            "label": "Named botanical species & region"
+          }
+        },
+        "metric_2": {
+          "type": "metric",
+          "settings": {
+            "metric": "Zero Fillers",
+            "label": "No synthetic fragrances or hexane"
+          }
+        }
+      },
+      "block_order": [
+        "metric_1",
+        "metric_2"
+      ],
+      "settings": {
+        "bg_color": "#F2EFE9",
+        "image_position": "left",
+        "subtitle": "From Harvest to Bottle",
+        "title": "Botanical Integrity & Dark Glass Preservation",
+        "text": "<p>Every Ghosoun formulation begins with carefully selected crops grown in climates where aroma and fatty-acid character develop naturally. We favor gentle steam distillation and expeller cold-pressing, then bottle in protective dark glass to preserve freshness.</p>",
+        "button_text": "Why Choose Ghosoun",
+        "button_link": "/pages/why-choose-our-products",
+        "padding_top": 80,
+        "padding_bottom": 80
+      }
+    },
+    "featured_collections": {
+      "type": "featured-collections",
+      "blocks": {
+        "fc_1": {
+          "type": "featured_collection",
+          "settings": {
+            "title": "Single-Origin Essential Oils",
+            "description": "Wild-harvested rosemary, high-altitude lavender, and sacred Omani frankincense resin."
+          }
+        },
+        "fc_2": {
+          "type": "featured_collection",
+          "settings": {
+            "title": "First-Press Carrier Oils",
+            "description": "Cold-pressed argan, rosehip seed, golden jojoba, and nigella seed botanicals."
+          }
+        },
+        "fc_3": {
+          "type": "featured_collection",
+          "settings": {
+            "title": "Artisan Diffusers & Rituals",
+            "description": "Matte ceramic ultrasonic diffusers and cold-air waterless nebulizers."
+          }
+        }
+      },
+      "block_order": [
+        "fc_1",
+        "fc_2",
+        "fc_3"
+      ],
+      "settings": {
+        "eyebrow": "Botanical Families",
+        "heading": "Signature Ghosoun Collections",
+        "view_all_label": "Browse All Collections",
+        "padding_top": 64,
+        "padding_bottom": 64
+      }
+    },
+    "educational_journal": {
+      "type": "educational-journal",
+      "settings": {
+        "eyebrow": "Knowledge & Rituals",
+        "heading": "From the Ghosoun Journal",
+        "post_limit": 3,
+        "show_date": true,
+        "cta_label": "Explore All Articles",
+        "padding_top": 64,
+        "padding_bottom": 64
+      }
+    },
+    "testimonials": {
+      "type": "testimonials",
+      "blocks": {
+        "t_1": {
+          "type": "testimonial",
+          "settings": {
+            "product_label": "Tunisian Rosemary Oil",
+            "quote": "Crisp, green, herbaceous aroma right out of the dropper. Blending a few drops into warm jojoba has become my weekly scalp ritual.",
+            "author_name": "Lina M.",
+            "author_note": "Hair & Scalp Routine"
+          }
+        },
+        "t_2": {
+          "type": "testimonial",
+          "settings": {
+            "product_label": "Alabaster Ceramic Diffuser",
+            "quote": "Silent mist output and a warm matte finish that looks intentional on a bedside shelf even when switched off.",
+            "author_name": "Tariq S.",
+            "author_note": "Home Atmosphere"
+          }
+        },
+        "t_3": {
+          "type": "testimonial",
+          "settings": {
+            "product_label": "Omani Frankincense Sacra",
+            "quote": "Resinous, grounded, and unmistakably clean compared to synthetic amber oils. Two drops fill the entire study.",
+            "author_name": "Noura K.",
+            "author_note": "Evening Diffusing"
+          }
+        }
+      },
+      "block_order": [
+        "t_1",
+        "t_2",
+        "t_3"
+      ],
+      "settings": {
+        "eyebrow": "Ritual Perspectives",
+        "heading": "Everyday Experiences With Ghosoun",
+        "subtitle": "Merchant-curated customer notes and aromatherapy practitioners sharing how they weave single-origin oils into daily routines.",
+        "padding_top": 64,
+        "padding_bottom": 56
+      }
+    },
+    "newsletter_banner": {
+      "type": "newsletter-banner",
+      "settings": {
+        "eyebrow": "Ghosoun Inner Circle",
+        "heading": "Seasonal Botanical Notes & New Harvests",
+        "subtext": "Subscribe for single-origin harvest releases, aromatherapy dilution guides, and private seasonal previews.",
+        "button_label": "Subscribe",
+        "padding_top": 32,
+        "padding_bottom": 56
+      }
+    },
+    "social_gallery": {
+      "type": "social-gallery",
+      "blocks": {
+        "g_1": {
+          "type": "gallery_tile",
+          "settings": {
+            "caption": "Rosemary Scalp Ritual"
+          }
+        },
+        "g_2": {
+          "type": "gallery_tile",
+          "settings": {
+            "caption": "Evening Lavender Mist"
+          }
+        },
+        "g_3": {
+          "type": "gallery_tile",
+          "settings": {
+            "caption": "Cold-Pressed Argan Glow"
+          }
+        },
+        "g_4": {
+          "type": "gallery_tile",
+          "settings": {
+            "caption": "Omani Frankincense Resin"
+          }
+        }
+      },
+      "block_order": [
+        "g_1",
+        "g_2",
+        "g_3",
+        "g_4"
+      ],
+      "settings": {
+        "eyebrow": "@ghosoun.botanicals",
+        "heading": "Daily Botanical Rituals",
+        "subtitle": "Curate serene apothecary shelves, morning scalp blends, and warm ceramic mist across your living spaces.",
+        "padding_top": 40,
+        "padding_bottom": 64
+      }
+    }
+  },
+  "order": [
+    "hero_slider",
+    "trust_bar",
+    "category_grid",
+    "collection_tabs",
+    "origin_story",
+    "featured_collections",
+    "educational_journal",
+    "testimonials",
+    "newsletter_banner",
+    "social_gallery"
+  ]
+}

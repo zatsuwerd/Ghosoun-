@@ -1,0 +1,14 @@
+{
+  "sections": {
+    "main_cart": {
+      "type": "main-cart",
+      "settings": {
+        "padding_top": 48,
+        "padding_bottom": 64
+      }
+    }
+  },
+  "order": [
+    "main_cart"
+  ]
+}

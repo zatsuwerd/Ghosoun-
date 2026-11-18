@@ -1,0 +1,51 @@
+{
+  "sections": {
+    "contact": {
+      "type": "page-contact",
+      "blocks": {
+        "detail_1": {
+          "type": "contact_detail",
+          "settings": {
+            "label": "Customer Care & Consultations",
+            "value": "care@ghosoun.com",
+            "note": "Personal dilution & oil pairing support"
+          }
+        },
+        "detail_2": {
+          "type": "contact_detail",
+          "settings": {
+            "label": "Concierge Hours",
+            "value": "Monday – Saturday, 9:00 AM – 6:00 PM",
+            "note": "Direct storefront inquiry desk"
+          }
+        },
+        "detail_3": {
+          "type": "contact_detail",
+          "settings": {
+            "label": "Hospitality & Boutique Wholesale",
+            "value": "partners@ghosoun.com",
+            "note": "Spa amenities & stockist inquiries"
+          }
+        }
+      },
+      "block_order": [
+        "detail_1",
+        "detail_2",
+        "detail_3"
+      ],
+      "settings": {
+        "eyebrow": "Ghosoun Concierge",
+        "heading": "Connect With Our Team",
+        "subtitle": "Whether you need dilution guidance, gift curation, or hospitality inquiries, our team is ready to assist.",
+        "form_heading": "Send a Direct Inquiry",
+        "form_subtext": "We aim to respond to every message within one business day.",
+        "info_heading": "Concierge Channels",
+        "padding_top": 0,
+        "padding_bottom": 72
+      }
+    }
+  },
+  "order": [
+    "contact"
+  ]
+}

@@ -1,0 +1,145 @@
+{%- style -%}
+  #shopify-section-{{ section.id }} .social-gallery-section {
+    padding-top: {{ section.settings.padding_top }}px;
+    padding-bottom: {{ section.settings.padding_bottom }}px;
+  }
+{%- endstyle -%}
+
+<section class="social-gallery-section" aria-labelledby="SocialGalleryHeading-{{ section.id }}">
+  <div class="page-width">
+    <div style="text-align: center; margin-bottom: 3.6rem;">
+      {%- if section.settings.eyebrow != blank -%}
+        <p class="botanical-page-eyebrow">{{ section.settings.eyebrow | escape }}</p>
+      {%- endif -%}
+      <h2 id="SocialGalleryHeading-{{ section.id }}">{{ section.settings.heading | escape }}</h2>
+      {%- if section.settings.subtitle != blank -%}
+        <p class="botanical-page-subtitle">{{ section.settings.subtitle | escape }}</p>
+      {%- endif -%}
+    </div>
+
+    <div class="social-gallery-grid">
+      {%- for block in section.blocks -%}
+        <a
+          href="{{ block.settings.link | default: routes.all_products_collection_url }}"
+          class="social-gallery-tile"
+          {{ block.shopify_attributes }}
+        >
+          {%- if block.settings.image != blank -%}
+            {{ block.settings.image | image_url: width: 640 | image_tag:
+              widths: '320, 480, 640',
+              sizes: '(min-width: 768px) 25vw, 50vw',
+              alt: block.settings.image.alt | default: block.settings.caption,
+              loading: 'lazy'
+            }}
+          {%- else -%}
+            <div style="width: 100%; height: 100%; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 0.8rem; background: linear-gradient(155deg, var(--color-primary), #174B4E); color: #FAF9F5; padding: 2rem; text-align: center;">
+              <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true">
+                <rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect>
+                <path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path>
+                <line x1="17.5" y1="6.5" x2="17.51" y2="6.5"></line>
+              </svg>
+              <span style="font-family: var(--font-heading-family); font-size: 1.7rem;">{{ block.settings.caption | escape }}</span>
+            </div>
+          {%- endif -%}
+
+          {%- if block.settings.caption != blank -%}
+            <span class="social-gallery-caption">{{ block.settings.caption | escape }}</span>
+          {%- endif -%}
+        </a>
+      {%- endfor -%}
+    </div>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Social Ritual Gallery",
+  "settings": [
+    {
+      "type": "text",
+      "id": "eyebrow",
+      "label": "Eyebrow",
+      "default": "@ghosoun.botanicals"
+    },
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Heading",
+      "default": "Daily Botanical Rituals"
+    },
+    {
+      "type": "textarea",
+      "id": "subtitle",
+      "label": "Subtitle",
+      "default": "Curate serene apothecary shelves, morning scalp blends, and warm ceramic mist across your living spaces."
+    },
+    {
+      "type": "range",
+      "id": "padding_top",
+      "min": 0,
+      "max": 100,
+      "step": 4,
+      "unit": "px",
+      "label": "Top Padding",
+      "default": 56
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "min": 0,
+      "max": 100,
+      "step": 4,
+      "unit": "px",
+      "label": "Bottom Padding",
+      "default": 64
+    }
+  ],
+  "blocks": [
+    {
+      "type": "gallery_tile",
+      "name": "Gallery Tile",
+      "settings": [
+        {
+          "type": "image_picker",
+          "id": "image",
+          "label": "Photo"
+        },
+        {
+          "type": "text",
+          "id": "caption",
+          "label": "Caption",
+          "default": "Morning Diffuser Blend"
+        },
+        {
+          "type": "url",
+          "id": "link",
+          "label": "Link"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Social Ritual Gallery",
+      "blocks": [
+        {
+          "type": "gallery_tile",
+          "settings": { "caption": "Rosemary Scalp Ritual" }
+        },
+        {
+          "type": "gallery_tile",
+          "settings": { "caption": "Evening Lavender Mist" }
+        },
+        {
+          "type": "gallery_tile",
+          "settings": { "caption": "Cold-Pressed Argan Glow" }
+        },
+        {
+          "type": "gallery_tile",
+          "settings": { "caption": "Omani Frankincense Resin" }
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}

@@ -1,0 +1,211 @@
+{%- style -%}
+  #shopify-section-{{ section.id }} .main-blog-section {
+    padding-top: {{ section.settings.padding_top }}px;
+    padding-bottom: {{ section.settings.padding_bottom }}px;
+  }
+{%- endstyle -%}
+
+<section class="main-blog-section">
+  <div class="botanical-page-hero">
+    <div class="page-width">
+      <p class="botanical-page-eyebrow">{{ section.settings.eyebrow | escape }}</p>
+      <h1>{{ blog.title | default: section.settings.fallback_heading | escape }}</h1>
+      {%- if section.settings.subtitle != blank -%}
+        <p class="botanical-page-subtitle">{{ section.settings.subtitle | escape }}</p>
+      {%- endif -%}
+    </div>
+  </div>
+
+  <div class="page-width" style="padding-top: 4.5rem;">
+    {%- if blog.all_tags.size > 0 -%}
+      <nav aria-label="{{ 'blogs.blog.all_topics' | t }}" class="tabs-nav" style="margin-bottom: 4rem;">
+        <a
+          href="{{ blog.url }}"
+          class="tab-trigger {% unless current_tags %}is-active{% endunless %}"
+        >
+          {{ 'blogs.blog.all_topics' | t }}
+        </a>
+        {%- for tag in blog.all_tags -%}
+          <a
+            href="{{ blog.url }}/tagged/{{ tag | handle }}"
+            class="tab-trigger {% if current_tags contains tag %}is-active{% endif %}"
+          >
+            {{ tag }}
+          </a>
+        {%- endfor -%}
+      </nav>
+    {%- endif -%}
+
+    {%- paginate blog.articles by section.settings.articles_per_page -%}
+      {%- if blog.articles.size > 0 -%}
+        <div class="blog-grid">
+          {%- for article in blog.articles -%}
+            {%- assign word_count = article.content | strip_html | split: ' ' | size -%}
+            {%- assign read_minutes = word_count | divided_by: 180 | plus: 1 -%}
+            <article class="blog-article-card">
+              <a href="{{ article.url }}" class="blog-article-media">
+                {%- if article.image != blank -%}
+                  {{ article.image | image_url: width: 800 | image_tag:
+                    widths: '400, 600, 800',
+                    alt: article.image.alt | default: article.title,
+                    loading: 'lazy'
+                  }}
+                {%- else -%}
+                  <div style="width: 100%; height: 100%; display: flex; align-items: center; justify-content: center; padding: 2rem; text-align: center; color: var(--color-accent); font-family: var(--font-heading-family); font-size: 2rem;">
+                    Ghosoun Journal
+                  </div>
+                {%- endif -%}
+              </a>
+
+              <div class="blog-article-body">
+                <div class="blog-article-meta">
+                  {%- if section.settings.show_date -%}
+                    <time datetime="{{ article.published_at | date: '%Y-%m-%d' }}">
+                      {{ article.published_at | date: '%b %d, %Y' }}
+                    </time>
+                  {%- endif -%}
+                  {%- if section.settings.show_author -%}
+                    <span> &middot; {{ 'blogs.article.by_author' | t: author: article.author }}</span>
+                  {%- endif -%}
+                  <span> &middot; {{ 'blogs.blog.min_read' | t: minutes: read_minutes }}</span>
+                </div>
+
+                <h2 class="h4" style="margin-bottom: 1rem;">
+                  <a href="{{ article.url }}">{{ article.title | escape }}</a>
+                </h2>
+
+                {%- if article.excerpt_or_content != blank -%}
+                  <p style="font-size: 1.4rem; color: var(--color-text-muted); margin-bottom: 2rem; flex: 1;">
+                    {{ article.excerpt_or_content | strip_html | truncate: 130 }}
+                  </p>
+                {%- endif -%}
+
+                <a href="{{ article.url }}" class="btn btn-secondary btn-sm" style="align-self: flex-start;">
+                  {{ 'blogs.article.read_more' | t }}
+                </a>
+              </div>
+            </article>
+          {%- endfor -%}
+        </div>
+
+        {%- if paginate.pages > 1 -%}
+          <nav aria-label="{{ 'general.pagination.label' | t }}" style="display: flex; justify-content: center; gap: 1.2rem; margin-top: 4.5rem;">
+            {%- if paginate.previous -%}
+              <a href="{{ paginate.previous.url }}" class="btn btn-secondary btn-sm">{{ 'general.pagination.previous' | t }}</a>
+            {%- endif -%}
+            {%- if paginate.next -%}
+              <a href="{{ paginate.next.url }}" class="btn btn-secondary btn-sm">{{ 'general.pagination.next' | t }}</a>
+            {%- endif -%}
+          </nav>
+        {%- endif -%}
+      {%- else -%}
+        <div class="blog-grid">
+          <article class="blog-article-card">
+            <div class="blog-article-media" style="display: flex; align-items: center; justify-content: center; padding: 2rem; text-align: center;">
+              <span class="botanical-page-eyebrow">Botanical Craft</span>
+            </div>
+            <div class="blog-article-body">
+              <div class="blog-article-meta">Ghosoun Journal &middot; {{ 'blogs.blog.min_read' | t: minutes: 4 }}</div>
+              <h2 class="h4" style="margin-bottom: 1rem;">Cold-Pressed vs. Steam-Distilled Botanicals</h2>
+              <p style="font-size: 1.4rem; color: var(--color-text-muted); margin: 0;">Understanding how extraction temperature preserves volatile terpenes in leaves, resins, and seed kernels.</p>
+            </div>
+          </article>
+
+          <article class="blog-article-card">
+            <div class="blog-article-media" style="display: flex; align-items: center; justify-content: center; padding: 2rem; text-align: center;">
+              <span class="botanical-page-eyebrow">Hair &amp; Scalp Rituals</span>
+            </div>
+            <div class="blog-article-body">
+              <div class="blog-article-meta">Ghosoun Journal &middot; {{ 'blogs.blog.min_read' | t: minutes: 4 }}</div>
+              <h2 class="h4" style="margin-bottom: 1rem;">Diluting Rosemary Oil Safely for Scalp Vitality</h2>
+              <p style="font-size: 1.4rem; color: var(--color-text-muted); margin: 0;">Balanced ratios for pairing Rosmarinus officinalis with cold-pressed Jojoba and Argan carrier oils.</p>
+            </div>
+          </article>
+
+          <article class="blog-article-card">
+            <div class="blog-article-media" style="display: flex; align-items: center; justify-content: center; padding: 2rem; text-align: center;">
+              <span class="botanical-page-eyebrow">Home Atmosphere</span>
+            </div>
+            <div class="blog-article-body">
+              <div class="blog-article-meta">Ghosoun Journal &middot; {{ 'blogs.blog.min_read' | t: minutes: 3 }}</div>
+              <h2 class="h4" style="margin-bottom: 1rem;">Choosing Between Ultrasonic Mist &amp; Waterless Nebulizers</h2>
+              <p style="font-size: 1.4rem; color: var(--color-text-muted); margin: 0;">Select the right diffuser architecture for open living spaces, bedrooms, and quiet meditation rooms.</p>
+            </div>
+          </article>
+        </div>
+      {%- endif -%}
+    {%- endpaginate -%}
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Blog Article Grid",
+  "settings": [
+    {
+      "type": "text",
+      "id": "eyebrow",
+      "label": "Eyebrow",
+      "default": "Ghosoun Botanical Journal"
+    },
+    {
+      "type": "text",
+      "id": "fallback_heading",
+      "label": "Fallback Heading",
+      "default": "Aromatherapy & Sourcing Notes"
+    },
+    {
+      "type": "textarea",
+      "id": "subtitle",
+      "label": "Subtitle",
+      "default": "Editorial guides on essential oil dilution, single-origin harvesting, and cold-pressed botanical rituals."
+    },
+    {
+      "type": "range",
+      "id": "articles_per_page",
+      "min": 3,
+      "max": 24,
+      "step": 3,
+      "label": "Articles Per Page",
+      "default": 9
+    },
+    {
+      "type": "checkbox",
+      "id": "show_date",
+      "label": "Show Publish Date",
+      "default": true
+    },
+    {
+      "type": "checkbox",
+      "id": "show_author",
+      "label": "Show Author Name",
+      "default": true
+    },
+    {
+      "type": "range",
+      "id": "padding_top",
+      "min": 0,
+      "max": 100,
+      "step": 4,
+      "unit": "px",
+      "label": "Top Padding",
+      "default": 0
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "min": 0,
+      "max": 120,
+      "step": 4,
+      "unit": "px",
+      "label": "Bottom Padding",
+      "default": 72
+    }
+  ],
+  "presets": [
+    {
+      "name": "Blog Article Grid"
+    }
+  ]
+}
+{% endschema %}

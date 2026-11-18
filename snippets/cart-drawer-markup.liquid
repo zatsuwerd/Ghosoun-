@@ -1,0 +1,68 @@
+{%- comment -%}
+  Renders the <cart-drawer> custom element fallback markup
+  synchronized with sections/cart-drawer.liquid via Shopify Section Rendering API.
+{%- endcomment -%}
+
+{%- assign threshold_amount = settings.free_shipping_threshold | default: 200 -%}
+{%- assign threshold_cents = threshold_amount | times: 100 -%}
+{%- assign remaining_cents = threshold_cents | minus: cart.total_price -%}
+{%- assign progress_pct = cart.total_price | times: 100 | divided_by: threshold_cents -%}
+{%- if progress_pct > 100 -%}
+  {%- assign progress_pct = 100 -%}
+{%- endif -%}
+
+<cart-drawer class="cart-drawer-backdrop" id="CartDrawerBackdrop" aria-hidden="true">
+  <div class="cart-drawer" role="dialog" aria-modal="true" aria-label="{{ 'general.cart.title' | t }}">
+
+    <div class="cart-drawer-header">
+      <h3 class="h4" style="margin: 0;">{{ 'general.cart.title' | t }}</h3>
+      <button type="button" class="header-action-icon" id="CartDrawerClose" data-cart-close aria-label="{{ 'general.accessibility.close' | t }}">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true" focusable="false"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
+      </button>
+    </div>
+
+    <div class="cart-free-shipping">
+      <div id="CartShippingMessage" style="font-size: 1.25rem; font-weight: 500;">
+        {%- if remaining_cents <= 0 -%}
+          {{ 'general.cart.free_shipping_eligible' | t }}
+        {%- else -%}
+          {%- assign formatted_remaining = remaining_cents | money -%}
+          {{ 'general.cart.free_shipping_away' | t: amount: formatted_remaining }}
+        {%- endif -%}
+      </div>
+      <div class="cart-shipping-bar">
+        <div class="cart-shipping-progress" id="CartShippingProgress" style="width: {{ progress_pct }}%;"></div>
+      </div>
+    </div>
+
+    <div class="cart-drawer-items" id="CartDrawerItemList">
+      <div class="product-form-error" role="alert" data-cart-drawer-error hidden></div>
+      {%- if cart.item_count == 0 -%}
+        <div style="text-align: center; padding: 4rem 1rem;">
+          <p style="color: var(--color-text-muted);">{{ 'general.cart.empty' | t }}</p>
+          <a href="{{ routes.all_products_collection_url }}" class="btn btn-primary btn-sm">
+            {{ 'general.cart.continue_shopping' | t }}
+          </a>
+        </div>
+      {%- endif -%}
+    </div>
+
+    <div class="cart-drawer-footer">
+      <div style="display: flex; justify-content: space-between; align-items: baseline; margin-bottom: 1.6rem;">
+        <span style="font-weight: 600; font-size: 1.5rem;">{{ 'general.cart.subtotal' | t }}</span>
+        <span style="font-weight: 700; font-size: 1.8rem;" id="CartDrawerSubtotal">{{ cart.total_price | money }}</span>
+      </div>
+      <div style="display: grid; grid-template-columns: 1fr 1.4fr; gap: 1rem;">
+        <a href="{{ routes.cart_url }}" class="btn btn-secondary" style="padding: 1.2rem;">
+          {{ 'general.cart.view_cart' | t }}
+        </a>
+        <form action="{{ routes.cart_url }}" method="post">
+          <button type="submit" name="checkout" class="btn btn-primary" style="width: 100%; padding: 1.2rem;" {% if cart.item_count == 0 %}disabled{% endif %}>
+            {{ 'general.cart.checkout' | t }}
+          </button>
+        </form>
+      </div>
+    </div>
+
+  </div>
+</cart-drawer>

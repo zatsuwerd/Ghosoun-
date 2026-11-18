@@ -1,0 +1,258 @@
+{%- style -%}
+  #shopify-section-{{ section.id }} {
+    padding-top: {{ section.settings.padding_top }}px;
+    padding-bottom: {{ section.settings.padding_bottom }}px;
+  }
+  .hero-slide-{{ section.id }} {
+    min-height: {{ section.settings.slide_height_desktop }}px;
+  }
+  @media screen and (max-width: 767px) {
+    .hero-slide-{{ section.id }} {
+      min-height: {{ section.settings.slide_height_mobile }}px;
+    }
+  }
+{%- endstyle -%}
+
+<section class="hero-botanical-section" data-section-id="{{ section.id }}" aria-label="{{ section.settings.accessibility_label | escape }}">
+  <hero-slider class="hero-slider-container" role="region" aria-roledescription="carousel">
+    {%- for block in section.blocks -%}
+      {%- assign overlay_alpha = block.settings.overlay_opacity | divided_by: 100.0 -%}
+      <div
+        class="hero-slide hero-slide-{{ section.id }} {% if forloop.first %}is-active{% endif %}"
+        aria-hidden="{% if forloop.first %}false{% else %}true{% endif %}"
+        {{ block.shopify_attributes }}
+      >
+        <div class="hero-media-wrapper">
+          {%- if block.settings.image_desktop != blank -%}
+            <picture>
+              {%- if block.settings.image_mobile != blank -%}
+                <source media="(max-width: 767px)" srcset="{{ block.settings.image_mobile | image_url: width: 900 }}">
+              {%- endif -%}
+              {%- if forloop.first -%}
+                {{ block.settings.image_desktop | image_url: width: 2000 | image_tag:
+                  class: 'hero-bg-img',
+                  widths: '375, 550, 750, 1100, 1500, 2000',
+                  loading: 'eager',
+                  fetchpriority: 'high',
+                  alt: block.settings.image_desktop.alt | default: block.settings.heading | default: shop.name
+                }}
+              {%- else -%}
+                {{ block.settings.image_desktop | image_url: width: 2000 | image_tag:
+                  class: 'hero-bg-img',
+                  widths: '375, 550, 750, 1100, 1500, 2000',
+                  loading: 'lazy',
+                  alt: block.settings.image_desktop.alt | default: block.settings.heading | default: shop.name
+                }}
+              {%- endif -%}
+            </picture>
+          {%- else -%}
+            <div style="width: 100%; height: 100%; background: radial-gradient(circle at 80% 30%, rgba(197, 155, 67, 0.22), transparent 55%), linear-gradient(125deg, #0D2F32 0%, #154B3E 58%, #217C42 100%);"></div>
+          {%- endif -%}
+          <div class="hero-overlay" style="opacity: {{ overlay_alpha }};"></div>
+        </div>
+
+        <div class="page-width hero-content-wrap">
+          <div class="hero-content-box {% if section.settings.text_alignment == 'center' %}align-center{% endif %}">
+            {%- if block.settings.badge_label != blank -%}
+              <span class="badge" style="margin-bottom: 1.6rem; background-color: var(--color-accent); color: #FFFFFF;">
+                {{ block.settings.badge_label | escape }}
+              </span>
+            {%- endif -%}
+
+            {%- if forloop.first -%}
+              <h1 style="color: #FAF9F5; margin-bottom: 1.8rem;">{{ block.settings.heading | escape }}</h1>
+            {%- else -%}
+              <h2 class="h1" style="color: #FAF9F5; margin-bottom: 1.8rem;">{{ block.settings.heading | escape }}</h2>
+            {%- endif -%}
+
+            {%- if block.settings.subtext != blank -%}
+              <p style="font-size: 1.65rem; line-height: 1.65; margin-bottom: 3rem; color: #F2EFE9;">
+                {{ block.settings.subtext | escape }}
+              </p>
+            {%- endif -%}
+
+            <div class="hero-actions">
+              {%- if block.settings.btn_1_text != blank -%}
+                <a href="{{ block.settings.btn_1_link | default: routes.all_products_collection_url }}" class="btn btn-accent">
+                  {{ block.settings.btn_1_text | escape }}
+                </a>
+              {%- endif -%}
+              {%- if block.settings.btn_2_text != blank -%}
+                <a href="{{ block.settings.btn_2_link | default: routes.collections_url }}" class="btn btn-secondary" style="color: #FAF9F5; border-color: rgba(250, 249, 245, 0.72);">
+                  {{ block.settings.btn_2_text | escape }}
+                </a>
+              {%- endif -%}
+            </div>
+          </div>
+        </div>
+      </div>
+    {%- endfor -%}
+
+    {%- if section.blocks.size > 1 -%}
+      <div class="hero-slider-controls page-width">
+        <div class="hero-slider-dots">
+          {%- for block in section.blocks -%}
+            <button
+              type="button"
+              class="hero-dot-btn {% if forloop.first %}is-active{% endif %}"
+              data-hero-dot
+              aria-label="{{ 'sections.hero.go_to_slide' | t: number: forloop.index }}"
+              aria-current="{% if forloop.first %}true{% else %}false{% endif %}"
+            ></button>
+          {%- endfor -%}
+        </div>
+        <div class="hero-slider-arrows">
+          <button type="button" class="hero-arrow-btn" data-hero-prev aria-label="{{ 'sections.hero.previous_slide' | t }}">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><polyline points="15 18 9 12 15 6"/></svg>
+          </button>
+          <button type="button" class="hero-arrow-btn" data-hero-next aria-label="{{ 'sections.hero.next_slide' | t }}">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><polyline points="9 18 15 12 9 6"/></svg>
+          </button>
+        </div>
+      </div>
+    {%- endif -%}
+  </hero-slider>
+</section>
+
+{% schema %}
+{
+  "name": "Botanical Hero Slideshow",
+  "max_blocks": 4,
+  "settings": [
+    {
+      "type": "text",
+      "id": "accessibility_label",
+      "label": "Slideshow Accessibility Label",
+      "default": "Ghosoun Featured Botanical Collections"
+    },
+    {
+      "type": "select",
+      "id": "text_alignment",
+      "label": "Content Alignment",
+      "options": [
+        { "value": "start", "label": "Start (LTR Left / RTL Right)" },
+        { "value": "center", "label": "Centered" }
+      ],
+      "default": "start"
+    },
+    {
+      "type": "range",
+      "id": "slide_height_desktop",
+      "min": 440,
+      "max": 840,
+      "step": 20,
+      "unit": "px",
+      "label": "Desktop Height",
+      "default": 620
+    },
+    {
+      "type": "range",
+      "id": "slide_height_mobile",
+      "min": 360,
+      "max": 640,
+      "step": 20,
+      "unit": "px",
+      "label": "Mobile Height",
+      "default": 480
+    },
+    {
+      "type": "range",
+      "id": "padding_top",
+      "min": 0,
+      "max": 100,
+      "step": 4,
+      "unit": "px",
+      "label": "Top Padding",
+      "default": 0
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "min": 0,
+      "max": 100,
+      "step": 4,
+      "unit": "px",
+      "label": "Bottom Padding",
+      "default": 0
+    }
+  ],
+  "blocks": [
+    {
+      "type": "slide",
+      "name": "Botanical Slide",
+      "settings": [
+        {
+          "type": "image_picker",
+          "id": "image_desktop",
+          "label": "Desktop Image"
+        },
+        {
+          "type": "image_picker",
+          "id": "image_mobile",
+          "label": "Mobile Image (Optional)"
+        },
+        {
+          "type": "range",
+          "id": "overlay_opacity",
+          "min": 10,
+          "max": 100,
+          "step": 5,
+          "unit": "%",
+          "label": "Overlay Opacity",
+          "default": 85
+        },
+        {
+          "type": "text",
+          "id": "badge_label",
+          "label": "Pre-Title Badge",
+          "default": "Ghosoun · غصون"
+        },
+        {
+          "type": "text",
+          "id": "heading",
+          "label": "Slide Title",
+          "default": "Pure Botanical Oils, Rooted in Natural Origin"
+        },
+        {
+          "type": "textarea",
+          "id": "subtext",
+          "label": "Slide Description",
+          "default": "Single-origin essential and cold-pressed carrier oils crafted for mindful skin, hair, and home aromatherapy rituals."
+        },
+        {
+          "type": "text",
+          "id": "btn_1_text",
+          "label": "Primary Button Text",
+          "default": "Shop All Botanicals"
+        },
+        {
+          "type": "url",
+          "id": "btn_1_link",
+          "label": "Primary Button Link"
+        },
+        {
+          "type": "text",
+          "id": "btn_2_text",
+          "label": "Secondary Button Text",
+          "default": "Explore Collections"
+        },
+        {
+          "type": "url",
+          "id": "btn_2_link",
+          "label": "Secondary Button Link"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Botanical Hero Slideshow",
+      "blocks": [
+        {
+          "type": "slide"
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}

@@ -1,0 +1,181 @@
+{%- style -%}
+  #shopify-section-{{ section.id }} .featured-collections-section {
+    padding-top: {{ section.settings.padding_top }}px;
+    padding-bottom: {{ section.settings.padding_bottom }}px;
+  }
+{%- endstyle -%}
+
+<section class="featured-collections-section" aria-labelledby="FeaturedCollectionsHeading-{{ section.id }}">
+  <div class="page-width">
+    <div style="display: flex; flex-wrap: wrap; align-items: flex-end; justify-content: space-between; gap: 1.6rem; margin-bottom: 3.6rem;">
+      <div>
+        {%- if section.settings.eyebrow != blank -%}
+          <p class="botanical-page-eyebrow" style="margin-bottom: 0.6rem;">{{ section.settings.eyebrow | escape }}</p>
+        {%- endif -%}
+        <h2 id="FeaturedCollectionsHeading-{{ section.id }}" style="margin-bottom: 0;">{{ section.settings.heading | escape }}</h2>
+      </div>
+      {%- if section.settings.view_all_label != blank -%}
+        <a href="{{ routes.collections_url }}" class="btn btn-secondary btn-sm">
+          {{ section.settings.view_all_label | escape }}
+        </a>
+      {%- endif -%}
+    </div>
+
+    <div class="botanical-grid-3">
+      {%- for block in section.blocks -%}
+        {%- liquid
+          assign col_obj = collections[block.settings.collection]
+          assign col_title = block.settings.title
+          if col_title == blank and col_obj != blank
+            assign col_title = col_obj.title
+          endif
+          assign col_desc = block.settings.description
+          if col_desc == blank and col_obj != blank
+            assign col_desc = col_obj.description | strip_html | truncate: 110
+          endif
+          assign col_url = col_obj.url | default: block.settings.custom_url | default: routes.collections_url
+          assign col_img = block.settings.image | default: col_obj.featured_image
+        -%}
+        <article class="category-card" {{ block.shopify_attributes }}>
+          <a href="{{ col_url }}" class="category-card-media">
+            {%- if col_img != blank -%}
+              {{ col_img | image_url: width: 900 | image_tag:
+                widths: '400, 700, 900',
+                sizes: '(min-width: 1024px) 33vw, (min-width: 768px) 50vw, 100vw',
+                alt: col_img.alt | default: col_title,
+                loading: 'lazy'
+              }}
+            {%- else -%}
+              <div style="width: 100%; height: 100%; display: flex; align-items: center; justify-content: center; background: linear-gradient(135deg, var(--color-primary), #174B4E); color: #FAF9F5; padding: 2.4rem; text-align: center;">
+                <span style="font-family: var(--font-heading-family); font-size: 2.4rem;">{{ col_title | escape }}</span>
+              </div>
+            {%- endif -%}
+          </a>
+
+          <div class="category-card-body">
+            <h3 class="h3" style="margin-bottom: 0.8rem;">
+              <a href="{{ col_url }}">{{ col_title | escape }}</a>
+            </h3>
+            {%- if col_desc != blank -%}
+              <p style="font-size: 1.4rem; color: var(--color-text-muted); margin-bottom: 1.8rem;">
+                {{ col_desc | escape }}
+              </p>
+            {%- endif -%}
+            <a href="{{ col_url }}" class="btn btn-secondary btn-sm" style="align-self: flex-start; margin-top: auto;">
+              {{ 'collections.general.view_collection' | t }}
+            </a>
+          </div>
+        </article>
+      {%- endfor -%}
+    </div>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Featured Collections",
+  "settings": [
+    {
+      "type": "text",
+      "id": "eyebrow",
+      "label": "Eyebrow",
+      "default": "Botanical Families"
+    },
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Heading",
+      "default": "Signature Ghosoun Collections"
+    },
+    {
+      "type": "text",
+      "id": "view_all_label",
+      "label": "View All Button Label",
+      "default": "Browse All Collections"
+    },
+    {
+      "type": "range",
+      "id": "padding_top",
+      "min": 0,
+      "max": 100,
+      "step": 4,
+      "unit": "px",
+      "label": "Top Padding",
+      "default": 56
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "min": 0,
+      "max": 100,
+      "step": 4,
+      "unit": "px",
+      "label": "Bottom Padding",
+      "default": 56
+    }
+  ],
+  "blocks": [
+    {
+      "type": "featured_collection",
+      "name": "Collection Card",
+      "settings": [
+        {
+          "type": "collection",
+          "id": "collection",
+          "label": "Collection"
+        },
+        {
+          "type": "image_picker",
+          "id": "image",
+          "label": "Custom Cover Image"
+        },
+        {
+          "type": "text",
+          "id": "title",
+          "label": "Title",
+          "default": "Pure Essential Oils"
+        },
+        {
+          "type": "textarea",
+          "id": "description",
+          "label": "Short Description",
+          "default": "Single-origin oils steam-distilled from wild and organic harvests."
+        },
+        {
+          "type": "url",
+          "id": "custom_url",
+          "label": "Fallback URL"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Featured Collections",
+      "blocks": [
+        {
+          "type": "featured_collection",
+          "settings": {
+            "title": "Single-Origin Essential Oils",
+            "description": "Wild-harvested rosemary, high-altitude lavender, and sacred Omani frankincense resin."
+          }
+        },
+        {
+          "type": "featured_collection",
+          "settings": {
+            "title": "First-Press Carrier Oils",
+            "description": "Cold-pressed argan, rosehip seed, golden jojoba, and nigella seed botanicals."
+          }
+        },
+        {
+          "type": "featured_collection",
+          "settings": {
+            "title": "Artisan Diffusers & Rituals",
+            "description": "Matte ceramic ultrasonic diffusers and cold-air waterless nebulizers."
+          }
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}

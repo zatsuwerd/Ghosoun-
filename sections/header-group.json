@@ -1,0 +1,54 @@
+{
+  "name": "Header Group",
+  "type": "header",
+  "sections": {
+    "announcement_bar": {
+      "type": "announcement-bar",
+      "blocks": {
+        "notice_1": {
+          "type": "announcement",
+          "settings": {
+            "text": "Ghosoun Botanicals · Single-Origin Oils & Natural Skincare",
+            "icon": "leaf",
+            "link": ""
+          }
+        },
+        "notice_2": {
+          "type": "announcement",
+          "settings": {
+            "text": "Cold-Pressed & Steam-Distilled · Dark UV-Shielded Glass",
+            "icon": "droplet",
+            "link": "/pages/why-choose-our-products"
+          }
+        }
+      },
+      "block_order": [
+        "notice_1",
+        "notice_2"
+      ],
+      "settings": {
+        "bg_color": "#0D2F32",
+        "text_color": "#FAF9F5",
+        "padding_top": 8,
+        "padding_bottom": 8
+      }
+    },
+    "header": {
+      "type": "header",
+      "settings": {
+        "logo_width": 150,
+        "menu": "main-menu",
+        "enable_sticky": true,
+        "transparent_on_home": false,
+        "enable_predictive_search": true,
+        "show_language_selector": true,
+        "padding_top": 12,
+        "padding_bottom": 12
+      }
+    }
+  },
+  "order": [
+    "announcement_bar",
+    "header"
+  ]
+}

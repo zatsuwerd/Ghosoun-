@@ -1,0 +1,376 @@
+{%- style -%}
+  #shopify-section-{{ section.id }} .site-header {
+    padding-top: {{ section.settings.padding_top }}px;
+    padding-bottom: {{ section.settings.padding_bottom }}px;
+  }
+  #shopify-section-{{ section.id }} .header-logo-img {
+    max-width: {{ section.settings.logo_width }}px;
+  }
+{%- endstyle -%}
+
+<header
+  class="site-header {% if section.settings.enable_sticky %}is-sticky{% endif %} {% if section.settings.transparent_on_home and template.name == 'index' %}is-transparent-home{% endif %}"
+  data-section-id="{{ section.id }}"
+>
+  <div class="page-width header-inner">
+
+    <!-- Mobile Navigation Web Component -->
+    <header-drawer>
+      <button
+        type="button"
+        class="header-action-icon mobile-menu-toggle"
+        aria-label="{{ 'general.accessibility.menu' | t }}"
+        aria-controls="MobileNavDrawer"
+        aria-expanded="false"
+      >
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" aria-hidden="true" focusable="false"><line x1="3" y1="12" x2="21" y2="12"></line><line x1="3" y1="6" x2="21" y2="6"></line><line x1="3" y1="18" x2="21" y2="18"></line></svg>
+      </button>
+
+      <div id="MobileNavDrawer" class="cart-drawer-backdrop" role="dialog" aria-modal="true" aria-label="{{ 'general.accessibility.menu' | t }}" aria-hidden="true" style="z-index: 1002;">
+        <div class="cart-drawer mobile-drawer-panel">
+          <div class="cart-drawer-header">
+            <span class="h4" style="margin: 0;">{{ shop.name }}</span>
+            <button type="button" class="header-action-icon" data-drawer-close aria-label="{{ 'general.accessibility.close' | t }}">&times;</button>
+          </div>
+
+          <div class="mobile-drawer-search">
+            <form action="{{ routes.search_url }}" method="get" role="search" class="mobile-drawer-search-form">
+              <label for="MobileDrawerSearchInput-{{ section.id }}" class="visually-hidden">{{ 'general.search.title' | t }}</label>
+              <input
+                id="MobileDrawerSearchInput-{{ section.id }}"
+                type="search"
+                name="q"
+                placeholder="{{ 'general.search.placeholder' | t }}"
+                autocomplete="off"
+              />
+              <button type="submit" class="btn btn-primary btn-sm">{{ 'general.search.submit' | t }}</button>
+            </form>
+          </div>
+
+          <div class="cart-drawer-items">
+            <ul class="mobile-drawer-list">
+              {%- if section.settings.menu.links != blank -%}
+                {%- for link in section.settings.menu.links -%}
+                  <li class="mobile-drawer-item">
+                    {%- if link.links != blank -%}
+                      <details class="mobile-drawer-accordion">
+                        <summary class="mobile-drawer-link-row">
+                          <span>{{ link.title }}</span>
+                          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true" focusable="false"><polyline points="6 9 12 15 18 9"></polyline></svg>
+                        </summary>
+                        <ul class="mobile-drawer-sublist">
+                          <li><a href="{{ link.url }}">{{ 'collections.general.all_of_collection' | t: title: link.title }}</a></li>
+                          {%- for sub_link in link.links -%}
+                            <li><a href="{{ sub_link.url }}">{{ sub_link.title }}</a></li>
+                          {%- endfor -%}
+                        </ul>
+                      </details>
+                    {%- else -%}
+                      <a href="{{ link.url }}" class="mobile-drawer-link">{{ link.title }}</a>
+                    {%- endif -%}
+                  </li>
+                {%- endfor -%}
+              {%- else -%}
+                <li class="mobile-drawer-item"><a href="{{ routes.all_products_collection_url }}" class="mobile-drawer-link">{{ 'sections.header.shop_all' | t }}</a></li>
+                <li class="mobile-drawer-item"><a href="{{ routes.collections_url }}" class="mobile-drawer-link">{{ 'collections.general.catalog_title' | t }}</a></li>
+              {%- endif -%}
+            </ul>
+
+            {%- if section.settings.show_language_selector and localization.available_languages.size > 1 -%}
+              <localization-form style="display: block; margin-top: 2.4rem; padding-top: 1.8rem; border-top: 1px solid var(--color-border);">
+                {%- form 'localization', id: 'MobileHeaderLanguageForm' -%}
+                  <label for="MobileLanguageSelect-{{ section.id }}" class="section-eyebrow" style="margin-bottom: 0.6rem;">
+                    {{ 'general.language.label' | t }}
+                  </label>
+                  <select id="MobileLanguageSelect-{{ section.id }}" name="locale_code">
+                    {%- for language in localization.available_languages -%}
+                      <option value="{{ language.iso_code }}" {% if language.iso_code == localization.language.iso_code %}selected{% endif %}>
+                        {{ language.endonym_name | capitalize }}
+                      </option>
+                    {%- endfor -%}
+                  </select>
+                {%- endform -%}
+              </localization-form>
+            {%- endif -%}
+          </div>
+        </div>
+      </div>
+    </header-drawer>
+
+    <!-- Brand Logo (Uses Merchant Upload or Authentic Ghosoun Brand Mark Asset) -->
+    <div class="header-logo">
+      <a href="{{ routes.root_url }}" class="header-logo-link" aria-label="{{ shop.name }}">
+        {%- if section.settings.logo != blank -%}
+          {{ section.settings.logo | image_url: width: 400 | image_tag:
+            class: 'header-logo-img',
+            widths: '160, 240, 320, 400',
+            alt: shop.name,
+            loading: 'eager'
+          }}
+        {%- else -%}
+          <img
+            src="{{ 'ghosoun-logo.jpg' | asset_url }}"
+            alt="{{ shop.name }}"
+            class="header-logo-img"
+            width="{{ section.settings.logo_width }}"
+            height="{{ section.settings.logo_width }}"
+            loading="eager"
+          >
+        {%- endif -%}
+      </a>
+    </div>
+
+    <!-- Desktop Navigation with Accessible Click + Hover Mega Menus -->
+    <mega-menu class="header-nav" role="navigation" aria-label="Main Navigation">
+      <ul class="header-menu-list">
+        {%- if section.settings.menu.links != blank -%}
+          {%- for link in section.settings.menu.links -%}
+            {%- assign mega_block = null -%}
+            {%- for block in section.blocks -%}
+              {%- assign block_title = block.settings.dropdown_trigger_title | downcase | strip -%}
+              {%- assign current_title = link.title | downcase | strip -%}
+              {%- if block_title == current_title and block_title != blank -%}
+                {%- assign mega_block = block -%}
+                {%- break -%}
+              {%- endif -%}
+            {%- endfor -%}
+
+            <li class="header-menu-item {% if link.active %}is-current{% endif %}">
+              <a
+                href="{{ link.url }}"
+                class="header-menu-link"
+                {% if link.active %}aria-current="page"{% endif %}
+                {% if link.links != blank or mega_block != blank %}
+                  aria-expanded="false"
+                  aria-controls="MegaMenuPanel-{{ forloop.index }}"
+                  data-mega-trigger
+                {% endif %}
+              >
+                <span>{{ link.title }}</span>
+                {%- if link.links != blank or mega_block != blank -%}
+                  <svg width="10" height="6" viewBox="0 0 10 6" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true" focusable="false"><path d="M1 1L5 5L9 1"/></svg>
+                {%- endif -%}
+              </a>
+
+              {%- if link.links != blank or mega_block != blank -%}
+                <div class="mega-menu-panel {% if link.links.size <= 1 and mega_block == blank %}is-compact{% endif %}" id="MegaMenuPanel-{{ forloop.index }}" {% if mega_block != blank %}{{ mega_block.shopify_attributes }}{% endif %}>
+                  {%- if link.links != blank -%}
+                    {%- for sub_link in link.links -%}
+                      <div class="mega-menu-col">
+                        <a href="{{ sub_link.url }}" class="mega-menu-column-heading">{{ sub_link.title }}</a>
+                        {%- if sub_link.links != blank -%}
+                          <ul class="mega-menu-list">
+                            {%- for child_link in sub_link.links -%}
+                              <li><a href="{{ child_link.url }}" class="mega-menu-link">{{ child_link.title }}</a></li>
+                            {%- endfor -%}
+                          </ul>
+                        {%- endif -%}
+                      </div>
+                    {%- endfor -%}
+                  {%- endif -%}
+
+                  {%- if mega_block != blank and mega_block.settings.featured_collection != blank -%}
+                    {%- assign feat_coll = mega_block.settings.featured_collection -%}
+                    <div class="mega-menu-col mega-featured-col">
+                      <div class="mega-menu-column-heading">{{ feat_coll.title }}</div>
+                      {%- if feat_coll.featured_image != blank -%}
+                        <a href="{{ feat_coll.url }}">
+                          {{ feat_coll.featured_image | image_url: width: 600 | image_tag:
+                            class: 'mega-menu-image',
+                            widths: '300, 450, 600',
+                            alt: feat_coll.title,
+                            loading: 'lazy'
+                          }}
+                        </a>
+                      {%- endif -%}
+                      <p class="mega-featured-desc">{{ feat_coll.description | strip_html | truncate: 75 }}</p>
+                    </div>
+                  {%- endif -%}
+                </div>
+              {%- endif -%}
+            </li>
+          {%- endfor -%}
+        {%- else -%}
+          <li class="header-menu-item"><a href="{{ routes.all_products_collection_url }}" class="header-menu-link">{{ 'sections.header.shop_all' | t }}</a></li>
+          <li class="header-menu-item"><a href="{{ routes.collections_url }}" class="header-menu-link">{{ 'collections.general.catalog_title' | t }}</a></li>
+        {%- endif -%}
+      </ul>
+    </mega-menu>
+
+    <!-- Header Actions (Language Switcher, Search, Account, Cart) -->
+    <div class="header-actions">
+      {%- if section.settings.show_language_selector and localization.available_languages.size > 1 -%}
+        <localization-form class="header-localization-desktop">
+          {%- form 'localization', id: 'HeaderLanguageForm' -%}
+            <label for="HeaderLanguageSelect-{{ section.id }}" class="visually-hidden">{{ 'general.language.label' | t }}</label>
+            <select id="HeaderLanguageSelect-{{ section.id }}" name="locale_code" class="localization-select">
+              {%- for language in localization.available_languages -%}
+                <option value="{{ language.iso_code }}" {% if language.iso_code == localization.language.iso_code %}selected{% endif %}>
+                  {{ language.iso_code | upcase }}
+                </option>
+              {%- endfor -%}
+            </select>
+          {%- endform -%}
+        </localization-form>
+      {%- endif -%}
+
+      {%- if section.settings.enable_predictive_search -%}
+        <header-search>
+          <button
+            type="button"
+            class="header-action-icon"
+            data-search-open
+            aria-label="{{ 'general.accessibility.search' | t }}"
+            aria-controls="HeaderSearchOverlay-{{ section.id }}"
+            aria-expanded="false"
+          >
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" aria-hidden="true" focusable="false"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
+          </button>
+
+          <div id="HeaderSearchOverlay-{{ section.id }}" class="header-search-overlay" role="dialog" aria-modal="true" aria-label="{{ 'general.search.title' | t }}" hidden>
+            <div class="page-width header-search-inner">
+              <form action="{{ routes.search_url }}" method="get" role="search" class="header-search-form">
+                <label for="HeaderSearchInput-{{ section.id }}" class="visually-hidden">{{ 'general.search.title' | t }}</label>
+                <svg class="header-search-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true" focusable="false"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
+                <input
+                  id="HeaderSearchInput-{{ section.id }}"
+                  type="search"
+                  name="q"
+                  value="{{ search.terms | escape }}"
+                  placeholder="{{ 'sections.header.search_placeholder' | t }}"
+                  autocomplete="off"
+                  data-search-input
+                />
+                <button type="submit" class="btn btn-primary btn-sm">{{ 'general.search.submit' | t }}</button>
+                <button type="button" class="header-action-icon" data-search-close aria-label="{{ 'general.accessibility.close' | t }}">&times;</button>
+              </form>
+              <div class="header-search-results" data-search-results>
+                <div class="header-search-popular">
+                  <span class="header-search-popular-label">{{ 'general.search.popular_label' | t }}:</span>
+                  <a href="{{ routes.search_url }}?q=Rosemary">Rosemary</a>
+                  <a href="{{ routes.search_url }}?q=Frankincense">Frankincense</a>
+                  <a href="{{ routes.search_url }}?q=Argan">Argan Oil</a>
+                  <a href="{{ routes.search_url }}?q=Lavender">Lavender</a>
+                  <a href="{{ routes.search_url }}?q=Diffuser">Diffuser</a>
+                </div>
+              </div>
+            </div>
+          </div>
+        </header-search>
+      {%- else -%}
+        <a href="{{ routes.search_url }}" class="header-action-icon" aria-label="{{ 'general.accessibility.search' | t }}">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" aria-hidden="true" focusable="false"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
+        </a>
+      {%- endif -%}
+
+      {%- if shop.customer_accounts_enabled -%}
+        <a href="{% if customer %}{{ routes.account_url }}{% else %}{{ routes.account_login_url }}{% endif %}" class="header-action-icon" aria-label="{{ 'sections.header.account' | t }}">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" aria-hidden="true" focusable="false"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg>
+        </a>
+      {%- endif -%}
+
+      <a href="{{ routes.cart_url }}" class="header-action-icon cart-trigger" id="CartTrigger" aria-label="{{ 'general.accessibility.cart' | t }}" aria-controls="CartDrawerBackdrop" aria-expanded="false">
+        <svg width="21" height="21" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" aria-hidden="true" focusable="false"><path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"></path><line x1="3" y1="6" x2="21" y2="6"></line><path d="M16 10a4 4 0 0 1-8 0"></path></svg>
+        <span class="cart-count-badge" id="CartItemCount">{{ cart.item_count }}</span>
+      </a>
+    </div>
+
+  </div>
+</header>
+
+{% schema %}
+{
+  "name": "Header",
+  "settings": [
+    {
+      "type": "image_picker",
+      "id": "logo",
+      "label": "Brand Logo"
+    },
+    {
+      "type": "range",
+      "id": "logo_width",
+      "min": 80,
+      "max": 260,
+      "step": 10,
+      "unit": "px",
+      "label": "Logo Width",
+      "default": 150
+    },
+    {
+      "type": "link_list",
+      "id": "menu",
+      "label": "Primary Navigation",
+      "default": "main-menu"
+    },
+    {
+      "type": "checkbox",
+      "id": "enable_sticky",
+      "label": "Enable Sticky Header",
+      "default": true
+    },
+    {
+      "type": "checkbox",
+      "id": "transparent_on_home",
+      "label": "Translucent Header Over Top of Home Page",
+      "default": false
+    },
+    {
+      "type": "checkbox",
+      "id": "enable_predictive_search",
+      "label": "Enable Header Quick Search Bar",
+      "default": true
+    },
+    {
+      "type": "checkbox",
+      "id": "show_language_selector",
+      "label": "Show Language Switcher (when 2+ languages are published)",
+      "default": true
+    },
+    {
+      "type": "range",
+      "id": "padding_top",
+      "min": 4,
+      "max": 36,
+      "step": 2,
+      "unit": "px",
+      "label": "Top Padding",
+      "default": 12
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "min": 4,
+      "max": 36,
+      "step": 2,
+      "unit": "px",
+      "label": "Bottom Padding",
+      "default": 12
+    }
+  ],
+  "blocks": [
+    {
+      "type": "mega_menu",
+      "name": "Mega Menu Dropdown",
+      "settings": [
+        {
+          "type": "text",
+          "id": "dropdown_trigger_title",
+          "label": "Menu Item Title to Attach",
+          "info": "Match navigation name exactly, e.g. Essential Oils"
+        },
+        {
+          "type": "collection",
+          "id": "featured_collection",
+          "label": "Featured Collection Spotlight"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Header"
+    }
+  ]
+}
+{% endschema %}

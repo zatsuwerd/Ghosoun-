@@ -1,0 +1,165 @@
+{%- liquid
+  assign is_rtl = false
+  if request.locale.iso_code == 'ar' or request.locale.iso_code == 'he' or request.locale.iso_code == 'fa' or request.locale.iso_code == 'ur'
+    assign is_rtl = true
+  endif
+-%}
+<!doctype html>
+<html class="no-js" lang="{{ request.locale.iso_code }}" dir="{% if is_rtl %}rtl{% else %}ltr{% endif %}">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <meta name="theme-color" content="{{ settings.color_primary }}">
+    <link rel="canonical" href="{{ canonical_url }}">
+    <link rel="preconnect" href="https://cdn.shopify.com" crossorigin>
+
+    {%- if settings.font_heading != blank or settings.font_body != blank -%}
+      <link rel="preconnect" href="https://fonts.shopifycdn.com" crossorigin>
+    {%- endif -%}
+
+    {%- if is_rtl -%}
+      <link rel="preconnect" href="https://fonts.googleapis.com">
+      <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+      <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;500;600;700&display=swap" rel="stylesheet">
+    {%- endif -%}
+
+    <title>
+      {{ page_title }}
+      {%- if current_tags %} &ndash; tagged "{{ current_tags | join: ', ' }}"{% endif -%}
+      {%- if current_page != 1 %} &ndash; Page {{ current_page }}{% endif -%}
+      {%- unless page_title contains shop.name %} &ndash; {{ shop.name }}{% endunless -%}
+    </title>
+
+    {%- if page_description -%}
+      <meta name="description" content="{{ page_description | escape }}">
+    {%- endif -%}
+
+    {% render 'social-meta-tags' %}
+    {% render 'structured-data' %}
+
+    {{ content_for_header }}
+
+    {%- style -%}
+      {{ settings.font_heading | font_face: font_display: 'swap' }}
+      {{ settings.font_body | font_face: font_display: 'swap' }}
+      {{ settings.font_nav | font_face: font_display: 'swap' }}
+      {{ settings.font_button | font_face: font_display: 'swap' }}
+
+      {%- assign font_body_bold = settings.font_body | font_modify: 'weight', 'bold' -%}
+      {%- if font_body_bold -%}
+        {{ font_body_bold | font_face: font_display: 'swap' }}
+      {%- endif -%}
+
+      :root {
+        --color-bg: {{ settings.color_bg }};
+        --color-bg-secondary: {{ settings.color_bg_secondary }};
+        --color-card-bg: {{ settings.color_card_bg }};
+        --color-primary: {{ settings.color_primary }};
+        --color-secondary: {{ settings.color_secondary }};
+        --color-accent: {{ settings.color_accent }};
+        --color-heading: {{ settings.color_heading }};
+        --color-text: {{ settings.color_text }};
+        --color-text-muted: {{ settings.color_text_muted }};
+        --color-border: {{ settings.color_border }};
+        --color-header-bg: {{ settings.color_header_bg }};
+        --color-header-text: {{ settings.color_header_text }};
+        --color-footer-bg: {{ settings.color_footer_bg }};
+        --color-footer-text: {{ settings.color_footer_text }};
+        --color-btn-bg: {{ settings.color_btn_bg }};
+        --color-btn-text: {{ settings.color_btn_text }};
+        --color-btn-hover-bg: {{ settings.color_btn_hover_bg }};
+        --color-btn-hover-text: {{ settings.color_btn_hover_text }};
+        --color-badge-bg: {{ settings.color_badge_bg }};
+        --color-badge-text: {{ settings.color_badge_text }};
+        --color-sale-badge: {{ settings.color_sale_badge }};
+        --color-violet-glass: {{ settings.color_violet_glass }};
+
+        --font-heading-family: {{ settings.font_heading.family }}, {{ settings.font_heading.fallback_families }};
+        --font-heading-weight: {{ settings.font_heading.weight }};
+        --font-heading-style: {{ settings.font_heading.style }};
+        --font-heading-scale: {{ settings.heading_scale | divided_by: 100.0 }};
+        --font-heading-scale-mobile: {{ settings.heading_scale_mobile | divided_by: 100.0 }};
+        --heading-line-height: {{ settings.heading_line_height_pct | divided_by: 100.0 }};
+        --heading-letter-spacing: {{ settings.heading_letter_spacing | times: 0.01 }}em;
+        --heading-transform: {{ settings.heading_transform }};
+
+        --font-body-family: {% if is_rtl %}'Cairo', 'Tajawal', {% endif %}{{ settings.font_body.family }}, {{ settings.font_body.fallback_families }};
+        --font-body-weight: {{ settings.font_body.weight }};
+        --font-body-style: {{ settings.font_body.style }};
+        --font-body-scale: {{ settings.body_scale | divided_by: 100.0 }};
+        --base-font-size: {{ settings.base_font_size }}px;
+        --body-line-height: {{ settings.body_line_height_pct | divided_by: 100.0 }};
+
+        --font-nav-family: {% if is_rtl %}'Cairo', 'Tajawal', {% endif %}{{ settings.font_nav.family }}, {{ settings.font_nav.fallback_families }};
+        --font-nav-weight: {{ settings.font_nav.weight }};
+        --font-button-family: {% if is_rtl %}'Cairo', 'Tajawal', {% endif %}{{ settings.font_button.family }}, {{ settings.font_button.fallback_families }};
+        --font-button-weight: {{ settings.font_button.weight }};
+        --button-transform: {{ settings.button_transform }};
+
+        --page-width: {{ settings.page_width }}px;
+        --container-padding-desktop: {{ settings.container_padding_desktop }}px;
+        --container-padding-mobile: {{ settings.container_padding_mobile }}px;
+        --grid-gap: {{ settings.grid_gap }}px;
+        --section-spacing: {{ settings.section_spacing }}px;
+        --section-spacing-mobile: {{ settings.section_spacing_mobile }}px;
+        --btn-radius: {{ settings.button_border_radius }}px;
+        --btn-border-width: {{ settings.button_border_width }}px;
+        --input-radius: {{ settings.input_border_radius }}px;
+        --card-radius: {{ settings.card_border_radius }}px;
+        --image-radius: {{ settings.image_border_radius }}px;
+        --card-border-width: {{ settings.card_border_width }}px;
+        --card-shadow-alpha: {{ settings.card_shadow_opacity | divided_by: 100.0 }};
+        --icon-size: {{ settings.icon_size }}px;
+        --free-shipping-threshold: {{ settings.free_shipping_threshold | default: 200 }};
+      }
+    {%- endstyle -%}
+
+    {{ 'base.css' | asset_url | stylesheet_tag }}
+
+    <script>
+      document.documentElement.className = document.documentElement.className.replace('no-js', 'js');
+      window.theme = {
+        moneyFormat: {{ shop.money_format | json }},
+        locale: {{ request.locale.iso_code | json }},
+        rtl: {{ is_rtl | json }},
+        animationsEnabled: {{ settings.enable_animations | json }},
+        freeShippingThreshold: {{ settings.free_shipping_threshold | default: 200 }},
+        translations: {
+          freeShippingAway: {{ 'general.cart.free_shipping_away' | t | json }},
+          freeShippingEligible: {{ 'general.cart.free_shipping_eligible' | t | json }},
+          addToCart: {{ 'products.product.add_to_cart' | t | json }},
+          adding: {{ 'products.product.adding' | t | json }},
+          soldOut: {{ 'products.product.sold_out' | t | json }},
+          addError: {{ 'general.cart.add_error' | t | json }},
+          skuLabel: {{ 'products.product.sku' | t | json }},
+          searchNoResults: {{ 'general.search.no_results' | t: terms: '__TERMS__' | json }},
+          wishlistEmpty: {{ 'general.wishlist.empty' | t | json }},
+          wishlistExplore: {{ 'general.wishlist.explore' | t | json }},
+          wishlistRemove: {{ 'general.wishlist.remove' | t | json }},
+          invalidEmail: {{ 'sections.newsletter_popup.invalid_email' | t | json }}
+        }
+      };
+    </script>
+  </head>
+
+  <body class="template-{{ template.name | handle }}{% unless settings.enable_animations %} animations-disabled{% endunless %}">
+    <a class="skip-to-content visually-hidden" href="#MainContent">
+      {{ 'general.accessibility.skip_to_content' | t }}
+    </a>
+
+    {% sections 'header-group' %}
+
+    <main id="MainContent" class="focus-none" role="main" tabindex="-1">
+      {{ content_for_layout }}
+    </main>
+
+    {% sections 'footer-group' %}
+
+    {%- if settings.cart_type == 'drawer' -%}
+      {% section 'cart-drawer' %}
+    {%- endif -%}
+
+    <script src="{{ 'theme.js' | asset_url }}" defer="defer"></script>
+  </body>
+</html>

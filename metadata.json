@@ -1,0 +1,6 @@
+{
+  "name": "Aroma Tierra — Shopify OS 2.0 Theme",
+  "description": "Complete production-ready Shopify Online Store 2.0 theme for Aroma Tierra organic essential oils, carrier oils, and botanical skincare.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}

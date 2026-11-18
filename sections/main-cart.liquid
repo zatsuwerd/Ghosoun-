@@ -1,0 +1,265 @@
+{%- style -%}
+  #shopify-section-{{ section.id }} {
+    padding-top: {{ section.settings.padding_top }}px;
+    padding-bottom: {{ section.settings.padding_bottom }}px;
+  }
+
+  .cart-page-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 4rem;
+    align-items: start;
+  }
+
+  @media screen and (min-width: 990px) {
+    .cart-page-grid {
+      grid-template-columns: 1.5fr 0.9fr;
+    }
+  }
+
+  .cart-table {
+    width: 100%;
+    border-collapse: collapse;
+    background-color: var(--color-card-bg, #FFFFFF);
+    border: 1px solid var(--color-border);
+    border-radius: var(--card-radius, 6px);
+    overflow: hidden;
+  }
+
+  .cart-table th {
+    text-align: start;
+    padding: 1.6rem 2rem;
+    font-size: 1.2rem;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: var(--color-text-muted);
+    border-bottom: 1px solid var(--color-border);
+    background-color: var(--color-bg-secondary);
+  }
+
+  .cart-table td {
+    padding: 2rem;
+    border-bottom: 1px solid var(--color-border);
+    vertical-align: middle;
+  }
+
+  .cart-summary-card {
+    background-color: var(--color-card-bg, #FFFFFF);
+    border: 1px solid var(--color-border);
+    border-radius: var(--card-radius, 6px);
+    padding: 2.8rem;
+  }
+{%- endstyle -%}
+
+{%- assign threshold_amount = settings.free_shipping_threshold | default: 200 -%}
+{%- assign threshold_cents = threshold_amount | times: 100 -%}
+{%- assign remaining_cents = threshold_cents | minus: cart.total_price -%}
+{%- assign progress_pct = cart.total_price | times: 100 | divided_by: threshold_cents -%}
+{%- if progress_pct > 100 -%}
+  {%- assign progress_pct = 100 -%}
+{%- endif -%}
+
+<section class="main-cart-section" data-section-id="{{ section.id }}">
+  <div class="page-width">
+
+    <div style="display: flex; justify-content: space-between; align-items: baseline; margin-bottom: 2.8rem; flex-wrap: wrap; gap: 1rem;">
+      <h1 class="h2" style="margin: 0;">{{ 'general.cart.title' | t }}</h1>
+      <a href="{{ routes.all_products_collection_url }}" style="font-size: 1.35rem; text-decoration: underline; color: var(--color-primary);">
+        {{ 'general.cart.continue_shopping' | t }}
+      </a>
+    </div>
+
+    {%- if cart.item_count == 0 -%}
+      <div style="text-align: center; padding: 6rem 2rem; background-color: var(--color-card-bg, #FFFFFF); border: 1px solid var(--color-border); border-radius: var(--card-radius);">
+        <p style="font-size: 1.6rem; color: var(--color-text-muted); margin-bottom: 2.4rem;">
+          {{ 'general.cart.empty' | t }}
+        </p>
+        <a href="{{ routes.all_products_collection_url }}" class="btn btn-primary">
+          {{ 'general.cart.continue_shopping' | t }}
+        </a>
+      </div>
+    {%- else -%}
+      <div class="cart-free-shipping" style="border: 1px solid var(--color-border); border-radius: var(--card-radius); margin-bottom: 3rem;">
+        <div style="font-size: 1.35rem; font-weight: 600;">
+          {%- if remaining_cents <= 0 -%}
+            {{ 'general.cart.free_shipping_eligible' | t }}
+          {%- else -%}
+            {%- assign formatted_remaining = remaining_cents | money -%}
+            {{ 'general.cart.free_shipping_away' | t: amount: formatted_remaining }}
+          {%- endif -%}
+        </div>
+        <div class="cart-shipping-bar">
+          <div class="cart-shipping-progress" style="width: {{ progress_pct }}%;"></div>
+        </div>
+      </div>
+
+      <form action="{{ routes.cart_url }}" method="post" id="MainCartForm">
+        <div class="cart-page-grid">
+
+          <div>
+            <table class="cart-table">
+              <thead>
+                <tr>
+                  <th>{{ shop.name }}</th>
+                  <th>{{ 'general.cart.quantity' | t }}</th>
+                  <th style="text-align: end;">{{ 'general.cart.subtotal' | t }}</th>
+                </tr>
+              </thead>
+              <tbody>
+                {%- for item in cart.items -%}
+                  <tr>
+                    <td>
+                      <div style="display: flex; align-items: center; gap: 1.6rem;">
+                        {%- if item.image -%}
+                          <a href="{{ item.url }}">
+                            {{ item.image | image_url: width: 200 | image_tag:
+                              loading: 'lazy',
+                              widths: '100, 200',
+                              style: 'width: 84px; height: 84px; object-fit: cover; border-radius: var(--image-radius, 6px);',
+                              alt: item.title
+                            }}
+                          </a>
+                        {%- endif -%}
+                        <div>
+                          <a href="{{ item.url }}" style="font-family: var(--font-heading-family); font-size: 1.8rem; font-weight: 600; color: var(--color-primary);">
+                            {{ item.product.title | escape }}
+                          </a>
+                          {%- unless item.product.has_only_default_variant -%}
+                            <div style="font-size: 1.25rem; color: var(--color-text-muted); margin-top: 0.3rem;">
+                              {{ item.variant.title | escape }}
+                            </div>
+                          {%- endunless -%}
+                          <div style="font-size: 1.35rem; font-weight: 600; margin-top: 0.4rem;">
+                            {{ item.final_price | money }}
+                          </div>
+                          {%- if item.line_level_discount_allocations.size > 0 -%}
+                            <ul style="list-style: none; padding: 0; margin: 0.4rem 0 0; font-size: 1.2rem; color: var(--color-secondary);">
+                              {%- for allocation in item.line_level_discount_allocations -%}
+                                <li>{{ allocation.discount_application.title }} (&minus;{{ allocation.amount | money }})</li>
+                              {%- endfor -%}
+                            </ul>
+                          {%- endif -%}
+                        </div>
+                      </div>
+                    </td>
+
+                    <td>
+                      <div style="display: inline-flex; align-items: center; gap: 1rem; flex-wrap: wrap;">
+                        <div style="display: inline-flex; align-items: center; border: 1px solid var(--color-border); border-radius: var(--btn-radius);">
+                          <a
+                            href="{{ routes.cart_change_url }}?line={{ forloop.index }}&quantity={{ item.quantity | minus: 1 }}"
+                            style="padding: 0.5rem 1rem; font-weight: 600;"
+                            aria-label="{{ 'general.cart.decrease_quantity' | t }}"
+                          >&minus;</a>
+                          <input
+                            type="number"
+                            name="updates[]"
+                            value="{{ item.quantity }}"
+                            min="0"
+                            aria-label="{{ 'general.cart.quantity' | t }}"
+                            style="width: 4.5rem; text-align: center; border: none; padding: 0.4rem 0; font-weight: 600;"
+                          >
+                          <a
+                            href="{{ routes.cart_change_url }}?line={{ forloop.index }}&quantity={{ item.quantity | plus: 1 }}"
+                            style="padding: 0.5rem 1rem; font-weight: 600;"
+                            aria-label="{{ 'general.cart.increase_quantity' | t }}"
+                          >&#43;</a>
+                        </div>
+
+                        <a
+                          href="{{ item.url_to_remove }}"
+                          style="font-size: 1.2rem; color: var(--color-text-muted); text-decoration: underline;"
+                        >
+                          {{ 'general.cart.remove' | t }}
+                        </a>
+                      </div>
+                    </td>
+
+                    <td style="text-align: end; font-weight: 700; font-size: 1.55rem; color: var(--color-primary);">
+                      {{ item.final_line_price | money }}
+                    </td>
+                  </tr>
+                {%- endfor -%}
+              </tbody>
+            </table>
+          </div>
+
+          <div class="cart-summary-card">
+            <details open style="margin-bottom: 2.2rem; border-bottom: 1px solid var(--color-border); padding-bottom: 1.8rem;">
+              <summary style="cursor: pointer; font-weight: 600; font-size: 1.35rem; margin-bottom: 1rem;">
+                {{ 'general.cart.note' | t }}
+              </summary>
+              <label for="MainCartNote-{{ section.id }}" class="visually-hidden">{{ 'general.cart.note' | t }}</label>
+              <textarea
+                id="MainCartNote-{{ section.id }}"
+                name="note"
+                rows="3"
+                placeholder="{{ 'general.cart.note' | t }}"
+              >{{ cart.note }}</textarea>
+            </details>
+
+            {%- if cart.cart_level_discount_applications.size > 0 -%}
+              <div style="margin-bottom: 1.4rem; font-size: 1.35rem; color: var(--color-secondary);">
+                <div style="font-weight: 600; margin-bottom: 0.4rem;">{{ 'general.cart.discounts' | t }}</div>
+                {%- for discount_application in cart.cart_level_discount_applications -%}
+                  <div style="display: flex; justify-content: space-between;">
+                    <span>{{ discount_application.title }}</span>
+                    <span>&minus;{{ discount_application.total_allocated_amount | money }}</span>
+                  </div>
+                {%- endfor -%}
+              </div>
+            {%- endif -%}
+
+            <div style="display: flex; justify-content: space-between; align-items: baseline; margin-bottom: 1rem;">
+              <span style="font-size: 1.5rem; font-weight: 600;">{{ 'general.cart.subtotal' | t }}</span>
+              <span style="font-size: 2.2rem; font-weight: 700; color: var(--color-primary);">{{ cart.total_price | money }}</span>
+            </div>
+
+            <p style="font-size: 1.25rem; color: var(--color-text-muted); margin-bottom: 2.2rem;">
+              {{ 'general.cart.taxes_shipping_note' | t }}
+            </p>
+
+            <div style="display: flex; flex-direction: column; gap: 1rem;">
+              <button type="submit" name="checkout" class="btn btn-primary" style="width: 100%; padding: 1.5rem;">
+                {{ 'general.cart.checkout' | t }}
+              </button>
+              <button type="submit" name="update" class="btn btn-secondary" style="width: 100%; padding: 1.2rem;">
+                {{ 'general.cart.update' | t }}
+              </button>
+            </div>
+          </div>
+
+        </div>
+      </form>
+    {%- endif -%}
+
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Main Cart Page",
+  "settings": [
+    {
+      "type": "range",
+      "id": "padding_top",
+      "min": 0,
+      "max": 100,
+      "step": 4,
+      "unit": "px",
+      "label": "Top Padding",
+      "default": 48
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "min": 0,
+      "max": 100,
+      "step": 4,
+      "unit": "px",
+      "label": "Bottom Padding",
+      "default": 64
+    }
+  ]
+}
+{% endschema %}

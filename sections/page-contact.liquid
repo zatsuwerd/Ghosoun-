@@ -1,0 +1,247 @@
+{%- style -%}
+  #shopify-section-{{ section.id }} .contact-page-section {
+    padding-top: {{ section.settings.padding_top }}px;
+    padding-bottom: {{ section.settings.padding_bottom }}px;
+  }
+{%- endstyle -%}
+
+<section class="contact-page-section">
+  <div class="botanical-page-hero">
+    <div class="page-width">
+      <p class="botanical-page-eyebrow">{{ section.settings.eyebrow | escape }}</p>
+      <h1>{{ section.settings.heading | default: page.title | escape }}</h1>
+      {%- if section.settings.subtitle != blank -%}
+        <p class="botanical-page-subtitle">{{ section.settings.subtitle | escape }}</p>
+      {%- endif -%}
+    </div>
+  </div>
+
+  <div class="page-width" style="padding-top: 5rem;">
+    <div class="contact-grid">
+      <div class="contact-form-card">
+        <h2 style="font-size: 2.4rem; margin-bottom: 1rem;">{{ section.settings.form_heading | escape }}</h2>
+        <p style="font-size: 1.4rem; color: var(--color-text-muted); margin-bottom: 2.4rem;">
+          {{ section.settings.form_subtext | escape }}
+        </p>
+
+        {%- form 'contact', id: 'GhosounContactForm' -%}
+          {%- if form.posted_successfully? -%}
+            <div class="form-status-banner is-success" role="status" tabindex="-1">
+              {{ 'templates.contact.form.post_success' | t }}
+            </div>
+          {%- elsif form.errors -%}
+            <div class="form-status-banner is-error" role="alert">
+              {{ form.errors | default_errors }}
+            </div>
+          {%- endif -%}
+
+          <div class="contact-field-grid">
+            <div class="contact-field">
+              <label for="ContactForm-name-{{ section.id }}">{{ 'templates.contact.form.name' | t }}</label>
+              <input
+                id="ContactForm-name-{{ section.id }}"
+                type="text"
+                name="contact[name]"
+                value="{% if form.name %}{{ form.name }}{% elsif customer %}{{ customer.name }}{% endif %}"
+                autocomplete="name"
+                required
+                aria-required="true"
+              />
+            </div>
+
+            <div class="contact-field">
+              <label for="ContactForm-email-{{ section.id }}">{{ 'templates.contact.form.email' | t }}</label>
+              <input
+                id="ContactForm-email-{{ section.id }}"
+                type="email"
+                name="contact[email]"
+                value="{% if form.email %}{{ form.email }}{% elsif customer %}{{ customer.email }}{% endif %}"
+                autocomplete="email"
+                spellcheck="false"
+                autocapitalize="off"
+                required
+                aria-required="true"
+              />
+            </div>
+          </div>
+
+          <div class="contact-field-grid" style="margin-top: 1.6rem;">
+            <div class="contact-field">
+              <label for="ContactForm-phone-{{ section.id }}">{{ 'templates.contact.form.phone' | t }}</label>
+              <input
+                id="ContactForm-phone-{{ section.id }}"
+                type="tel"
+                name="contact[phone]"
+                value="{% if form.phone %}{{ form.phone }}{% elsif customer %}{{ customer.phone }}{% endif %}"
+                autocomplete="tel"
+              />
+            </div>
+
+            <div class="contact-field">
+              <label for="ContactForm-topic-{{ section.id }}">{{ 'templates.contact.form.topic' | t }}</label>
+              <select id="ContactForm-topic-{{ section.id }}" name="contact[topic]">
+                <option value="Order & Delivery">Order &amp; Delivery</option>
+                <option value="Botanical Consultation">Botanical Consultation</option>
+                <option value="Wholesale & Hospitality">Wholesale &amp; Hospitality</option>
+                <option value="Product Information">Product Information</option>
+              </select>
+            </div>
+          </div>
+
+          <div class="contact-field" style="margin-top: 1.6rem;">
+            <label for="ContactForm-body-{{ section.id }}">{{ 'templates.contact.form.message' | t }}</label>
+            <textarea
+              id="ContactForm-body-{{ section.id }}"
+              rows="5"
+              name="contact[body]"
+              required
+              aria-required="true"
+            >{{ form.body }}</textarea>
+          </div>
+
+          <div style="margin-top: 2.2rem;">
+            <button type="submit" class="btn btn-primary">
+              {{ 'templates.contact.form.send' | t }}
+            </button>
+          </div>
+        {%- endform -%}
+      </div>
+
+      <div class="contact-info-card">
+        <h2 style="font-size: 2.2rem; margin-bottom: 2rem;">{{ section.settings.info_heading | escape }}</h2>
+        <div style="display: flex; flex-direction: column; gap: 2rem;">
+          {%- for block in section.blocks -%}
+            <div style="border-bottom: 1px solid var(--color-border); padding-bottom: 1.6rem;" {{ block.shopify_attributes }}>
+              <p class="botanical-page-eyebrow" style="margin-bottom: 0.4rem;">{{ block.settings.label | escape }}</p>
+              <p style="font-weight: 600; color: var(--color-primary); margin-bottom: 0.3rem;">{{ block.settings.value | escape }}</p>
+              {%- if block.settings.note != blank -%}
+                <p style="font-size: 1.3rem; color: var(--color-text-muted); margin: 0;">{{ block.settings.note | escape }}</p>
+              {%- endif -%}
+            </div>
+          {%- endfor -%}
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Contact Us Page",
+  "settings": [
+    {
+      "type": "text",
+      "id": "eyebrow",
+      "label": "Eyebrow",
+      "default": "Ghosoun Concierge"
+    },
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Heading",
+      "default": "Connect With Our Team"
+    },
+    {
+      "type": "textarea",
+      "id": "subtitle",
+      "label": "Subtitle",
+      "default": "Whether you need dilution guidance, gift curation, or hospitality inquiries, our team is ready to assist."
+    },
+    {
+      "type": "text",
+      "id": "form_heading",
+      "label": "Form Title",
+      "default": "Send a Direct Inquiry"
+    },
+    {
+      "type": "text",
+      "id": "form_subtext",
+      "label": "Form Subtext",
+      "default": "We aim to respond to every message within one business day."
+    },
+    {
+      "type": "text",
+      "id": "info_heading",
+      "label": "Studio Details Heading",
+      "default": "Concierge Channels"
+    },
+    {
+      "type": "range",
+      "id": "padding_top",
+      "min": 0,
+      "max": 100,
+      "step": 4,
+      "unit": "px",
+      "label": "Top Padding",
+      "default": 0
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "min": 0,
+      "max": 120,
+      "step": 4,
+      "unit": "px",
+      "label": "Bottom Padding",
+      "default": 72
+    }
+  ],
+  "blocks": [
+    {
+      "type": "contact_detail",
+      "name": "Contact Detail",
+      "settings": [
+        {
+          "type": "text",
+          "id": "label",
+          "label": "Channel Label",
+          "default": "Customer Care"
+        },
+        {
+          "type": "text",
+          "id": "value",
+          "label": "Detail Value",
+          "default": "care@ghosoun.com"
+        },
+        {
+          "type": "text",
+          "id": "note",
+          "label": "Hours / Note",
+          "default": "Personal oil pairing & order assistance"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Contact Us Page",
+      "blocks": [
+        {
+          "type": "contact_detail",
+          "settings": {
+            "label": "Customer Care & Consultations",
+            "value": "care@ghosoun.com",
+            "note": "Dilution guidance & order support"
+          }
+        },
+        {
+          "type": "contact_detail",
+          "settings": {
+            "label": "Wholesale & Hospitality",
+            "value": "partners@ghosoun.com",
+            "note": "Spa amenities & boutique stockists"
+          }
+        },
+        {
+          "type": "contact_detail",
+          "settings": {
+            "label": "Concierge Hours",
+            "value": "Monday – Saturday, 9:00 AM – 6:00 PM",
+            "note": "Direct storefront inquiry desk"
+          }
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}

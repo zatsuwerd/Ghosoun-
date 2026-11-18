@@ -1,0 +1,20 @@
+{
+  "sections": {
+    "main": {
+      "type": "main-blog",
+      "settings": {
+        "eyebrow": "Ghosoun Botanical Journal",
+        "fallback_heading": "Aromatherapy & Sourcing Notes",
+        "subtitle": "Editorial guides on essential oil dilution, single-origin harvesting, and cold-pressed botanical rituals.",
+        "articles_per_page": 9,
+        "show_date": true,
+        "show_author": true,
+        "padding_top": 0,
+        "padding_bottom": 72
+      }
+    }
+  },
+  "order": [
+    "main"
+  ]
+}

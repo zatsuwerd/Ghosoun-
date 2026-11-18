@@ -1,0 +1,151 @@
+{%- style -%}
+  #shopify-section-{{ section.id }} .testimonials-section {
+    padding-top: {{ section.settings.padding_top }}px;
+    padding-bottom: {{ section.settings.padding_bottom }}px;
+  }
+{%- endstyle -%}
+
+<section class="testimonials-section" aria-labelledby="TestimonialsHeading-{{ section.id }}">
+  <div class="page-width">
+    <div style="text-align: center; margin-bottom: 4rem;">
+      {%- if section.settings.eyebrow != blank -%}
+        <p class="botanical-page-eyebrow">{{ section.settings.eyebrow | escape }}</p>
+      {%- endif -%}
+      <h2 id="TestimonialsHeading-{{ section.id }}">{{ section.settings.heading | escape }}</h2>
+      {%- if section.settings.subtitle != blank -%}
+        <p class="botanical-page-subtitle">{{ section.settings.subtitle | escape }}</p>
+      {%- endif -%}
+    </div>
+
+    <div class="botanical-grid-3">
+      {%- for block in section.blocks -%}
+        <blockquote class="testimonial-card" {{ block.shopify_attributes }}>
+          <div>
+            {%- if block.settings.product_label != blank -%}
+              <p class="botanical-page-eyebrow" style="margin-bottom: 1rem;">{{ block.settings.product_label | escape }}</p>
+            {%- endif -%}
+            <p class="testimonial-quote">&ldquo;{{ block.settings.quote | escape }}&rdquo;</p>
+          </div>
+          <div>
+            <div class="testimonial-author">{{ block.settings.author_name | escape }}</div>
+            {%- if block.settings.author_note != blank -%}
+              <div class="testimonial-meta">{{ block.settings.author_note | escape }}</div>
+            {%- endif -%}
+          </div>
+        </blockquote>
+      {%- endfor -%}
+    </div>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Community Notes",
+  "settings": [
+    {
+      "type": "text",
+      "id": "eyebrow",
+      "label": "Eyebrow",
+      "default": "Ritual Perspectives"
+    },
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Heading",
+      "default": "Everyday Experiences With Ghosoun"
+    },
+    {
+      "type": "textarea",
+      "id": "subtitle",
+      "label": "Subtitle",
+      "default": "Merchant-curated customer notes and aromatherapy practitioners sharing how they weave single-origin oils into daily routines."
+    },
+    {
+      "type": "range",
+      "id": "padding_top",
+      "min": 0,
+      "max": 100,
+      "step": 4,
+      "unit": "px",
+      "label": "Top Padding",
+      "default": 56
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "min": 0,
+      "max": 100,
+      "step": 4,
+      "unit": "px",
+      "label": "Bottom Padding",
+      "default": 56
+    }
+  ],
+  "blocks": [
+    {
+      "type": "testimonial",
+      "name": "Editorial Quote",
+      "settings": [
+        {
+          "type": "text",
+          "id": "product_label",
+          "label": "Botanical Reference",
+          "default": "Rosemary Essential Oil"
+        },
+        {
+          "type": "textarea",
+          "id": "quote",
+          "label": "Quote",
+          "default": "Crisp, herbaceous aroma right out of the dropper. A few drops blended with jojoba leaves my scalp feeling balanced."
+        },
+        {
+          "type": "text",
+          "id": "author_name",
+          "label": "Contributor Name",
+          "default": "Lina A."
+        },
+        {
+          "type": "text",
+          "id": "author_note",
+          "label": "Role / City",
+          "default": "Skincare Enthusiast"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Community Notes",
+      "blocks": [
+        {
+          "type": "testimonial",
+          "settings": {
+            "product_label": "Tunisian Rosemary Oil",
+            "quote": "Crisp, green, herbaceous aroma right out of the dropper. Blending a few drops into warm jojoba has become my weekly scalp ritual.",
+            "author_name": "Lina M.",
+            "author_note": "Hair & Scalp Routine"
+          }
+        },
+        {
+          "type": "testimonial",
+          "settings": {
+            "product_label": "Alabaster Ceramic Diffuser",
+            "quote": "Silent mist output and a warm matte finish that looks intentional on a bedside shelf even when switched off.",
+            "author_name": "Tariq S.",
+            "author_note": "Home Atmosphere"
+          }
+        },
+        {
+          "type": "testimonial",
+          "settings": {
+            "product_label": "Omani Frankincense Sacra",
+            "quote": "Resinous, grounded, and unmistakably clean compared to synthetic amber oils. Two drops fill the entire study.",
+            "author_name": "Noura K.",
+            "author_note": "Evening Diffusing"
+          }
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}

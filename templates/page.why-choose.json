@@ -1,0 +1,81 @@
+{
+  "sections": {
+    "why_choose": {
+      "type": "page-why-choose",
+      "blocks": {
+        "adv_1": {
+          "type": "advantage",
+          "settings": {
+            "badge_text": "01 · Extraction",
+            "title": "First-Press Cold Extraction",
+            "description": "Carrier oils are never deodorized, bleached, or solvent-extracted so natural phytonutrients remain intact."
+          }
+        },
+        "adv_2": {
+          "type": "advantage",
+          "settings": {
+            "badge_text": "02 · Packaging",
+            "title": "UV-Shielded Dark Glass",
+            "description": "Thick UV-filtering dark glass safeguards delicate aromatic esters and lipids from light degradation."
+          }
+        },
+        "adv_3": {
+          "type": "advantage",
+          "settings": {
+            "badge_text": "03 · Transparency",
+            "title": "Full Botanical Labeling",
+            "description": "Every label lists Latin botanical name, plant part distilled, extraction process, and country of origin."
+          }
+        },
+        "row_1": {
+          "type": "comparison_row",
+          "settings": {
+            "criterion": "Ingredient Transparency",
+            "ghosoun_val": "Full Latin Name, Country & Plant Part",
+            "commercial_val": "Often Vague 'Fragrance' Blends"
+          }
+        },
+        "row_2": {
+          "type": "comparison_row",
+          "settings": {
+            "criterion": "Light Protection",
+            "ghosoun_val": "UV-Protective Dark Glass",
+            "commercial_val": "Clear Glass or Thin Plastic"
+          }
+        },
+        "row_3": {
+          "type": "comparison_row",
+          "settings": {
+            "criterion": "Formulation Purity",
+            "ghosoun_val": "Unrefined Single-Origin Botanicals",
+            "commercial_val": "Cut With Synthetic Diluents"
+          }
+        }
+      },
+      "block_order": [
+        "adv_1",
+        "adv_2",
+        "adv_3",
+        "row_1",
+        "row_2",
+        "row_3"
+      ],
+      "settings": {
+        "eyebrow": "The Ghosoun Standard",
+        "heading": "Why Choose Ghosoun Botanicals",
+        "subtitle": "Every harvest is selected from authentic growing regions, cold-pressed or steam-distilled gently, and bottled in UV-protective glass.",
+        "show_comparison": true,
+        "comparison_eyebrow": "Formulation Benchmark",
+        "comparison_heading": "How Ghosoun Compares to Conventional Oils",
+        "col_standard": "Quality Benchmark",
+        "col_ghosoun": "Ghosoun",
+        "col_conventional": "Conventional Commercial Oils",
+        "padding_top": 0,
+        "padding_bottom": 72
+      }
+    }
+  },
+  "order": [
+    "why_choose"
+  ]
+}

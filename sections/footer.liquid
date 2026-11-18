@@ -1,0 +1,259 @@
+{%- style -%}
+  #shopify-section-{{ section.id }} .site-footer {
+    padding-top: {{ section.settings.padding_top }}px;
+    padding-bottom: {{ section.settings.padding_bottom }}px;
+  }
+{%- endstyle -%}
+
+<footer class="site-footer" data-section-id="{{ section.id }}">
+  <div class="page-width">
+    <div class="footer-top-grid">
+
+      <!-- Bio / Brand Identity Column -->
+      <div class="footer-bio-col">
+        <a href="{{ routes.root_url }}" style="display: inline-block; margin-bottom: 1.6rem;">
+          {%- if section.settings.footer_logo != blank -%}
+            {{ section.settings.footer_logo | image_url: width: 280 | image_tag:
+              widths: '140, 220, 280',
+              alt: shop.name,
+              loading: 'lazy',
+              style: 'max-width: 140px; height: auto; border-radius: var(--image-radius); background: #FFFFFF; padding: 0.6rem;'
+            }}
+          {%- else -%}
+            <img
+              src="{{ 'ghosoun-logo.jpg' | asset_url }}"
+              alt="{{ shop.name }}"
+              width="140"
+              height="140"
+              loading="lazy"
+              style="max-width: 140px; width: auto; height: auto; border-radius: var(--image-radius); background: #FFFFFF; padding: 0.6rem;"
+            >
+          {%- endif -%}
+        </a>
+        <p style="font-size: 1.4rem; line-height: 1.65; margin-bottom: 1.6rem; opacity: 0.9;">
+          {{ section.settings.brand_bio | escape }}
+        </p>
+
+        {%- if section.blocks.size > 0 -%}
+          <div class="footer-certifications">
+            {%- for block in section.blocks -%}
+              {%- if block.type == 'value_pill' and block.settings.label != blank -%}
+                <span class="cert-pill" {{ block.shopify_attributes }}>{{ block.settings.label | escape }}</span>
+              {%- endif -%}
+            {%- endfor -%}
+          </div>
+        {%- endif -%}
+
+        {%- if settings.social_instagram != blank or settings.social_facebook != blank or settings.social_youtube != blank or settings.social_whatsapp != blank -%}
+          <div class="footer-social-list">
+            {%- if settings.social_instagram != blank -%}
+              <a href="{{ settings.social_instagram }}" class="footer-social-link" target="_blank" rel="noopener noreferrer">{{ 'general.social.instagram' | t }}</a>
+            {%- endif -%}
+            {%- if settings.social_facebook != blank -%}
+              <a href="{{ settings.social_facebook }}" class="footer-social-link" target="_blank" rel="noopener noreferrer">{{ 'general.social.facebook' | t }}</a>
+            {%- endif -%}
+            {%- if settings.social_youtube != blank -%}
+              <a href="{{ settings.social_youtube }}" class="footer-social-link" target="_blank" rel="noopener noreferrer">{{ 'general.social.youtube' | t }}</a>
+            {%- endif -%}
+            {%- if settings.social_whatsapp != blank -%}
+              <a href="{{ settings.social_whatsapp }}" class="footer-social-link" target="_blank" rel="noopener noreferrer">{{ 'general.social.whatsapp' | t }}</a>
+            {%- endif -%}
+          </div>
+        {%- endif -%}
+      </div>
+
+      <!-- Quick Links 1 -->
+      <div>
+        <h3 class="footer-col-title">{{ section.settings.menu_1_heading | escape }}</h3>
+        <ul class="footer-links-list">
+          {%- if section.settings.menu_1 != blank and section.settings.menu_1.links != blank -%}
+            {%- for link in section.settings.menu_1.links -%}
+              <li><a href="{{ link.url }}" class="footer-link">{{ link.title }}</a></li>
+            {%- endfor -%}
+          {%- else -%}
+            <li><a href="{{ routes.all_products_collection_url }}" class="footer-link">{{ 'sections.header.shop_all' | t }}</a></li>
+            <li><a href="{{ routes.collections_url }}" class="footer-link">{{ 'collections.general.catalog_title' | t }}</a></li>
+          {%- endif -%}
+        </ul>
+      </div>
+
+      <!-- Quick Links 2 -->
+      <div>
+        <h3 class="footer-col-title">{{ section.settings.menu_2_heading | escape }}</h3>
+        <ul class="footer-links-list">
+          {%- if section.settings.menu_2 != blank and section.settings.menu_2.links != blank -%}
+            {%- for link in section.settings.menu_2.links -%}
+              <li><a href="{{ link.url }}" class="footer-link">{{ link.title }}</a></li>
+            {%- endfor -%}
+          {%- else -%}
+            <li><a href="{{ routes.search_url }}" class="footer-link">{{ 'general.search.submit' | t }}</a></li>
+            <li><a href="{{ routes.cart_url }}" class="footer-link">{{ 'general.cart.view_cart' | t }}</a></li>
+          {%- endif -%}
+        </ul>
+      </div>
+
+      <!-- Newsletter Column -->
+      <div class="footer-newsletter-col">
+        <h3 class="footer-col-title">{{ 'sections.footer.newsletter_title' | t }}</h3>
+        <p style="font-size: 1.35rem; margin-bottom: 1.5rem; opacity: 0.9;">
+          {{ 'sections.footer.newsletter_subtext' | t }}
+        </p>
+
+        {% form 'customer', id: 'FooterNewsletterForm' %}
+          <input type="hidden" name="contact[tags]" value="newsletter">
+          {%- if form.posted_successfully? -%}
+            <p style="font-size: 1.35rem;" role="status">{{ 'sections.footer.newsletter_success' | t }}</p>
+          {%- else -%}
+            <div style="display: flex; gap: 0.8rem; flex-wrap: wrap;">
+              <label for="NewsletterEmail-{{ section.id }}" class="visually-hidden">
+                {{ 'sections.footer.email_placeholder' | t }}
+              </label>
+              <input
+                id="NewsletterEmail-{{ section.id }}"
+                type="email"
+                name="contact[email]"
+                placeholder="{{ 'sections.footer.email_placeholder' | t }}"
+                aria-label="{{ 'sections.footer.email_placeholder' | t }}"
+                required
+                style="flex: 1; min-width: 180px; background-color: rgba(255,255,255,0.08); border-color: rgba(255,255,255,0.22); color: #FFF;"
+              >
+              <button type="submit" class="btn btn-accent" style="white-space: nowrap;">
+                {{ 'sections.footer.subscribe' | t }}
+              </button>
+            </div>
+          {%- endif -%}
+        {% endform %}
+      </div>
+
+    </div>
+
+    <!-- Bottom Copyright, Localization & Payment Icons -->
+    <div class="footer-bottom">
+      <div>
+        &copy; {{ 'now' | date: '%Y' }} {{ shop.name }}. {{ 'sections.footer.copyright' | t }}
+      </div>
+
+      <div style="display: flex; gap: 1.4rem; align-items: center; flex-wrap: wrap;">
+        {%- if section.settings.show_language_selector and localization.available_languages.size > 1 -%}
+          <localization-form>
+            {%- form 'localization', id: 'FooterLanguageForm' -%}
+              <label for="FooterLanguageSelect-{{ section.id }}" class="visually-hidden">{{ 'general.language.label' | t }}</label>
+              <select
+                id="FooterLanguageSelect-{{ section.id }}"
+                name="locale_code"
+                class="localization-select"
+                style="background-color: rgba(255,255,255,0.08); color: #FFF; border-color: rgba(255,255,255,0.24);"
+              >
+                {%- for language in localization.available_languages -%}
+                  <option value="{{ language.iso_code }}" style="color: #0D2F32;" {% if language.iso_code == localization.language.iso_code %}selected{% endif %}>
+                    {{ language.endonym_name | capitalize }}
+                  </option>
+                {%- endfor -%}
+              </select>
+            {%- endform -%}
+          </localization-form>
+        {%- endif -%}
+
+        <div style="display: flex; gap: 0.8rem; align-items: center;">
+          {%- for type in shop.enabled_payment_types -%}
+            {{ type | payment_type_svg_tag: class: 'payment-icon' }}
+          {%- endfor -%}
+        </div>
+      </div>
+    </div>
+  </div>
+</footer>
+
+{% schema %}
+{
+  "name": "Footer",
+  "max_blocks": 6,
+  "settings": [
+    {
+      "type": "image_picker",
+      "id": "footer_logo",
+      "label": "Optional Custom Footer Logo"
+    },
+    {
+      "type": "textarea",
+      "id": "brand_bio",
+      "label": "Brand Bio Text",
+      "default": "Ghosoun (غصون) curates single-origin botanical oils, cold-pressed skincare elixirs, and atmospheric diffusers crafted with respect for natural origin."
+    },
+    {
+      "type": "text",
+      "id": "menu_1_heading",
+      "label": "First Column Title",
+      "default": "Botanicals"
+    },
+    {
+      "type": "link_list",
+      "id": "menu_1",
+      "label": "First Column Navigation",
+      "default": "footer"
+    },
+    {
+      "type": "text",
+      "id": "menu_2_heading",
+      "label": "Second Column Title",
+      "default": "House of Ghosoun"
+    },
+    {
+      "type": "link_list",
+      "id": "menu_2",
+      "label": "Second Column Navigation",
+      "default": "footer"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_language_selector",
+      "label": "Show Language Switcher (when 2+ languages are published)",
+      "default": true
+    },
+    {
+      "type": "range",
+      "id": "padding_top",
+      "min": 20,
+      "max": 100,
+      "step": 4,
+      "unit": "px",
+      "label": "Top Padding",
+      "default": 60
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "min": 20,
+      "max": 100,
+      "step": 4,
+      "unit": "px",
+      "label": "Bottom Padding",
+      "default": 40
+    }
+  ],
+  "blocks": [
+    {
+      "type": "value_pill",
+      "name": "Brand Standard Pill",
+      "settings": [
+        {
+          "type": "text",
+          "id": "label",
+          "label": "Pill Label",
+          "default": "Single-Origin Oils"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Footer",
+      "blocks": [
+        { "type": "value_pill", "settings": { "label": "Single-Origin Botanicals" } },
+        { "type": "value_pill", "settings": { "label": "Dark Glass Preserved" } },
+        { "type": "value_pill", "settings": { "label": "Cold-Pressed & Distilled" } }
+      ]
+    }
+  ]
+}
+{% endschema %}

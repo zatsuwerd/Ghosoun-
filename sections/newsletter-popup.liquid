@@ -1,0 +1,257 @@
+{%- liquid
+  assign popup_enabled = section.settings.enable_newsletter_popup
+  assign delay_seconds = section.settings.delay_seconds | default: 5
+  assign dismiss_days = section.settings.dismiss_days | default: 7
+-%}
+
+{%- if popup_enabled -%}
+  <newsletter-popup
+    id="NewsletterPopup-{{ section.id }}"
+    class="newsletter-popup-backdrop"
+    role="dialog"
+    aria-modal="true"
+    aria-labelledby="NewsletterPopupTitle-{{ section.id }}"
+    aria-hidden="true"
+    data-section-id="{{ section.id }}"
+    data-delay-seconds="{{ delay_seconds }}"
+    data-dismiss-days="{{ dismiss_days }}"
+  >
+    <div class="newsletter-popup-modal" role="document">
+      <button
+        type="button"
+        class="newsletter-popup-close"
+        data-popup-close
+        aria-label="{{ 'general.accessibility.close' | t }}"
+      >
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false">
+          <line x1="18" y1="6" x2="6" y2="18"></line>
+          <line x1="6" y1="6" x2="18" y2="18"></line>
+        </svg>
+      </button>
+
+      <div class="newsletter-popup-layout {% if section.settings.image == blank %}is-no-image{% endif %}">
+        {%- if section.settings.image != blank -%}
+          <div class="newsletter-popup-media">
+            {{ section.settings.image | image_url: width: 900 | image_tag:
+              class: 'newsletter-popup-img',
+              widths: '400, 650, 900',
+              sizes: '(min-width: 768px) 340px, 100vw',
+              alt: section.settings.image.alt | default: section.settings.heading,
+              loading: 'lazy'
+            }}
+          </div>
+        {%- endif -%}
+
+        <div class="newsletter-popup-body">
+          {%- form 'customer', id: 'NewsletterPopupForm', class: 'newsletter-popup-form' -%}
+            <input type="hidden" name="contact[tags]" value="newsletter,popup">
+
+            {%- if form.posted_successfully? -%}
+              <div class="newsletter-popup-success" role="status" aria-live="polite" data-popup-success="true">
+                <div class="newsletter-popup-success-icon" aria-hidden="true">
+                  <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path>
+                    <polyline points="22 4 12 14.01 9 11.01"></polyline>
+                  </svg>
+                </div>
+                {%- if section.settings.kicker != blank -%}
+                  <p class="newsletter-popup-kicker">{{ section.settings.kicker | escape }}</p>
+                {%- endif -%}
+                <h2 id="NewsletterPopupTitle-{{ section.id }}" class="h3 newsletter-popup-heading">
+                  {{ section.settings.success_heading | default: 'sections.newsletter_popup.success_heading' | t }}
+                </h2>
+                <p class="newsletter-popup-text">
+                  {{ section.settings.success_message | default: 'sections.newsletter_popup.success_message' | t }}
+                </p>
+                {%- if section.settings.welcome_code != blank -%}
+                  <div class="newsletter-popup-code-box">
+                    <span class="newsletter-popup-code-label">{{ 'sections.newsletter_popup.welcome_code_label' | t }}</span>
+                    <strong class="newsletter-popup-code-value">{{ section.settings.welcome_code | escape }}</strong>
+                  </div>
+                {%- endif -%}
+                <button type="button" class="btn btn-primary newsletter-popup-done" data-popup-close>
+                  {{ 'sections.newsletter_popup.continue_shopping' | t }}
+                </button>
+              </div>
+            {%- else -%}
+              <div class="newsletter-popup-prompt" data-popup-prompt>
+                {%- if section.settings.kicker != blank -%}
+                  <p class="newsletter-popup-kicker">{{ section.settings.kicker | escape }}</p>
+                {%- endif -%}
+
+                <h2 id="NewsletterPopupTitle-{{ section.id }}" class="h3 newsletter-popup-heading">
+                  {{ section.settings.heading | escape }}
+                </h2>
+
+                {%- if section.settings.description != blank -%}
+                  <div class="newsletter-popup-text">{{ section.settings.description }}</div>
+                {%- endif -%}
+
+                {%- if form.errors -%}
+                  <div class="form-status-banner is-error" role="alert" data-popup-server-error="true">
+                    {{ form.errors | default_errors }}
+                  </div>
+                {%- endif -%}
+
+                <div class="form-status-banner is-error" role="alert" data-popup-error hidden></div>
+
+                <div class="newsletter-popup-field-group">
+                  <label for="NewsletterPopupEmail-{{ section.id }}" class="visually-hidden">
+                    {{ 'sections.newsletter_popup.email_label' | t }}
+                  </label>
+                  <input
+                    id="NewsletterPopupEmail-{{ section.id }}"
+                    type="email"
+                    name="contact[email]"
+                    value="{{ form.email }}"
+                    autocorrect="off"
+                    autocapitalize="off"
+                    autocomplete="email"
+                    placeholder="{{ section.settings.email_placeholder | default: 'sections.newsletter_popup.email_placeholder' | t }}"
+                    aria-required="true"
+                    required
+                    data-popup-email
+                  />
+                  <button type="submit" class="btn btn-primary newsletter-popup-submit">
+                    {{ section.settings.button_label | default: 'sections.newsletter_popup.submit' | t }}
+                  </button>
+                </div>
+
+                {%- if section.settings.show_dismiss_link -%}
+                  <button type="button" class="newsletter-popup-dismiss" data-popup-close>
+                    {{ 'sections.newsletter_popup.dismiss' | t }}
+                  </button>
+                {%- endif -%}
+              </div>
+
+              <div class="newsletter-popup-success" role="status" aria-live="polite" data-popup-client-success hidden>
+                <div class="newsletter-popup-success-icon" aria-hidden="true">
+                  <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path>
+                    <polyline points="22 4 12 14.01 9 11.01"></polyline>
+                  </svg>
+                </div>
+                <p class="newsletter-popup-kicker">{{ section.settings.kicker | escape }}</p>
+                <h3 class="h3 newsletter-popup-heading">
+                  {{ section.settings.success_heading | escape }}
+                </h3>
+                <p class="newsletter-popup-text">
+                  {{ section.settings.success_message | escape }}
+                </p>
+                {%- if section.settings.welcome_code != blank -%}
+                  <div class="newsletter-popup-code-box">
+                    <span class="newsletter-popup-code-label">{{ 'sections.newsletter_popup.welcome_code_label' | t }}</span>
+                    <strong class="newsletter-popup-code-value">{{ section.settings.welcome_code | escape }}</strong>
+                  </div>
+                {%- endif -%}
+                <button type="button" class="btn btn-primary newsletter-popup-done" data-popup-close>
+                  {{ 'sections.newsletter_popup.continue_shopping' | t }}
+                </button>
+              </div>
+            {%- endif -%}
+          {%- endform -%}
+        </div>
+      </div>
+    </div>
+  </newsletter-popup>
+{%- endif -%}
+
+{% schema %}
+{
+  "name": "Newsletter Popup",
+  "tag": "section",
+  "class": "section-newsletter-popup",
+  "settings": [
+    {
+      "type": "checkbox",
+      "id": "enable_newsletter_popup",
+      "label": "Enable timed newsletter popup",
+      "default": true
+    },
+    {
+      "type": "range",
+      "id": "delay_seconds",
+      "min": 1,
+      "max": 30,
+      "step": 1,
+      "unit": "s",
+      "label": "Delay before appearing",
+      "default": 5
+    },
+    {
+      "type": "range",
+      "id": "dismiss_days",
+      "min": 1,
+      "max": 30,
+      "step": 1,
+      "unit": "d",
+      "label": "Hide popup after closing (days)",
+      "default": 7
+    },
+    {
+      "type": "image_picker",
+      "id": "image",
+      "label": "Editorial botanical image"
+    },
+    {
+      "type": "text",
+      "id": "kicker",
+      "label": "Kicker label",
+      "default": "Ghosoun Inner Circle"
+    },
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Popup heading",
+      "default": "Receive Seasonal Botanical Notes & New Harvest Alerts"
+    },
+    {
+      "type": "richtext",
+      "id": "description",
+      "label": "Popup description",
+      "default": "<p>Join the Ghosoun community for dilution guides, botanical sourcing dispatches, and merchant welcome privileges.</p>"
+    },
+    {
+      "type": "text",
+      "id": "email_placeholder",
+      "label": "Email input placeholder",
+      "default": "Enter your email address"
+    },
+    {
+      "type": "text",
+      "id": "button_label",
+      "label": "Submit button label",
+      "default": "Join Ghosoun"
+    },
+    {
+      "type": "text",
+      "id": "welcome_code",
+      "label": "Welcome privilege code",
+      "default": "WELCOME10"
+    },
+    {
+      "type": "text",
+      "id": "success_heading",
+      "label": "Success heading",
+      "default": "Welcome to Ghosoun"
+    },
+    {
+      "type": "textarea",
+      "id": "success_message",
+      "label": "Success confirmation message",
+      "default": "Thank you for joining the Ghosoun journal. Your welcome code is ready below."
+    },
+    {
+      "type": "checkbox",
+      "id": "show_dismiss_link",
+      "label": "Show 'No thanks' dismiss button",
+      "default": true
+    }
+  ],
+  "presets": [
+    {
+      "name": "Newsletter Popup"
+    }
+  ]
+}
+{% endschema %}

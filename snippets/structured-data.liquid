@@ -1,0 +1,107 @@
+{%- comment -%}
+  Schema.org JSON-LD structured data for Organization, WebSite, Product, and Breadcrumbs.
+  Emits strictly verified Shopify data with zero fabricated ratings or review counts.
+{%- endcomment -%}
+
+<script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "Organization",
+    "name": {{ shop.name | json }},
+    "url": {{ shop.url | json }}
+    {%- if settings.social_instagram != blank or settings.social_facebook != blank or settings.social_youtube != blank -%}
+      ,"sameAs": [
+        {%- assign socials = '' -%}
+        {%- if settings.social_instagram != blank %}{% assign socials = socials | append: settings.social_instagram | append: '||' %}{% endif -%}
+        {%- if settings.social_facebook != blank %}{% assign socials = socials | append: settings.social_facebook | append: '||' %}{% endif -%}
+        {%- if settings.social_youtube != blank %}{% assign socials = socials | append: settings.social_youtube | append: '||' %}{% endif -%}
+        {%- assign social_list = socials | split: '||' -%}
+        {%- for link in social_list -%}
+          {%- if link != blank -%}
+            {{ link | json }}{% unless forloop.last %},{% endunless %}
+          {%- endif -%}
+        {%- endfor -%}
+      ]
+    {%- endif -%}
+  }
+</script>
+
+{%- if template.name == 'index' -%}
+  <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "WebSite",
+      "name": {{ shop.name | json }},
+      "url": {{ shop.url | json }},
+      "potentialAction": {
+        "@type": "SearchAction",
+        "target": "{{ shop.url }}{{ routes.search_url }}?q={search_term_string}",
+        "query-input": "required name=search_term_string"
+      }
+    }
+  </script>
+{%- endif -%}
+
+{%- if template.name == 'product' and product -%}
+  {%- assign ld_variant = product.selected_or_first_available_variant -%}
+  <script type="application/ld+json">
+    {
+      "@context": "https://schema.org/",
+      "@type": "Product",
+      "name": {{ product.title | json }},
+      "url": "{{ shop.url }}{{ product.url }}",
+      {%- if product.featured_media -%}
+        "image": [{{ product.featured_media | image_url: width: 1200 | prepend: 'https:' | json }}],
+      {%- endif -%}
+      "description": {{ product.description | strip_html | truncate: 320 | json }},
+      {%- if ld_variant.sku != blank -%}
+        "sku": {{ ld_variant.sku | json }},
+      {%- endif -%}
+      "brand": {
+        "@type": "Brand",
+        "name": {{ product.vendor | default: shop.name | json }}
+      },
+      "offers": {
+        "@type": "Offer",
+        "url": "{{ shop.url }}{{ ld_variant.url }}",
+        "priceCurrency": {{ cart.currency.iso_code | json }},
+        "price": {{ ld_variant.price | divided_by: 100.0 | json }},
+        "availability": "https://schema.org/{% if ld_variant.available %}InStock{% else %}OutOfStock{% endif %}",
+        "itemCondition": "https://schema.org/NewCondition"
+      }
+    }
+  </script>
+{%- endif -%}
+
+{%- if template.name == 'collection' or template.name == 'product' -%}
+  <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "BreadcrumbList",
+      "itemListElement": [
+        {
+          "@type": "ListItem",
+          "position": 1,
+          "name": "Home",
+          "item": {{ shop.url | json }}
+        }
+        {%- if collection -%}
+          ,{
+            "@type": "ListItem",
+            "position": 2,
+            "name": {{ collection.title | json }},
+            "item": "{{ shop.url }}{{ collection.url }}"
+          }
+        {%- endif -%}
+        {%- if template.name == 'product' and product -%}
+          ,{
+            "@type": "ListItem",
+            "position": {% if collection %}3{% else %}2{% endif %},
+            "name": {{ product.title | json }},
+            "item": "{{ shop.url }}{{ product.url }}"
+          }
+        {%- endif -%}
+      ]
+    }
+  </script>
+{%- endif -%}

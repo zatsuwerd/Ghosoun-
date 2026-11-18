@@ -1,0 +1,539 @@
+[
+  {
+    "name": "theme_info",
+    "theme_name": "Ghosoun (غصون) Botanical Store",
+    "theme_version": "2.0.0",
+    "theme_author": "Ghosoun Engineering",
+    "theme_documentation_url": "https://help.shopify.com/en/manual/online-store/themes",
+    "theme_support_url": "/pages/contact"
+  },
+  {
+    "name": "Colors",
+    "settings": [
+      {
+        "type": "header",
+        "content": "Brand & Surface Palette"
+      },
+      {
+        "type": "color",
+        "id": "color_bg",
+        "label": "Primary Background (Ivory Canvas)",
+        "default": "#FAF9F5"
+      },
+      {
+        "type": "color",
+        "id": "color_bg_secondary",
+        "label": "Secondary Surface (Warm Stone)",
+        "default": "#F2EFE9"
+      },
+      {
+        "type": "color",
+        "id": "color_card_bg",
+        "label": "Card Surface Color",
+        "default": "#FFFFFF"
+      },
+      {
+        "type": "color",
+        "id": "color_primary",
+        "label": "Primary Brand Color (Deep Teal)",
+        "default": "#0D2F32"
+      },
+      {
+        "type": "color",
+        "id": "color_secondary",
+        "label": "Secondary Botanical Color (Leaf Green)",
+        "default": "#217C42"
+      },
+      {
+        "type": "color",
+        "id": "color_accent",
+        "label": "Warm Gold Accent",
+        "default": "#C59B43"
+      },
+      {
+        "type": "header",
+        "content": "Typography & Border Colors"
+      },
+      {
+        "type": "color",
+        "id": "color_heading",
+        "label": "Heading Color",
+        "default": "#0D2F32"
+      },
+      {
+        "type": "color",
+        "id": "color_text",
+        "label": "Body Text Color",
+        "default": "#142224"
+      },
+      {
+        "type": "color",
+        "id": "color_text_muted",
+        "label": "Muted Text Color",
+        "default": "#526162"
+      },
+      {
+        "type": "color",
+        "id": "color_border",
+        "label": "Borders & Dividers",
+        "default": "#E2DDD2"
+      },
+      {
+        "type": "header",
+        "content": "Header, Footer & Buttons"
+      },
+      {
+        "type": "color",
+        "id": "color_header_bg",
+        "label": "Header Background",
+        "default": "#FAF9F5"
+      },
+      {
+        "type": "color",
+        "id": "color_header_text",
+        "label": "Header Text & Icons",
+        "default": "#0D2F32"
+      },
+      {
+        "type": "color",
+        "id": "color_footer_bg",
+        "label": "Footer Background",
+        "default": "#0D2F32"
+      },
+      {
+        "type": "color",
+        "id": "color_footer_text",
+        "label": "Footer Text",
+        "default": "#F2EFE9"
+      },
+      {
+        "type": "color",
+        "id": "color_btn_bg",
+        "label": "Primary Button Background",
+        "default": "#0D2F32"
+      },
+      {
+        "type": "color",
+        "id": "color_btn_text",
+        "label": "Primary Button Text",
+        "default": "#FAF9F5"
+      },
+      {
+        "type": "color",
+        "id": "color_btn_hover_bg",
+        "label": "Button Hover Background",
+        "default": "#217C42"
+      },
+      {
+        "type": "color",
+        "id": "color_btn_hover_text",
+        "label": "Button Hover Text",
+        "default": "#FAF9F5"
+      },
+      {
+        "type": "header",
+        "content": "Badges & Glass Accents"
+      },
+      {
+        "type": "color",
+        "id": "color_badge_bg",
+        "label": "Botanical Badge Background",
+        "default": "#0D2F32"
+      },
+      {
+        "type": "color",
+        "id": "color_badge_text",
+        "label": "Botanical Badge Text",
+        "default": "#FAF9F5"
+      },
+      {
+        "type": "color",
+        "id": "color_sale_badge",
+        "label": "Sale Badge Color",
+        "default": "#9B3B2E"
+      },
+      {
+        "type": "color",
+        "id": "color_violet_glass",
+        "label": "Dark Glass Accent",
+        "default": "#2A1B3D"
+      }
+    ]
+  },
+  {
+    "name": "Typography",
+    "settings": [
+      {
+        "type": "font_picker",
+        "id": "font_heading",
+        "label": "Heading Font",
+        "default": "cormorant_garamond_n6"
+      },
+      {
+        "type": "font_picker",
+        "id": "font_body",
+        "label": "Body Font",
+        "default": "montserrat_n4"
+      },
+      {
+        "type": "font_picker",
+        "id": "font_nav",
+        "label": "Navigation Font",
+        "default": "montserrat_n5"
+      },
+      {
+        "type": "font_picker",
+        "id": "font_button",
+        "label": "Button Font",
+        "default": "montserrat_n6"
+      },
+      {
+        "type": "range",
+        "id": "base_font_size",
+        "min": 14,
+        "max": 18,
+        "step": 1,
+        "unit": "px",
+        "label": "Base Font Size",
+        "default": 16
+      },
+      {
+        "type": "range",
+        "id": "heading_scale",
+        "min": 85,
+        "max": 130,
+        "step": 5,
+        "unit": "%",
+        "label": "Desktop Heading Scale",
+        "default": 100
+      },
+      {
+        "type": "range",
+        "id": "heading_scale_mobile",
+        "min": 80,
+        "max": 120,
+        "step": 5,
+        "unit": "%",
+        "label": "Mobile Heading Scale",
+        "default": 95
+      },
+      {
+        "type": "range",
+        "id": "body_scale",
+        "min": 90,
+        "max": 120,
+        "step": 5,
+        "unit": "%",
+        "label": "Body Font Scale",
+        "default": 100
+      },
+      {
+        "type": "range",
+        "id": "heading_line_height_pct",
+        "min": 110,
+        "max": 150,
+        "step": 5,
+        "unit": "%",
+        "label": "Heading Line Height",
+        "default": 120
+      },
+      {
+        "type": "range",
+        "id": "body_line_height_pct",
+        "min": 140,
+        "max": 190,
+        "step": 5,
+        "unit": "%",
+        "label": "Body Line Height",
+        "default": 160
+      },
+      {
+        "type": "range",
+        "id": "heading_letter_spacing",
+        "min": 0,
+        "max": 10,
+        "step": 1,
+        "label": "Heading Letter Spacing (0.01em units)",
+        "default": 2
+      },
+      {
+        "type": "select",
+        "id": "heading_transform",
+        "label": "Heading Text Transform",
+        "options": [
+          { "value": "none", "label": "Normal" },
+          { "value": "capitalize", "label": "Capitalize" },
+          { "value": "uppercase", "label": "Uppercase" }
+        ],
+        "default": "none"
+      },
+      {
+        "type": "select",
+        "id": "button_transform",
+        "label": "Button Text Transform",
+        "options": [
+          { "value": "uppercase", "label": "Uppercase" },
+          { "value": "none", "label": "Normal" }
+        ],
+        "default": "uppercase"
+      }
+    ]
+  },
+  {
+    "name": "Layout & Styling",
+    "settings": [
+      {
+        "type": "range",
+        "id": "page_width",
+        "min": 1100,
+        "max": 1600,
+        "step": 20,
+        "unit": "px",
+        "label": "Maximum Container Width",
+        "default": 1440
+      },
+      {
+        "type": "range",
+        "id": "container_padding_desktop",
+        "min": 20,
+        "max": 80,
+        "step": 4,
+        "unit": "px",
+        "label": "Desktop Container Side Padding",
+        "default": 40
+      },
+      {
+        "type": "range",
+        "id": "container_padding_mobile",
+        "min": 12,
+        "max": 36,
+        "step": 4,
+        "unit": "px",
+        "label": "Mobile Container Side Padding",
+        "default": 20
+      },
+      {
+        "type": "range",
+        "id": "grid_gap",
+        "min": 12,
+        "max": 40,
+        "step": 4,
+        "unit": "px",
+        "label": "Grid Gap",
+        "default": 24
+      },
+      {
+        "type": "range",
+        "id": "section_spacing",
+        "min": 0,
+        "max": 100,
+        "step": 4,
+        "unit": "px",
+        "label": "Desktop Space Between Sections",
+        "default": 0
+      },
+      {
+        "type": "range",
+        "id": "section_spacing_mobile",
+        "min": 0,
+        "max": 64,
+        "step": 4,
+        "unit": "px",
+        "label": "Mobile Space Between Sections",
+        "default": 0
+      },
+      {
+        "type": "range",
+        "id": "button_border_radius",
+        "min": 0,
+        "max": 40,
+        "step": 2,
+        "unit": "px",
+        "label": "Button Border Radius",
+        "default": 4
+      },
+      {
+        "type": "range",
+        "id": "button_border_width",
+        "min": 1,
+        "max": 4,
+        "step": 1,
+        "unit": "px",
+        "label": "Button Border Width",
+        "default": 1
+      },
+      {
+        "type": "range",
+        "id": "input_border_radius",
+        "min": 0,
+        "max": 24,
+        "step": 2,
+        "unit": "px",
+        "label": "Input Field Border Radius",
+        "default": 4
+      },
+      {
+        "type": "range",
+        "id": "card_border_radius",
+        "min": 0,
+        "max": 30,
+        "step": 2,
+        "unit": "px",
+        "label": "Card Border Radius",
+        "default": 6
+      },
+      {
+        "type": "range",
+        "id": "image_border_radius",
+        "min": 0,
+        "max": 30,
+        "step": 2,
+        "unit": "px",
+        "label": "Image Border Radius",
+        "default": 6
+      },
+      {
+        "type": "range",
+        "id": "card_border_width",
+        "min": 0,
+        "max": 3,
+        "step": 1,
+        "unit": "px",
+        "label": "Card Border Thickness",
+        "default": 1
+      },
+      {
+        "type": "range",
+        "id": "card_shadow_opacity",
+        "min": 0,
+        "max": 20,
+        "step": 2,
+        "unit": "%",
+        "label": "Card Hover Shadow Opacity",
+        "default": 6
+      },
+      {
+        "type": "range",
+        "id": "icon_size",
+        "min": 16,
+        "max": 28,
+        "step": 2,
+        "unit": "px",
+        "label": "UI Icon Size",
+        "default": 20
+      },
+      {
+        "type": "checkbox",
+        "id": "enable_animations",
+        "label": "Enable Smooth Hover & Transition Animations",
+        "default": true
+      }
+    ]
+  },
+  {
+    "name": "Product Cards",
+    "settings": [
+      {
+        "type": "select",
+        "id": "card_image_ratio",
+        "label": "Image Aspect Ratio",
+        "options": [
+          { "value": "1/1", "label": "Square (1:1)" },
+          { "value": "3/4", "label": "Portrait (3:4)" },
+          { "value": "4/5", "label": "Botanical Tall (4:5)" }
+        ],
+        "default": "4/5"
+      },
+      {
+        "type": "select",
+        "id": "card_text_align",
+        "label": "Card Text Alignment",
+        "options": [
+          { "value": "start", "label": "Start (LTR Left / RTL Right)" },
+          { "value": "center", "label": "Center" }
+        ],
+        "default": "start"
+      },
+      {
+        "type": "checkbox",
+        "id": "show_secondary_image_on_hover",
+        "label": "Show Secondary Image on Hover",
+        "default": true
+      },
+      {
+        "type": "checkbox",
+        "id": "show_vendor",
+        "label": "Show Product Vendor",
+        "default": false
+      },
+      {
+        "type": "checkbox",
+        "id": "show_botanical_name",
+        "label": "Show Botanical Name Metafield",
+        "default": true
+      },
+      {
+        "type": "checkbox",
+        "id": "show_purity_badge",
+        "label": "Show Origin Tag Badge",
+        "default": true
+      },
+      {
+        "type": "checkbox",
+        "id": "show_quick_add",
+        "label": "Enable Quick Add to Cart Button",
+        "default": true
+      }
+    ]
+  },
+  {
+    "name": "Cart Drawer & Shipping",
+    "settings": [
+      {
+        "type": "select",
+        "id": "cart_type",
+        "label": "Cart Experience",
+        "options": [
+          { "value": "drawer", "label": "Slide-out Cart Drawer" },
+          { "value": "page", "label": "Standard Cart Page" }
+        ],
+        "default": "drawer"
+      },
+      {
+        "type": "range",
+        "id": "free_shipping_threshold",
+        "min": 50,
+        "max": 500,
+        "step": 10,
+        "unit": "AED",
+        "label": "Free Shipping Threshold",
+        "default": 200
+      }
+    ]
+  },
+  {
+    "name": "Social Media Links",
+    "settings": [
+      {
+        "type": "text",
+        "id": "social_instagram",
+        "label": "Instagram URL"
+      },
+      {
+        "type": "text",
+        "id": "social_facebook",
+        "label": "Facebook URL"
+      },
+      {
+        "type": "text",
+        "id": "social_youtube",
+        "label": "YouTube URL"
+      },
+      {
+        "type": "text",
+        "id": "social_whatsapp",
+        "label": "WhatsApp Contact Link"
+      }
+    ]
+  }
+]

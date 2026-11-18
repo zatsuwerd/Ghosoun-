@@ -1,0 +1,135 @@
+{%- comment -%}
+  Renders Ghosoun (غصون) botanical product card.
+  Accepts:
+  - card_product: <Product> Liquid object
+  - ratio: Aspect ratio string '1/1', '3/4', or '4/5'
+{%- endcomment -%}
+
+{%- liquid
+  assign aspect_ratio = ratio | default: settings.card_image_ratio | default: '4/5'
+  assign show_secondary = false
+  if settings.show_secondary_image_on_hover and card_product.media[1] != blank
+    assign show_secondary = true
+  endif
+  assign current_variant = card_product.selected_or_first_available_variant
+  assign card_align = settings.card_text_align | default: 'start'
+-%}
+
+<article class="product-card" data-product-id="{{ card_product.id }}">
+  <div class="card-media-wrapper" data-ratio="{{ aspect_ratio }}">
+
+    <!-- Botanical Origin & Sale Badges -->
+    <div class="card-badges">
+      {%- if card_product.compare_at_price > card_product.price -%}
+        {%- assign saved_amount = card_product.compare_at_price | minus: card_product.price | money_without_trailing_zeros -%}
+        <span class="badge badge-sale">
+          {{ 'products.product.save' | t: amount: saved_amount }}
+        </span>
+      {%- endif -%}
+      {%- if settings.show_purity_badge -%}
+        <span class="badge badge-botanical">{{ 'products.product.pure_guarantee' | t }}</span>
+      {%- endif -%}
+    </div>
+
+    <button
+      type="button"
+      class="card-wishlist-btn"
+      data-wishlist-toggle
+      data-product-id="{{ card_product.id }}"
+      data-product-title="{{ card_product.title | escape }}"
+      data-product-url="{{ card_product.url }}"
+      data-product-price="{{ card_product.price | money }}"
+      data-product-image="{% if card_product.featured_media %}{{ card_product.featured_media | image_url: width: 300 }}{% endif %}"
+      aria-label="{{ 'general.wishlist.add' | t }}"
+      aria-pressed="false"
+    >
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true" focusable="false"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>
+    </button>
+
+    <!-- Product Imagery -->
+    <a href="{{ card_product.url }}" class="card-media-link" aria-label="{{ card_product.title | escape }}">
+      {%- if card_product.featured_media != blank -%}
+        {%- assign primary_class = 'card-media card-media--primary' -%}
+        {%- if show_secondary -%}
+          {%- assign primary_class = primary_class | append: ' has-secondary' -%}
+        {%- endif -%}
+        {{ card_product.featured_media | image_url: width: 1200 | image_tag:
+          class: primary_class,
+          loading: 'lazy',
+          widths: '375, 550, 750, 1100, 1500',
+          alt: card_product.featured_media.alt | default: card_product.title
+        }}
+        {%- if show_secondary -%}
+          {{ card_product.media[1] | image_url: width: 1200 | image_tag:
+            class: 'card-media card-media--secondary',
+            loading: 'lazy',
+            widths: '375, 550, 750, 1100, 1500',
+            alt: card_product.media[1].alt | default: card_product.title
+          }}
+        {%- endif -%}
+      {%- else -%}
+        {{ 'product-1' | placeholder_svg_tag: 'card-media' }}
+      {%- endif -%}
+    </a>
+  </div>
+
+  <div class="card-content" data-align="{{ card_align }}">
+    {%- if settings.show_vendor and card_product.vendor != blank -%}
+      <div class="card-vendor">{{ card_product.vendor | escape }}</div>
+    {%- endif -%}
+
+    {%- if settings.show_botanical_name -%}
+      {%- assign botanical_name = card_product.metafields.custom.botanical_name -%}
+      <div class="card-botanical-name">
+        {%- if botanical_name != blank -%}
+          {{ botanical_name | escape }}
+        {%- else -%}
+          {{ 'products.product.botanical_origin_fallback' | t }}
+        {%- endif -%}
+      </div>
+    {%- endif -%}
+
+    <h3 class="card-title">
+      <a href="{{ card_product.url }}">{{ card_product.title | escape }}</a>
+    </h3>
+
+    <div class="card-price-row">
+      {%- if card_product.price_varies -%}
+        {%- assign min_price = card_product.price_min | money -%}
+        <span>{{ 'products.product.from_price' | t: price: min_price }}</span>
+      {%- else -%}
+        <span>{{ card_product.price | money }}</span>
+      {%- endif -%}
+
+      {%- if card_product.compare_at_price > card_product.price -%}
+        <span class="card-price-compare">{{ card_product.compare_at_price | money }}</span>
+      {%- endif -%}
+    </div>
+
+    {%- if settings.show_quick_add -%}
+      <product-form>
+        <form method="post" action="{{ routes.cart_add_url }}" class="card-quick-add-form" data-product-form>
+          <input type="hidden" name="id" value="{{ current_variant.id }}">
+          <input type="hidden" name="quantity" value="1">
+
+          {%- if current_variant.available -%}
+            {%- if card_product.has_only_default_variant -%}
+              <button type="submit" class="btn btn-secondary card-quick-add-btn" data-action="quick-add">
+                <span data-add-to-cart-text>{{ 'products.product.add_to_cart' | t }}</span>
+              </button>
+            {%- else -%}
+              <a href="{{ card_product.url }}" class="btn btn-secondary card-quick-add-btn">
+                {{ 'products.product.choose_options' | t }}
+              </a>
+            {%- endif -%}
+          {%- else -%}
+            <button type="button" class="btn btn-secondary card-quick-add-btn" disabled>
+              {{ 'products.product.sold_out' | t }}
+            </button>
+          {%- endif -%}
+          <div class="product-form-error" role="alert" data-product-form-error hidden></div>
+        </form>
+      </product-form>
+    {%- endif -%}
+  </div>
+</article>

@@ -1,0 +1,198 @@
+{
+  "general": {
+    "accessibility": {
+      "close": "إغلاق",
+      "menu": "فتح قائمة التنقل",
+      "search": "البحث في المتجر",
+      "cart": "عرض حقيبة التسوق",
+      "skip_to_content": "الانتقال إلى المحتوى الرئيسي",
+      "previous": "السابق",
+      "next": "التالي",
+      "zoom_image": "تكبير صورة المنتج"
+    },
+    "cart": {
+      "title": "حقيبة التسوق",
+      "empty": "حقيبة التسوق فارغة حالياً.",
+      "continue_shopping": "استكشف المنتجات النباتية",
+      "subtotal": "المجموع الفرعي",
+      "discounts": "الخصومات",
+      "checkout": "إتمام الطلب",
+      "view_cart": "عرض السلة الكاملة",
+      "update": "تحديث السلة",
+      "free_shipping_away": "أضف {{ amount }} للحصول على شحن محلي مجاني",
+      "free_shipping_eligible": "أنت مؤهل للحصول على شحن محلي مجاني",
+      "quantity": "الكمية",
+      "decrease_quantity": "تقليل الكمية",
+      "increase_quantity": "زيادة الكمية",
+      "remove": "إزالة",
+      "note": "ملاحظات الطلب أو رسالة الإهداء",
+      "taxes_shipping_note": "تُحسب الضرائب وخيارات الشحن عند الدفع.",
+      "add_error": "تعذّر تحديث الحقيبة حالياً. يرجى المحاولة مرة أخرى."
+    },
+    "wishlist": {
+      "title": "المفضلة",
+      "empty": "لا توجد منتجات محفوظة في قائمتك بعد.",
+      "add": "حفظ في المفضلة",
+      "remove": "إزالة من المفضلة",
+      "explore": "تصفح المجموعات"
+    },
+    "search": {
+      "title": "ابحث في غصون",
+      "placeholder": "ابحث عن الزيوت، الفواحات، أو المقالات...",
+      "submit": "بحث",
+      "results_count": "تم العثور على {{ count }} نتيجة",
+      "no_results": "لم يتم العثور على منتجات أو مقالات مطابقة لـ \"{{ terms }}\".",
+      "popular_label": "عمليات بحث شائعة",
+      "type_product": "منتج",
+      "type_article": "المجلة",
+      "type_page": "صفحة"
+    },
+    "pagination": {
+      "label": "ترقيم الصفحات",
+      "previous": "الصفحة السابقة",
+      "next": "الصفحة التالية",
+      "page": "صفحة {{ number }}"
+    },
+    "language": {
+      "label": "اللغة"
+    },
+    "social": {
+      "instagram": "إنستغرام",
+      "facebook": "فيسبوك",
+      "youtube": "يوتيوب",
+      "whatsapp": "واتساب"
+    },
+    "errors": {
+      "not_found_code": "404",
+      "not_found_title": "الصفحة غير موجودة",
+      "not_found_text": "عذراً، تعذّر العثور على الصفحة أو المجموعة المطلوبة.",
+      "return_home": "العودة للرئيسية"
+    }
+  },
+  "collections": {
+    "general": {
+      "all_of_collection": "جميع {{ title }}",
+      "products_count": "{{ count }} منتج",
+      "filter_by": "تصفية حسب",
+      "sort_by": "ترتيب حسب",
+      "apply": "تطبيق",
+      "clear_all": "إعادة ضبط الفلاتر",
+      "no_matches": "لا توجد منتجات مطابقة للفلاتر المحددة.",
+      "empty": "ستظهر المنتجات المضافة لهذه المجموعة هنا بمجرد نشرها.",
+      "catalog_title": "مجموعاتنا النباتية",
+      "view_collection": "تصفح المجموعة"
+    }
+  },
+  "products": {
+    "product": {
+      "add_to_cart": "أضف إلى الحقيبة",
+      "adding": "جاري الإضافة...",
+      "sold_out": "نفد من المخزون",
+      "unavailable": "غير متاح",
+      "choose_options": "اختر الخيار",
+      "from_price": "بدءاً من {{ price }}",
+      "regular_price": "السعر الأساسي",
+      "sale_price": "سعر العرض",
+      "save": "وفّر {{ amount }}",
+      "sku": "رمز المنتج",
+      "pure_guarantee": "أصل نباتي واحد",
+      "botanical_origin_fallback": "مستخلص نباتي معصور على البارد أو مقطّر بالبخار",
+      "quantity_low": "كمية محدودة متوفرة",
+      "in_stock": "متوفر وجاهز للشحن",
+      "botanical_name_label": "الاسم النباتي",
+      "plant_part_label": "جزء النبات",
+      "extraction_label": "طريقة الاستخلاص",
+      "origin_label": "المنشأ",
+      "related_heading": "منتجات نباتية مكملة"
+    }
+  },
+  "blogs": {
+    "article": {
+      "back_to_blog": "العودة إلى {{ title }}",
+      "by_author": "بقلم {{ author }}",
+      "read_more": "اقرأ المقال",
+      "tags": "التصنيفات",
+      "comments_title": "تعليقات القرّاء",
+      "comment_form_title": "أضف تعليقاً",
+      "comment_name": "الاسم",
+      "comment_email": "البريد الإلكتروني",
+      "comment_message": "التعليق",
+      "comment_post": "إرسال التعليق",
+      "comment_moderated": "تخضع التعليقات للمراجعة قبل نشرها في المتجر.",
+      "comment_success": "تم نشر تعليقك بنجاح.",
+      "comment_success_moderated": "تم استلام تعليقك وهو قيد المراجعة."
+    },
+    "blog": {
+      "all_topics": "جميع المقالات",
+      "empty": "ستظهر المقالات هنا عند نشرها.",
+      "min_read": "{{ minutes }} دقائق للقراءة"
+    }
+  },
+  "templates": {
+    "contact": {
+      "form": {
+        "name": "الاسم الكامل",
+        "email": "البريد الإلكتروني",
+        "phone": "رقم الهاتف (اختياري)",
+        "topic": "موضوع الاستفسار",
+        "message": "كيف يمكننا مساعدتك؟",
+        "send": "إرسال الرسالة",
+        "post_success": "شكراً لتواصلك مع غصون. سيرد فريقنا عليك قريباً."
+      }
+    }
+  },
+  "sections": {
+    "announcement": {
+      "aria_label": "إعلانات المتجر",
+      "previous": "الإعلان السابق",
+      "next": "الإعلان التالي"
+    },
+    "header": {
+      "search_placeholder": "ابحث عن زيوت غصون أو الفواحات أو المستخلصات...",
+      "account": "الحساب",
+      "cart": "الحقيبة",
+      "wishlist": "المفضلة",
+      "shop_all": "تسوق جميع المنتجات"
+    },
+    "hero": {
+      "previous_slide": "الشريحة السابقة",
+      "next_slide": "الشريحة التالية",
+      "go_to_slide": "الانتقال إلى الشريحة {{ number }}"
+    },
+    "mobile_nav": {
+      "aria_label": "التنقل السفلي للجوال",
+      "home": "الرئيسية",
+      "shop": "تسوق",
+      "wishlist": "المفضلة",
+      "cart": "الحقيبة",
+      "menu": "القائمة"
+    },
+    "footer": {
+      "newsletter_title": "انضم إلى نشرة غصون",
+      "newsletter_subtext": "احصل على أحدث الإصدارات النباتية وأدلة العناية الطبيعية.",
+      "email_placeholder": "أدخل بريدك الإلكتروني",
+      "subscribe": "اشترك",
+      "newsletter_success": "شكراً لاشتراكك في نشرة غصون.",
+      "copyright": "غصون للمنتجات النباتية. جميع الحقوق محفوظة."
+    },
+    "collection_tabs": {
+      "view_all": "عرض {{ title }}"
+    },
+    "faq": {
+      "search_placeholder": "ابحث في الأسئلة بالكلمات المفتاحية...",
+      "all_categories": "جميع المواضيع",
+      "no_matches": "لم نجد أسئلة مطابقة. تواصل معنا عبر صفحة اتصل بنا."
+    },
+    "newsletter_popup": {
+      "email_label": "البريد الإلكتروني",
+      "email_placeholder": "أدخل بريدك الإلكتروني",
+      "submit": "انضم إلى غصون",
+      "dismiss": "لا شكراً، متابعة التصفح",
+      "invalid_email": "يرجى إدخال بريد إلكتروني صحيح.",
+      "success_heading": "مرحباً بك في غصون",
+      "success_message": "شكراً لانضمامك. يمكنك استخدام الرمز الترحيبي الموضح أدناه عند تفعيله.",
+      "welcome_code_label": "رمز الترحيب",
+      "continue_shopping": "متابعة الاستكشاف"
+    }
+  }
+}

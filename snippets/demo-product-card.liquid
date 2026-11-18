@@ -1,0 +1,252 @@
+{%- comment -%}
+  Renders fallback showcase product cards for Ghosoun (غصون) when a collection
+  has not yet been populated or assigned in the Theme Editor.
+  Accepts:
+  - demo_index: Integer 1..8
+  - demo_tab: Optional tab label ('Bestsellers', 'Essential Oils', 'Carrier Oils', 'Diffusers')
+  - ratio: Aspect ratio string '1/1', '3/4', or '4/5'
+{%- endcomment -%}
+
+{%- liquid
+  assign idx = demo_index | default: 1
+  assign tab_name = demo_tab | default: 'Bestsellers'
+  assign aspect_ratio = ratio | default: settings.card_image_ratio | default: '4/5'
+  assign card_align = settings.card_text_align | default: 'start'
+
+  case tab_name
+    when 'Essential Oils'
+      case idx
+        when 1
+          assign d_title = 'Rosemary Essential Oil'
+          assign d_latin = 'Rosmarinus officinalis · Mediterranean'
+          assign d_price = 'From AED 69.00'
+          assign d_compare = 'AED 85.00'
+          assign d_badge = 'Save AED 16'
+        when 2
+          assign d_title = 'High-Altitude Lavender Oil'
+          assign d_latin = 'Lavandula angustifolia · Provence'
+          assign d_price = 'From AED 79.00'
+          assign d_compare = ''
+          assign d_badge = ''
+        when 3
+          assign d_title = 'Dhofar Frankincense Sacra Oil'
+          assign d_latin = 'Boswellia sacra · Oman'
+          assign d_price = 'AED 165.00'
+          assign d_compare = 'AED 195.00'
+          assign d_badge = 'Save AED 30'
+        when 4
+          assign d_title = 'Peppermint Botanical Oil'
+          assign d_latin = 'Mentha piperita · Leaves'
+          assign d_price = 'AED 55.00'
+          assign d_compare = ''
+          assign d_badge = ''
+        when 5
+          assign d_title = 'Calabrian Bergamot Peel Oil'
+          assign d_latin = 'Citrus bergamia · Cold Expressed'
+          assign d_price = 'AED 89.00'
+          assign d_compare = ''
+          assign d_badge = ''
+        when 6
+          assign d_title = 'Tea Tree Steam-Distilled Oil'
+          assign d_latin = 'Melaleuca alternifolia · Leaves'
+          assign d_price = 'AED 65.00'
+          assign d_compare = ''
+          assign d_badge = ''
+        when 7
+          assign d_title = 'Ylang Ylang Complete Oil'
+          assign d_latin = 'Cananga odorata · Blossoms'
+          assign d_price = 'AED 119.00'
+          assign d_compare = ''
+          assign d_badge = ''
+        else
+          assign d_title = 'Eucalyptus Radiata Oil'
+          assign d_latin = 'Eucalyptus radiata · Leaves'
+          assign d_price = 'AED 62.00'
+          assign d_compare = ''
+          assign d_badge = ''
+      endcase
+    when 'Carrier Oils'
+      case idx
+        when 1
+          assign d_title = 'Moroccan Argan Kernel Oil'
+          assign d_latin = 'Argania spinosa · Cold-Pressed'
+          assign d_price = 'From AED 95.00'
+          assign d_compare = 'AED 115.00'
+          assign d_badge = 'Save AED 20'
+        when 2
+          assign d_title = 'Wild Rosehip Seed Facial Oil'
+          assign d_latin = 'Rosa rubiginosa · Unrefined'
+          assign d_price = 'AED 115.00'
+          assign d_compare = ''
+          assign d_badge = ''
+        when 3
+          assign d_title = 'Golden Jojoba Botanical Wax'
+          assign d_latin = 'Simmondsia chinensis · First Press'
+          assign d_price = 'AED 145.00'
+          assign d_compare = ''
+          assign d_badge = ''
+        when 4
+          assign d_title = 'Black Seed Botanical Oil'
+          assign d_latin = 'Nigella sativa · Cold-Pressed'
+          assign d_price = 'AED 135.00'
+          assign d_compare = ''
+          assign d_badge = ''
+        when 5
+          assign d_title = 'Sweet Almond Nourishing Oil'
+          assign d_latin = 'Prunus amygdalus · Cold-Pressed'
+          assign d_price = 'AED 89.00'
+          assign d_compare = ''
+          assign d_badge = ''
+        when 6
+          assign d_title = 'Prickly Pear Seed Facial Elixir'
+          assign d_latin = 'Opuntia ficus-indica · Seeds'
+          assign d_price = 'AED 245.00'
+          assign d_compare = 'AED 280.00'
+          assign d_badge = 'Save AED 35'
+        when 7
+          assign d_title = 'Ghosoun Root & Scalp Elixir'
+          assign d_latin = 'Botanical Oil Infusion · Multi-Seed'
+          assign d_price = 'AED 185.00'
+          assign d_compare = 'AED 220.00'
+          assign d_badge = 'Save AED 35'
+        else
+          assign d_title = 'Cold-Pressed Castor Seed Oil'
+          assign d_latin = 'Ricinus communis · Unrefined'
+          assign d_price = 'AED 75.00'
+          assign d_compare = ''
+          assign d_badge = ''
+      endcase
+    when 'Diffusers'
+      case idx
+        when 1
+          assign d_title = 'Alabaster Ceramic Ultrasonic Diffuser'
+          assign d_latin = 'Stoneware Ceramic · Soft Mist'
+          assign d_price = 'AED 295.00'
+          assign d_compare = 'AED 340.00'
+          assign d_badge = 'Save AED 45'
+        when 2
+          assign d_title = 'Waterless Glass Nebulizer Diffuser'
+          assign d_latin = 'Hand-Blown Glass · Wood Base'
+          assign d_price = 'AED 385.00'
+          assign d_compare = ''
+          assign d_badge = ''
+        when 3
+          assign d_title = 'Cordless Brass-Trim Travel Diffuser'
+          assign d_latin = 'Matte Olive Alloy · USB-C'
+          assign d_price = 'AED 225.00'
+          assign d_compare = ''
+          assign d_badge = ''
+        else
+          assign d_title = 'Travertine Mist Vessel Diffuser'
+          assign d_latin = 'Matte Stone Finish · 300ml'
+          assign d_price = 'AED 265.00'
+          assign d_compare = ''
+          assign d_badge = ''
+      endcase
+    else
+      case idx
+        when 1
+          assign d_title = 'Rosemary Essential Oil'
+          assign d_latin = 'Rosmarinus officinalis · Mediterranean'
+          assign d_price = 'From AED 69.00'
+          assign d_compare = 'AED 85.00'
+          assign d_badge = 'Save AED 16'
+        when 2
+          assign d_title = 'Ghosoun Root & Scalp Elixir'
+          assign d_latin = 'Botanical Oil Infusion · Multi-Seed'
+          assign d_price = 'AED 185.00'
+          assign d_compare = 'AED 220.00'
+          assign d_badge = 'Save AED 35'
+        when 3
+          assign d_title = 'Moroccan Argan Kernel Oil'
+          assign d_latin = 'Argania spinosa · Cold-Pressed'
+          assign d_price = 'From AED 95.00'
+          assign d_compare = 'AED 115.00'
+          assign d_badge = 'Save AED 20'
+        when 4
+          assign d_title = 'High-Altitude Lavender Oil'
+          assign d_latin = 'Lavandula angustifolia · Provence'
+          assign d_price = 'From AED 79.00'
+          assign d_compare = ''
+          assign d_badge = ''
+        when 5
+          assign d_title = 'Dhofar Frankincense Sacra Oil'
+          assign d_latin = 'Boswellia sacra · Oman'
+          assign d_price = 'AED 165.00'
+          assign d_compare = 'AED 195.00'
+          assign d_badge = 'Save AED 30'
+        when 6
+          assign d_title = 'Wild Rosehip Seed Facial Oil'
+          assign d_latin = 'Rosa rubiginosa · Unrefined'
+          assign d_price = 'AED 115.00'
+          assign d_compare = ''
+          assign d_badge = ''
+        when 7
+          assign d_title = 'Alabaster Ceramic Ultrasonic Diffuser'
+          assign d_latin = 'Stoneware Ceramic · Soft Mist'
+          assign d_price = 'AED 295.00'
+          assign d_compare = 'AED 340.00'
+          assign d_badge = 'Save AED 45'
+        else
+          assign d_title = 'Golden Jojoba Botanical Wax'
+          assign d_latin = 'Simmondsia chinensis · First Press'
+          assign d_price = 'AED 145.00'
+          assign d_compare = ''
+          assign d_badge = ''
+      endcase
+  endcase
+-%}
+
+<article class="product-card" data-demo-product="{{ d_title | handle }}">
+  <div class="card-media-wrapper" data-ratio="{{ aspect_ratio }}">
+    <div class="card-badges">
+      {%- if d_badge != blank -%}
+        <span class="badge badge-sale">{{ d_badge }}</span>
+      {%- endif -%}
+      {%- if settings.show_purity_badge -%}
+        <span class="badge badge-botanical">{{ 'products.product.pure_guarantee' | t }}</span>
+      {%- endif -%}
+    </div>
+
+    <a href="{{ routes.all_products_collection_url }}" class="card-media-link" aria-label="{{ d_title | escape }}">
+      <div style="width: 100%; height: 100%; display: flex; flex-direction: column; align-items: center; justify-content: center; background: linear-gradient(155deg, var(--color-bg-secondary) 0%, var(--color-bg) 100%); padding: 2rem;">
+        <svg width="74" height="110" viewBox="0 0 74 110" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false">
+          <rect x="28" y="6" width="18" height="14" rx="2" fill="#0D2F32"/>
+          <rect x="25" y="20" width="24" height="6" rx="1.5" fill="#C59B43"/>
+          <path d="M27 26H47L53 36V96C53 99.3137 50.3137 102 47 102H27C23.6863 102 21 99.3137 21 96V36L27 26Z" fill="#0D2F32" stroke="#217C42" stroke-width="1.5"/>
+          <rect x="25" y="48" width="24" height="36" rx="2" fill="#FAF9F5" fill-opacity="0.96"/>
+          <line x1="29" y1="58" x2="45" y2="58" stroke="#0D2F32" stroke-width="1.5"/>
+          <line x1="29" y1="64" x2="45" y2="64" stroke="#217C42" stroke-width="1.2"/>
+          <line x1="31" y1="74" x2="43" y2="74" stroke="#C59B43" stroke-width="1.2"/>
+        </svg>
+      </div>
+    </a>
+  </div>
+
+  <div class="card-content" data-align="{{ card_align }}">
+    {%- if settings.show_vendor -%}
+      <div class="card-vendor">{{ shop.name }}</div>
+    {%- endif -%}
+
+    {%- if settings.show_botanical_name -%}
+      <div class="card-botanical-name">{{ d_latin }}</div>
+    {%- endif -%}
+
+    <h3 class="card-title">
+      <a href="{{ routes.all_products_collection_url }}">{{ d_title }}</a>
+    </h3>
+
+    <div class="card-price-row">
+      <span>{{ d_price }}</span>
+      {%- if d_compare != blank -%}
+        <span class="card-price-compare">{{ d_compare }}</span>
+      {%- endif -%}
+    </div>
+
+    {%- if settings.show_quick_add -%}
+      <a href="{{ routes.all_products_collection_url }}" class="btn btn-secondary card-quick-add-btn">
+        {{ 'products.product.choose_options' | t }}
+      </a>
+    {%- endif -%}
+  </div>
+</article>

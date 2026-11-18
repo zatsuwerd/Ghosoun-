@@ -1,0 +1,126 @@
+{
+  "name": "Footer Group",
+  "type": "footer",
+  "sections": {
+    "footer": {
+      "type": "footer",
+      "blocks": {
+        "pill_1": {
+          "type": "value_pill",
+          "settings": {
+            "label": "Single-Origin Botanicals"
+          }
+        },
+        "pill_2": {
+          "type": "value_pill",
+          "settings": {
+            "label": "Dark Glass Preserved"
+          }
+        },
+        "pill_3": {
+          "type": "value_pill",
+          "settings": {
+            "label": "Cold-Pressed & Distilled"
+          }
+        }
+      },
+      "block_order": [
+        "pill_1",
+        "pill_2",
+        "pill_3"
+      ],
+      "settings": {
+        "brand_bio": "Ghosoun (غصون) curates single-origin essential oils, first-press carrier elixirs, and atmospheric diffusers crafted with respect for natural origin.",
+        "menu_1_heading": "Botanicals",
+        "menu_1": "footer",
+        "menu_2_heading": "House of Ghosoun",
+        "menu_2": "footer",
+        "show_language_selector": true,
+        "padding_top": 60,
+        "padding_bottom": 40
+      }
+    },
+    "wishlist_drawer": {
+      "type": "wishlist-drawer",
+      "settings": {}
+    },
+    "mobile_bottom_nav": {
+      "type": "mobile-bottom-nav",
+      "blocks": {
+        "nav_home": {
+          "type": "nav_item",
+          "settings": {
+            "icon": "home",
+            "action_type": "home",
+            "label": "Home",
+            "link": "/"
+          }
+        },
+        "nav_shop": {
+          "type": "nav_item",
+          "settings": {
+            "icon": "shop",
+            "action_type": "shop",
+            "label": "Shop",
+            "link": "/collections/all"
+          }
+        },
+        "nav_wishlist": {
+          "type": "nav_item",
+          "settings": {
+            "icon": "wishlist",
+            "action_type": "wishlist",
+            "label": "Wishlist"
+          }
+        },
+        "nav_cart": {
+          "type": "nav_item",
+          "settings": {
+            "icon": "cart",
+            "action_type": "cart",
+            "label": "Bag"
+          }
+        },
+        "nav_menu": {
+          "type": "nav_item",
+          "settings": {
+            "icon": "menu",
+            "action_type": "menu",
+            "label": "Menu"
+          }
+        }
+      },
+      "block_order": [
+        "nav_home",
+        "nav_shop",
+        "nav_wishlist",
+        "nav_cart",
+        "nav_menu"
+      ],
+      "settings": {
+        "enable_mobile_nav": true,
+        "bg_color": "#FAF9F5",
+        "border_color": "#E2DDD2",
+        "active_color": "#217C42",
+        "inactive_color": "#526162"
+      }
+    },
+    "newsletter_popup": {
+      "type": "newsletter-popup",
+      "settings": {
+        "enable_newsletter_popup": true,
+        "delay_seconds": 5,
+        "dismiss_days": 7,
+        "kicker": "Ghosoun Inner Circle",
+        "heading": "Receive Seasonal Botanical Notes & New Harvest Alerts",
+        "welcome_code": "WELCOME10"
+      }
+    }
+  },
+  "order": [
+    "footer",
+    "wishlist_drawer",
+    "mobile_bottom_nav",
+    "newsletter_popup"
+  ]
+}

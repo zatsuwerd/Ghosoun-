@@ -1,0 +1,191 @@
+{%- style -%}
+  #shopify-section-{{ section.id }} .mobile-bottom-nav {
+    background-color: {{ section.settings.bg_color }};
+    border-top-color: {{ section.settings.border_color }};
+    --mobile-nav-active: {{ section.settings.active_color }};
+    --mobile-nav-inactive: {{ section.settings.inactive_color }};
+  }
+{%- endstyle -%}
+
+{%- if section.settings.enable_mobile_nav -%}
+  <mobile-bottom-nav
+    class="mobile-bottom-nav"
+    role="navigation"
+    aria-label="{{ 'sections.mobile_nav.aria_label' | t }}"
+    data-section-id="{{ section.id }}"
+  >
+    <div class="mobile-bottom-nav-grid">
+      {%- for block in section.blocks -%}
+        {%- liquid
+          assign item_action = block.settings.action_type
+          assign is_active = false
+          if item_action == 'home' and template.name == 'index'
+            assign is_active = true
+          elsif item_action == 'shop' and template.name == 'collection'
+            assign is_active = true
+          elsif item_action == 'shop' and template.name == 'product'
+            assign is_active = true
+          elsif item_action == 'cart' and template.name == 'cart'
+            assign is_active = true
+          endif
+        -%}
+
+        {%- if item_action == 'home' or item_action == 'shop' -%}
+          <a
+            href="{{ block.settings.link | default: routes.root_url }}"
+            class="mobile-bottom-nav-item {% if is_active %}is-active{% endif %}"
+            {% if is_active %}aria-current="page"{% endif %}
+            {{ block.shopify_attributes }}
+          >
+            <span class="mobile-bottom-nav-icon" aria-hidden="true">
+              {%- case block.settings.icon -%}
+                {%- when 'home' -%}
+                  <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M3 9.5L12 3l9 6.5V20a1 1 0 0 1-1 1h-5v-6h-6v6H4a1 1 0 0 1-1-1V9.5z"/></svg>
+                {%- when 'shop' -%}
+                  <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"/><line x1="3" y1="6" x2="21" y2="6"/><path d="M16 10a4 4 0 0 1-8 0"/></svg>
+                {%- when 'wishlist' -%}
+                  <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>
+                {%- when 'cart' -%}
+                  <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><circle cx="9" cy="21" r="1"/><circle cx="20" cy="21" r="1"/><path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"/></svg>
+                {%- when 'menu' -%}
+                  <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
+              {%- endcase -%}
+            </span>
+            <span class="mobile-bottom-nav-label">{{ block.settings.label | escape }}</span>
+          </a>
+        {%- else -%}
+          <button
+            type="button"
+            class="mobile-bottom-nav-item {% if is_active %}is-active{% endif %}"
+            data-mobile-nav-action="{{ item_action }}"
+            {% if item_action == 'cart' %}
+              aria-controls="CartDrawerBackdrop"
+              aria-expanded="false"
+            {% elsif item_action == 'wishlist' %}
+              aria-controls="WishlistDrawerBackdrop"
+              aria-expanded="false"
+            {% elsif item_action == 'menu' %}
+              aria-controls="MobileNavDrawer"
+              aria-expanded="false"
+            {% endif %}
+            {{ block.shopify_attributes }}
+          >
+            <span class="mobile-bottom-nav-icon" aria-hidden="true">
+              {%- case block.settings.icon -%}
+                {%- when 'home' -%}
+                  <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M3 9.5L12 3l9 6.5V20a1 1 0 0 1-1 1h-5v-6h-6v6H4a1 1 0 0 1-1-1V9.5z"/></svg>
+                {%- when 'shop' -%}
+                  <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"/><line x1="3" y1="6" x2="21" y2="6"/><path d="M16 10a4 4 0 0 1-8 0"/></svg>
+                {%- when 'wishlist' -%}
+                  <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>
+                  <span class="mobile-nav-badge" id="MobileWishlistCount" hidden>0</span>
+                {%- when 'cart' -%}
+                  <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><circle cx="9" cy="21" r="1"/><circle cx="20" cy="21" r="1"/><path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"/></svg>
+                  <span class="mobile-nav-badge" id="MobileCartCount" {% if cart.item_count == 0 %}hidden{% endif %}>{{ cart.item_count }}</span>
+                {%- when 'menu' -%}
+                  <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
+              {%- endcase -%}
+            </span>
+            <span class="mobile-bottom-nav-label">{{ block.settings.label | escape }}</span>
+          </button>
+        {%- endif -%}
+      {%- endfor -%}
+    </div>
+  </mobile-bottom-nav>
+{%- endif -%}
+
+{% schema %}
+{
+  "name": "Mobile Bottom Nav Bar",
+  "max_blocks": 5,
+  "settings": [
+    {
+      "type": "checkbox",
+      "id": "enable_mobile_nav",
+      "label": "Show Fixed Mobile Bottom Nav Bar",
+      "default": true
+    },
+    {
+      "type": "color",
+      "id": "bg_color",
+      "label": "Bar Background Color",
+      "default": "#FAF9F5"
+    },
+    {
+      "type": "color",
+      "id": "border_color",
+      "label": "Top Border Color",
+      "default": "#E2DDD2"
+    },
+    {
+      "type": "color",
+      "id": "active_color",
+      "label": "Active Tab Color",
+      "default": "#217C42"
+    },
+    {
+      "type": "color",
+      "id": "inactive_color",
+      "label": "Inactive Tab Color",
+      "default": "#6B7778"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "nav_item",
+      "name": "Navigation Tab",
+      "settings": [
+        {
+          "type": "select",
+          "id": "icon",
+          "label": "Icon",
+          "options": [
+            { "value": "home", "label": "Home" },
+            { "value": "shop", "label": "Shop Bag" },
+            { "value": "wishlist", "label": "Wishlist Heart" },
+            { "value": "cart", "label": "Shopping Cart" },
+            { "value": "menu", "label": "Menu Hamburger" }
+          ],
+          "default": "home"
+        },
+        {
+          "type": "select",
+          "id": "action_type",
+          "label": "Tap Action",
+          "options": [
+            { "value": "home", "label": "Navigate to Home" },
+            { "value": "shop", "label": "Navigate to Shop URL" },
+            { "value": "wishlist", "label": "Open Wishlist Drawer" },
+            { "value": "cart", "label": "Open Cart Drawer" },
+            { "value": "menu", "label": "Open Mobile Menu Drawer" }
+          ],
+          "default": "home"
+        },
+        {
+          "type": "text",
+          "id": "label",
+          "label": "Tab Label",
+          "default": "Home"
+        },
+        {
+          "type": "url",
+          "id": "link",
+          "label": "Link URL (for Home / Shop)"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Mobile Bottom Nav Bar",
+      "blocks": [
+        { "type": "nav_item", "settings": { "icon": "home", "action_type": "home", "label": "Home", "link": "/" } },
+        { "type": "nav_item", "settings": { "icon": "shop", "action_type": "shop", "label": "Shop", "link": "/collections/all" } },
+        { "type": "nav_item", "settings": { "icon": "wishlist", "action_type": "wishlist", "label": "Wishlist" } },
+        { "type": "nav_item", "settings": { "icon": "cart", "action_type": "cart", "label": "Cart" } },
+        { "type": "nav_item", "settings": { "icon": "menu", "action_type": "menu", "label": "Menu" } }
+      ]
+    }
+  ]
+}
+{% endschema %}

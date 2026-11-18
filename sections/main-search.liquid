@@ -1,0 +1,147 @@
+{%- style -%}
+  #shopify-section-{{ section.id }} .main-search-section {
+    padding-top: {{ section.settings.padding_top }}px;
+    padding-bottom: {{ section.settings.padding_bottom }}px;
+  }
+{%- endstyle -%}
+
+<section class="main-search-section">
+  <div class="botanical-page-hero">
+    <div class="page-width">
+      <p class="botanical-page-eyebrow">Ghosoun</p>
+      <h1>{{ 'general.search.title' | t }}</h1>
+
+      <form action="{{ routes.search_url }}" method="get" role="search" style="max-width: 58rem; margin: 2.4rem auto 0; display: flex; gap: 1rem;">
+        <label for="MainSearchInput-{{ section.id }}" class="visually-hidden">
+          {{ 'general.search.placeholder' | t }}
+        </label>
+        <input
+          id="MainSearchInput-{{ section.id }}"
+          type="search"
+          name="q"
+          value="{{ search.terms | escape }}"
+          placeholder="{{ 'general.search.placeholder' | t }}"
+          style="background: #FFFFFF;"
+        />
+        <input type="hidden" name="options[prefix]" value="last">
+        <button type="submit" class="btn btn-primary" style="flex-shrink: 0;">
+          {{ 'general.search.submit' | t }}
+        </button>
+      </form>
+    </div>
+  </div>
+
+  <div class="page-width" style="padding-top: 4.5rem;">
+    {%- if search.performed -%}
+      <p style="color: var(--color-text-muted); margin-bottom: 2.8rem;">
+        {{ 'general.search.results_count' | t: count: search.results_count }}
+      </p>
+
+      {%- paginate search.results by section.settings.results_per_page -%}
+        {%- if search.results_count > 0 -%}
+          <div class="botanical-grid-4">
+            {%- for item in search.results -%}
+              {%- case item.object_type -%}
+                {%- when 'product' -%}
+                  {%- render 'product-card', product: item -%}
+                {%- when 'article' -%}
+                  <article class="blog-article-card">
+                    <a href="{{ item.url }}" class="blog-article-media">
+                      {%- if item.image != blank -%}
+                        {{ item.image | image_url: width: 640 | image_tag:
+                          widths: '320, 480, 640',
+                          alt: item.image.alt | default: item.title,
+                          loading: 'lazy'
+                        }}
+                      {%- else -%}
+                        <div style="width: 100%; height: 100%; display: flex; align-items: center; justify-content: center; color: var(--color-accent); font-family: var(--font-heading-family); font-size: 1.8rem;">
+                          {{ 'general.search.type_article' | t }}
+                        </div>
+                      {%- endif -%}
+                    </a>
+                    <div class="blog-article-body">
+                      <span class="botanical-page-eyebrow" style="margin-bottom: 0.6rem;">{{ 'general.search.type_article' | t }}</span>
+                      <h2 class="h4" style="margin-bottom: 1rem;"><a href="{{ item.url }}">{{ item.title | escape }}</a></h2>
+                      <a href="{{ item.url }}" class="btn btn-secondary btn-sm" style="align-self: flex-start; margin-top: auto;">
+                        {{ 'blogs.article.read_more' | t }}
+                      </a>
+                    </div>
+                  </article>
+                {%- when 'page' -%}
+                  <article class="category-card">
+                    <div class="category-card-body">
+                      <span class="botanical-page-eyebrow" style="margin-bottom: 0.6rem;">{{ 'general.search.type_page' | t }}</span>
+                      <h2 class="h4" style="margin-bottom: 1rem;"><a href="{{ item.url }}">{{ item.title | escape }}</a></h2>
+                      <p style="font-size: 1.4rem; color: var(--color-text-muted); margin-bottom: 1.6rem;">
+                        {{ item.content | strip_html | truncate: 110 }}
+                      </p>
+                      <a href="{{ item.url }}" class="btn btn-secondary btn-sm" style="align-self: flex-start; margin-top: auto;">
+                        {{ 'collections.general.view_collection' | t }}
+                      </a>
+                    </div>
+                  </article>
+              {%- endcase -%}
+            {%- endfor -%}
+          </div>
+
+          {%- if paginate.pages > 1 -%}
+            <nav aria-label="{{ 'general.pagination.label' | t }}" style="display: flex; justify-content: center; gap: 1.2rem; margin-top: 4.5rem;">
+              {%- if paginate.previous -%}
+                <a href="{{ paginate.previous.url }}" class="btn btn-secondary btn-sm">{{ 'general.pagination.previous' | t }}</a>
+              {%- endif -%}
+              {%- if paginate.next -%}
+                <a href="{{ paginate.next.url }}" class="btn btn-secondary btn-sm">{{ 'general.pagination.next' | t }}</a>
+              {%- endif -%}
+            </nav>
+          {%- endif -%}
+        {%- else -%}
+          <div style="text-align: center; padding: 5rem 0;">
+            <p style="font-size: 1.6rem; color: var(--color-text-muted); margin-bottom: 2.4rem;">
+              {{ 'general.search.no_results' | t: terms: search.terms }}
+            </p>
+            <a href="{{ routes.all_products_collection_url }}" class="btn btn-primary">
+              {{ 'sections.header.shop_all' | t }}
+            </a>
+          </div>
+        {%- endif -%}
+      {%- endpaginate -%}
+    {%- endif -%}
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Search Results",
+  "settings": [
+    {
+      "type": "range",
+      "id": "results_per_page",
+      "min": 8,
+      "max": 32,
+      "step": 4,
+      "label": "Results Per Page",
+      "default": 16
+    },
+    {
+      "type": "range",
+      "id": "padding_top",
+      "min": 0,
+      "max": 100,
+      "step": 4,
+      "unit": "px",
+      "label": "Top Padding",
+      "default": 0
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "min": 0,
+      "max": 120,
+      "step": 4,
+      "unit": "px",
+      "label": "Bottom Padding",
+      "default": 72
+    }
+  ]
+}
+{% endschema %}

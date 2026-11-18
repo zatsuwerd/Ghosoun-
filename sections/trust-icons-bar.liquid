@@ -1,0 +1,117 @@
+{%- style -%}
+  #shopify-section-{{ section.id }} .trust-icons-strip {
+    padding-top: {{ section.settings.padding_top }}px;
+    padding-bottom: {{ section.settings.padding_bottom }}px;
+  }
+{%- endstyle -%}
+
+<section class="trust-icons-strip" data-section-id="{{ section.id }}" aria-label="{{ section.settings.aria_label | escape }}">
+  <div class="page-width">
+    <div class="trust-icons-grid">
+      {%- for block in section.blocks -%}
+        <div class="trust-item" {{ block.shopify_attributes }}>
+          <div class="trust-item-icon" aria-hidden="true">
+            {%- case block.settings.icon -%}
+              {%- when 'pure' -%}
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true" focusable="false"><path d="M12 2.69l5.66 5.66a8 8 0 1 1-11.31 0z"/></svg>
+              {%- when 'leaf' -%}
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true" focusable="false"><path d="M11 20A7 7 0 0 1 9.8 6.1C15.5 5 17 4.48 19 2c1 2 2 4.18 2 8 0 5.5-4.78 10-10 10Z"/><path d="M2 21c0-3 1.85-5.36 5.08-6C9.5 14.52 12 13 13 12"/></svg>
+              {%- when 'glass' -%}
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true" focusable="false"><rect x="6" y="2" width="12" height="20" rx="3"/><path d="M9 2v4h6V2"/><line x1="6" y1="10" x2="18" y2="10"/></svg>
+              {%- when 'origin' -%}
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true" focusable="false"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg>
+              {%- when 'delivery' -%}
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true" focusable="false"><rect x="1" y="3" width="15" height="13"/><polygon points="16 8 20 8 23 11 23 16 16 16 16 8"/><circle cx="5.5" cy="18.5" r="2.5"/><circle cx="18.5" cy="18.5" r="2.5"/></svg>
+              {%- when 'shield' -%}
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true" focusable="false"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+            {%- endcase -%}
+          </div>
+          <div class="trust-item-title">{{ block.settings.title | escape }}</div>
+          <div class="trust-item-sub">{{ block.settings.subtext | escape }}</div>
+        </div>
+      {%- endfor -%}
+    </div>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Botanical Pillars Bar",
+  "max_blocks": 8,
+  "settings": [
+    {
+      "type": "text",
+      "id": "aria_label",
+      "label": "Accessibility Label",
+      "default": "Ghosoun Botanical Standards"
+    },
+    {
+      "type": "range",
+      "id": "padding_top",
+      "min": 0,
+      "max": 80,
+      "step": 4,
+      "unit": "px",
+      "label": "Top Padding",
+      "default": 28
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "min": 0,
+      "max": 80,
+      "step": 4,
+      "unit": "px",
+      "label": "Bottom Padding",
+      "default": 28
+    }
+  ],
+  "blocks": [
+    {
+      "type": "trust_badge",
+      "name": "Botanical Pillar",
+      "settings": [
+        {
+          "type": "select",
+          "id": "icon",
+          "label": "Icon",
+          "options": [
+            { "value": "pure", "label": "Pure Droplet" },
+            { "value": "leaf", "label": "Botanical Leaf" },
+            { "value": "glass", "label": "Dark Glass Bottle" },
+            { "value": "origin", "label": "Single-Origin Globe" },
+            { "value": "delivery", "label": "Express Delivery" },
+            { "value": "shield", "label": "Quality Shield" }
+          ],
+          "default": "pure"
+        },
+        {
+          "type": "text",
+          "id": "title",
+          "label": "Heading",
+          "default": "Pure Botanicals"
+        },
+        {
+          "type": "text",
+          "id": "subtext",
+          "label": "Sub-label",
+          "default": "Zero synthetic fillers"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Botanical Pillars Bar",
+      "blocks": [
+        { "type": "trust_badge", "settings": { "icon": "pure", "title": "100% Pure Oils", "subtext": "No synthetics or diluents" } },
+        { "type": "trust_badge", "settings": { "icon": "leaf", "title": "Natural Extraction", "subtext": "Steam distilled & cold-pressed" } },
+        { "type": "trust_badge", "settings": { "icon": "glass", "title": "Dark Glass", "subtext": "UV-shielded apothecary bottles" } },
+        { "type": "trust_badge", "settings": { "icon": "origin", "title": "Single-Origin", "subtext": "Traceable harvest regions" } },
+        { "type": "trust_badge", "settings": { "icon": "shield", "title": "Batch Integrity", "subtext": "Transparent ingredient labels" } },
+        { "type": "trust_badge", "settings": { "icon": "delivery", "title": "Express Dispatch", "subtext": "Carefully packed to order" } }
+      ]
+    }
+  ]
+}
+{% endschema %}

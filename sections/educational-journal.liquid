@@ -1,0 +1,177 @@
+{%- style -%}
+  #shopify-section-{{ section.id }} .educational-journal-section {
+    padding-top: {{ section.settings.padding_top }}px;
+    padding-bottom: {{ section.settings.padding_bottom }}px;
+    background-color: var(--color-bg-secondary);
+    border-top: 1px solid var(--color-border);
+    border-bottom: 1px solid var(--color-border);
+  }
+{%- endstyle -%}
+
+{%- assign selected_blog = blogs[section.settings.blog] -%}
+
+<section class="educational-journal-section" aria-labelledby="JournalHeading-{{ section.id }}">
+  <div class="page-width">
+    <div style="display: flex; flex-wrap: wrap; align-items: flex-end; justify-content: space-between; gap: 1.6rem; margin-bottom: 3.6rem;">
+      <div>
+        {%- if section.settings.eyebrow != blank -%}
+          <p class="botanical-page-eyebrow" style="margin-bottom: 0.6rem;">{{ section.settings.eyebrow | escape }}</p>
+        {%- endif -%}
+        <h2 id="JournalHeading-{{ section.id }}" style="margin-bottom: 0;">{{ section.settings.heading | escape }}</h2>
+      </div>
+
+      {%- if selected_blog != blank -%}
+        <a href="{{ selected_blog.url }}" class="btn btn-secondary btn-sm">
+          {{ section.settings.cta_label | escape }}
+        </a>
+      {%- endif -%}
+    </div>
+
+    {%- if selected_blog != blank and selected_blog.articles_count > 0 -%}
+      <div class="blog-grid">
+        {%- for article in selected_blog.articles limit: section.settings.post_limit -%}
+          {%- assign word_count = article.content | strip_html | split: ' ' | size -%}
+          {%- assign read_minutes = word_count | divided_by: 180 | plus: 1 -%}
+          <article class="blog-article-card">
+            <a href="{{ article.url }}" class="blog-article-media">
+              {%- if article.image != blank -%}
+                {{ article.image | image_url: width: 800 | image_tag:
+                  widths: '400, 600, 800',
+                  alt: article.image.alt | default: article.title,
+                  loading: 'lazy'
+                }}
+              {%- else -%}
+                <div style="width: 100%; height: 100%; display: flex; align-items: center; justify-content: center; color: var(--color-accent); font-family: var(--font-heading-family); font-size: 2rem;">
+                  Ghosoun Journal
+                </div>
+              {%- endif -%}
+            </a>
+            <div class="blog-article-body">
+              <div class="blog-article-meta">
+                {%- if section.settings.show_date -%}
+                  <time datetime="{{ article.published_at | date: '%Y-%m-%d' }}">{{ article.published_at | date: '%b %d, %Y' }}</time>
+                {%- endif -%}
+                <span> &middot; {{ 'blogs.blog.min_read' | t: minutes: read_minutes }}</span>
+              </div>
+              <h3 class="h4" style="margin-bottom: 0.9rem;">
+                <a href="{{ article.url }}">{{ article.title | escape }}</a>
+              </h3>
+              {%- if article.excerpt_or_content != blank -%}
+                <p style="font-size: 1.4rem; color: var(--color-text-muted); margin-bottom: 1.8rem; flex: 1;">
+                  {{ article.excerpt_or_content | strip_html | truncate: 115 }}
+                </p>
+              {%- endif -%}
+              <a href="{{ article.url }}" class="btn btn-secondary btn-sm" style="align-self: flex-start;">
+                {{ 'blogs.article.read_more' | t }}
+              </a>
+            </div>
+          </article>
+        {%- endfor -%}
+      </div>
+    {%- else -%}
+      <div class="blog-grid">
+        <article class="blog-article-card">
+          <div class="blog-article-media" style="display: flex; align-items: center; justify-content: center; padding: 2rem; text-align: center;">
+            <span class="botanical-page-eyebrow">Extraction Methods</span>
+          </div>
+          <div class="blog-article-body">
+            <div class="blog-article-meta">{{ 'blogs.blog.min_read' | t: minutes: 4 }}</div>
+            <h3 class="h4" style="margin-bottom: 0.8rem;">Cold-Pressed vs. Steam-Distilled Botanicals</h3>
+            <p style="font-size: 1.4rem; color: var(--color-text-muted); margin: 0;">How gentle temperature control retains natural phytonutrients and clean aromatic profiles.</p>
+          </div>
+        </article>
+        <article class="blog-article-card">
+          <div class="blog-article-media" style="display: flex; align-items: center; justify-content: center; padding: 2rem; text-align: center;">
+            <span class="botanical-page-eyebrow">Dilution &amp; Care</span>
+          </div>
+          <div class="blog-article-body">
+            <div class="blog-article-meta">{{ 'blogs.blog.min_read' | t: minutes: 4 }}</div>
+            <h3 class="h4" style="margin-bottom: 0.8rem;">Balancing Essential Oils With Carrier Bases</h3>
+            <p style="font-size: 1.4rem; color: var(--color-text-muted); margin: 0;">Safe topical percentage guidelines for facial elixirs, scalp routines, and evening blends.</p>
+          </div>
+        </article>
+        <article class="blog-article-card">
+          <div class="blog-article-media" style="display: flex; align-items: center; justify-content: center; padding: 2rem; text-align: center;">
+            <span class="botanical-page-eyebrow">Harvest Traceability</span>
+          </div>
+          <div class="blog-article-body">
+            <div class="blog-article-meta">{{ 'blogs.blog.min_read' | t: minutes: 3 }}</div>
+            <h3 class="h4" style="margin-bottom: 0.8rem;">Reading a Botanical Label With Confidence</h3>
+            <p style="font-size: 1.4rem; color: var(--color-text-muted); margin: 0;">Why Latin species names, plant parts, and region of origin define authentic aromatherapy.</p>
+          </div>
+        </article>
+      </div>
+    {%- endif -%}
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Educational Journal",
+  "settings": [
+    {
+      "type": "text",
+      "id": "eyebrow",
+      "label": "Eyebrow",
+      "default": "Knowledge & Rituals"
+    },
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Heading",
+      "default": "From the Ghosoun Journal"
+    },
+    {
+      "type": "blog",
+      "id": "blog",
+      "label": "Blog Source"
+    },
+    {
+      "type": "range",
+      "id": "post_limit",
+      "min": 2,
+      "max": 6,
+      "step": 1,
+      "label": "Articles to Display",
+      "default": 3
+    },
+    {
+      "type": "checkbox",
+      "id": "show_date",
+      "label": "Show Publish Date",
+      "default": true
+    },
+    {
+      "type": "text",
+      "id": "cta_label",
+      "label": "View All Link Text",
+      "default": "Explore All Articles"
+    },
+    {
+      "type": "range",
+      "id": "padding_top",
+      "min": 0,
+      "max": 100,
+      "step": 4,
+      "unit": "px",
+      "label": "Top Padding",
+      "default": 64
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "min": 0,
+      "max": 100,
+      "step": 4,
+      "unit": "px",
+      "label": "Bottom Padding",
+      "default": 64
+    }
+  ],
+  "presets": [
+    {
+      "name": "Educational Journal"
+    }
+  ]
+}
+{% endschema %}

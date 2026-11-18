@@ -1,0 +1,187 @@
+{%- style -%}
+  #shopify-section-{{ section.id }} .origin-split-section {
+    padding-top: {{ section.settings.padding_top }}px;
+    padding-bottom: {{ section.settings.padding_bottom }}px;
+    background-color: {{ section.settings.bg_color }};
+  }
+  .split-inner-{{ section.id }} {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 4rem;
+    align-items: center;
+  }
+  @media screen and (min-width: 990px) {
+    .split-inner-{{ section.id }} {
+      grid-template-columns: {% if section.settings.image_position == 'left' %}1.1fr 1fr{% else %}1fr 1.1fr{% endif %};
+      gap: 6rem;
+    }
+  }
+{%- endstyle -%}
+
+<section class="origin-split-section" data-section-id="{{ section.id }}">
+  <div class="page-width">
+    <div class="split-inner-{{ section.id }}">
+
+      <!-- Media Column -->
+      <div class="split-media-col" {% if section.settings.image_position == 'right' %}style="order: 2;"{% endif %}>
+        {%- if section.settings.image != blank -%}
+          {{ section.settings.image | image_url: width: 1200 | image_tag:
+            class: 'origin-img',
+            widths: '375, 550, 750, 1100, 1500',
+            style: 'width: 100%; border-radius: var(--image-radius, 6px); box-shadow: 0 12px 32px rgba(13,47,50,0.08);',
+            loading: 'lazy',
+            alt: section.settings.image.alt | default: section.settings.title
+          }}
+        {%- else -%}
+          <div style="aspect-ratio: 4/3; border-radius: var(--card-radius, 6px); border: 1px solid var(--color-border); background: radial-gradient(circle at top right, rgba(197, 155, 67, 0.2), transparent 55%), linear-gradient(145deg, #0D2F32 0%, #1B5440 100%); display: flex; flex-direction: column; align-items: center; justify-content: center; padding: 3.5rem; text-align: center; color: #FAF9F5;">
+            <span class="section-eyebrow" style="color: var(--color-accent);">{{ section.settings.subtitle | escape }}</span>
+            <p class="h3" style="color: #FAF9F5; margin-bottom: 0.8rem;">{{ shop.name }}</p>
+            <p style="font-size: 1.4rem; opacity: 0.88; max-width: 34rem; margin: 0;">Single-origin harvests bottled in protective dark glass.</p>
+          </div>
+        {%- endif -%}
+      </div>
+
+      <!-- Text / Editorial Column -->
+      <div class="split-text-col">
+        {%- if section.settings.subtitle != blank -%}
+          <span class="section-eyebrow">{{ section.settings.subtitle | escape }}</span>
+        {%- endif -%}
+
+        <h2>{{ section.settings.title | escape }}</h2>
+
+        <div style="font-size: 1.55rem; line-height: 1.75; color: var(--color-text-muted); margin-bottom: 2.5rem;">
+          {{ section.settings.text }}
+        </div>
+
+        {%- if section.blocks.size > 0 -%}
+          <div style="display: grid; grid-template-columns: repeat(2, 1fr); gap: 2rem; margin-bottom: 3rem;">
+            {%- for block in section.blocks -%}
+              <div {{ block.shopify_attributes }}>
+                <h3 class="h4" style="margin-bottom: 0.4rem; color: var(--color-primary);">
+                  {{ block.settings.metric | escape }}
+                </h3>
+                <p style="font-size: 1.35rem; margin: 0; color: var(--color-text-muted);">
+                  {{ block.settings.label | escape }}
+                </p>
+              </div>
+            {%- endfor -%}
+          </div>
+        {%- endif -%}
+
+        {%- if section.settings.button_text != blank -%}
+          <a href="{{ section.settings.button_link | default: routes.all_products_collection_url }}" class="btn btn-primary">
+            {{ section.settings.button_text | escape }}
+          </a>
+        {%- endif -%}
+      </div>
+
+    </div>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Origin Story Split",
+  "settings": [
+    {
+      "type": "color",
+      "id": "bg_color",
+      "label": "Background Color",
+      "default": "#F2EFE9"
+    },
+    {
+      "type": "image_picker",
+      "id": "image",
+      "label": "Story Image"
+    },
+    {
+      "type": "select",
+      "id": "image_position",
+      "label": "Image Placement",
+      "options": [
+        { "value": "left", "label": "Left Column" },
+        { "value": "right", "label": "Right Column" }
+      ],
+      "default": "left"
+    },
+    {
+      "type": "text",
+      "id": "subtitle",
+      "label": "Sub-title Tag",
+      "default": "From Harvest to Bottle"
+    },
+    {
+      "type": "text",
+      "id": "title",
+      "label": "Editorial Heading",
+      "default": "Botanical Integrity & Dark Glass Preservation"
+    },
+    {
+      "type": "richtext",
+      "id": "text",
+      "label": "Story Body Text",
+      "default": "<p>Every Ghosoun formulation begins with carefully selected crops grown in climates where aroma and fatty-acid character develop naturally. We favor gentle steam distillation and expeller cold-pressing, then bottle in protective dark glass to preserve freshness.</p>"
+    },
+    {
+      "type": "text",
+      "id": "button_text",
+      "label": "CTA Button Text",
+      "default": "Explore Our Story"
+    },
+    {
+      "type": "url",
+      "id": "button_link",
+      "label": "CTA Button URL"
+    },
+    {
+      "type": "range",
+      "id": "padding_top",
+      "min": 0,
+      "max": 100,
+      "step": 4,
+      "unit": "px",
+      "label": "Top Spacing",
+      "default": 80
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "min": 0,
+      "max": 100,
+      "step": 4,
+      "unit": "px",
+      "label": "Bottom Spacing",
+      "default": 80
+    }
+  ],
+  "blocks": [
+    {
+      "type": "metric",
+      "name": "Story Highlight",
+      "settings": [
+        {
+          "type": "text",
+          "id": "metric",
+          "label": "Highlight Title",
+          "default": "100% Pure"
+        },
+        {
+          "type": "text",
+          "id": "label",
+          "label": "Highlight Description",
+          "default": "Unrefined & additive-free"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Origin Story Split",
+      "blocks": [
+        { "type": "metric", "settings": { "metric": "Single-Origin", "label": "Named botanical species & region" } },
+        { "type": "metric", "settings": { "metric": "Zero Fillers", "label": "No synthetic fragrances or hexane" } }
+      ]
+    }
+  ]
+}
+{% endschema %}

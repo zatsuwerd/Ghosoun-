@@ -1,0 +1,58 @@
+{
+  "sections": {
+    "faq": {
+      "type": "page-faq",
+      "blocks": {
+        "faq_1": {
+          "type": "faq_item",
+          "settings": {
+            "category": "Purity & Sourcing",
+            "question": "Are Ghosoun essential oils 100% pure and undiluted?",
+            "answer": "<p>Yes. Every Ghosoun essential oil is bottled neat without synthetic fragrances, carrier oil diluents, or artificial colorants.</p>"
+          }
+        },
+        "faq_2": {
+          "type": "faq_item",
+          "settings": {
+            "category": "Purity & Sourcing",
+            "question": "Why does Ghosoun package oils in dark UV-protective glass?",
+            "answer": "<p>UV-filtering dark glass shields delicate aromatic terpenes and cold-pressed fatty acids from light-induced oxidation, helping preserve freshness naturally.</p>"
+          }
+        },
+        "faq_3": {
+          "type": "faq_item",
+          "settings": {
+            "category": "Usage & Safety",
+            "question": "How should I dilute essential oils with carrier oils for skin or scalp?",
+            "answer": "<p>For facial skincare, blend 1 drop of essential oil per 10ml of cold-pressed carrier oil (0.5% dilution). For scalp rituals, blend 3 to 5 drops per tablespoon of Jojoba or Argan oil (1.5% to 2.5%).</p>"
+          }
+        },
+        "faq_4": {
+          "type": "faq_item",
+          "settings": {
+            "category": "Orders & Shipping",
+            "question": "How are complimentary shipping thresholds calculated?",
+            "answer": "<p>Complimentary shipping thresholds and courier rates configured in your Shopify store settings calculate automatically at checkout based on your delivery address.</p>"
+          }
+        }
+      },
+      "block_order": [
+        "faq_1",
+        "faq_2",
+        "faq_3",
+        "faq_4"
+      ],
+      "settings": {
+        "eyebrow": "Ghosoun Help Center",
+        "heading": "Frequently Asked Questions",
+        "subtitle": "Guidance on single-origin botanical sourcing, safe topical dilution, diffuser care, and order delivery.",
+        "show_search": true,
+        "padding_top": 0,
+        "padding_bottom": 64
+      }
+    }
+  },
+  "order": [
+    "faq"
+  ]
+}

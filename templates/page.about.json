@@ -1,0 +1,49 @@
+{
+  "sections": {
+    "about": {
+      "type": "page-about",
+      "blocks": {
+        "pillar_1": {
+          "type": "pillar",
+          "settings": {
+            "metric": "01 · Traceability",
+            "title": "Single-Origin Sourcing",
+            "description": "Carefully selected botanical harvests sourced from regions well suited to each plant species."
+          }
+        },
+        "pillar_2": {
+          "type": "pillar",
+          "settings": {
+            "metric": "02 · Purity",
+            "title": "Undiluted Formulations",
+            "description": "Free from synthetic fragrances, mineral oils, solvent extenders, or artificial colorants."
+          }
+        },
+        "pillar_3": {
+          "type": "pillar",
+          "settings": {
+            "metric": "03 · Preservation",
+            "title": "Dark Glass Vessels",
+            "description": "Light-filtering bottles designed to protect natural aromatic character and cold-pressed lipids."
+          }
+        }
+      },
+      "block_order": [
+        "pillar_1",
+        "pillar_2",
+        "pillar_3"
+      ],
+      "settings": {
+        "eyebrow": "Our Philosophy & Craft",
+        "heading": "Ghosoun · Inspired by Living Botanicals",
+        "subtitle": "Dedicated to bringing unrefined, single-origin essential oils and cold-pressed botanical care into everyday rituals.",
+        "story_heading": "Why Origin Shapes Potency",
+        "padding_top": 0,
+        "padding_bottom": 72
+      }
+    }
+  },
+  "order": [
+    "about"
+  ]
+}
